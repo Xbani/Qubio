@@ -12,8 +12,8 @@ class QuObject : public QGraphicsItem
 {
 public:
     QuObject();
-    virtual void toJSON()   = 0;
-    virtual void fromJSON() = 0;
+    virtual QJsonObject toJSON()   = 0;
+    virtual void fromJSON(QJsonObject qJsonObject) = 0;
 };
 
 #endif // QUOBJECT_H
