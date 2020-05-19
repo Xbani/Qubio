@@ -23,7 +23,7 @@ public:
     QuEntity(int instance_id);
 
     virtual int getClassId()    = 0;
-    virtual int getInstanceId() = 0;
+    int getInstanceId();
 
     QVector2D getAcceleration();
     void setAcceleration(QVector2D);

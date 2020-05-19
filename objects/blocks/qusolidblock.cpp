@@ -22,10 +22,15 @@ QRectF QuSolidBlock::boundingRect() const
 void QuSolidBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QSize sprite_size=getSprite().size();
-    painter->drawImage(boundingRect(),QImage(":/resources/block1.png"),QRectF(0,0,sprite_size.width(),sprite_size.height()));
+    painter->drawImage(boundingRect(),getSprite(),QRectF(0,0,sprite_size.width(),sprite_size.height()));
 }
 
 QJsonObject QuSolidBlock::toJSON()
 {
-    return QJsonObject();
+    return QJsonObject(); //TODO
+}
+
+void QuSolidBlock::fromJSON(QJsonObject qJsonObject)
+{
+    //TODO
 }

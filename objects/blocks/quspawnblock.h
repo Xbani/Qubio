@@ -6,7 +6,7 @@
 
 /**
  * @brief The QuSpawnBlock class
- * @details
+ * @details Class which be use to indicate a possible spawn location for a character
  */
 class QuSpawnBlock : public QuBlock
 {
