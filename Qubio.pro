@@ -18,10 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    objects/qublock.cpp \
     objects/quobject.cpp
 
 HEADERS += \
     mainwindow.h \
+    objects/qublock.h \
     objects/quobject.h
 
 FORMS += \
