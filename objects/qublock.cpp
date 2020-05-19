@@ -14,12 +14,12 @@ QuBlock::QuBlock(int texture_id)
     sprite=QImage(path);
 }
 
-QImage QuBlock::getSprite()
+QImage QuBlock::getSprite() const
 {
     return sprite;
 }
 
-int QuBlock::getTextureId()
+int QuBlock::getTextureId() const
 {
     return texture_id;
 }

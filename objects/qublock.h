@@ -17,8 +17,8 @@ public:
     QuBlock();
     QuBlock(int texture_id);
 
-    QImage getSprite();
-    int getTextureId();
+    QImage getSprite() const;
+    int getTextureId() const;
 
 public:
     static const int MAX_TEXTURE_ID=1;
