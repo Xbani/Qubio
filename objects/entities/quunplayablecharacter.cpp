@@ -7,9 +7,9 @@ QuUnplayableCharacter::QuUnplayableCharacter()
 
 }
 
-QuUnplayableCharacter::QuUnplayableCharacter(int instance_id)
+QuUnplayableCharacter::QuUnplayableCharacter(int instance_id):QuCharacter(instance_id)
 {
-    instance_id=instance_id;
+
 }
 
 QJsonObject QuUnplayableCharacter::toJSON()
