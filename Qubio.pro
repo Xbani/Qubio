@@ -20,7 +20,8 @@ SOURCES += \
     mainwindow.cpp \
     objects/blocks/qusolidblock.cpp \
     objects/blocks/quspawnblock.cpp \
-    objects/entities/quentity.cpp \
+    objects/entities/qucharacter.cpp \
+    objects/quentity.cpp \
     objects/qublock.cpp \
     objects/quobject.cpp
 
@@ -28,7 +29,8 @@ HEADERS += \
     mainwindow.h \
     objects/blocks/qusolidblock.h \
     objects/blocks/quspawnblock.h \
-    objects/entities/quentity.h \
+    objects/entities/qucharacter.h \
+    objects/quentity.h \
     objects/qublock.h \
     objects/quobject.h
 
