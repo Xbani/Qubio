@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    objects/blocks/qusolidblock.cpp \
     objects/qublock.cpp \
     objects/quobject.cpp
 
 HEADERS += \
     mainwindow.h \
+    objects/blocks/qusolidblock.h \
     objects/qublock.h \
     objects/quobject.h
 
@@ -33,3 +35,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
