@@ -21,6 +21,8 @@ SOURCES += \
     objects/blocks/qusolidblock.cpp \
     objects/blocks/quspawnblock.cpp \
     objects/entities/qucharacter.cpp \
+    objects/entities/quplayablecharacter.cpp \
+    objects/entities/quunplayablecharacter.cpp \
     objects/quentity.cpp \
     objects/qublock.cpp \
     objects/quobject.cpp
@@ -30,6 +32,8 @@ HEADERS += \
     objects/blocks/qusolidblock.h \
     objects/blocks/quspawnblock.h \
     objects/entities/qucharacter.h \
+    objects/entities/quplayablecharacter.h \
+    objects/entities/quunplayablecharacter.h \
     objects/quentity.h \
     objects/qublock.h \
     objects/quobject.h

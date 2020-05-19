@@ -4,7 +4,10 @@
 #include <objects/quentity.h>
 
 
-
+/**
+ * @brief The QuCharacter class
+ * @details Class which correspond to in game character.
+ */
 class QuCharacter : public QuEntity
 {
 private:
@@ -13,12 +16,14 @@ private:
     int statement;
 public:
     QuCharacter();
+    QuCharacter(int instance_id);
     void step();
 
     // QGraphicsItem interface
 public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
 
 private:
     static const int STATIC_RIGHT =  1;

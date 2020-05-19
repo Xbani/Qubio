@@ -14,16 +14,19 @@ class QuEntity : public QuObject
 {
 private:
     int instance_id;
-    int class_id;
     QVector2D position;
     QVector2D speed;
     QVector2D acceleration;
 
 public:
     QuEntity();
+    QuEntity(int instance_id);
 
     virtual int getClassId()    = 0;
     virtual int getInstanceId() = 0;
+
+    QVector2D getAcceleration();
+    void setAcceleration(QVector2D);
 
 public:
     static const int PLAYABLE_CHARACTER_ID=1;
