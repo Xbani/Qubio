@@ -13,7 +13,7 @@ class QuCharacter : public QuEntity
 private:
     QString name;
     QColor color;
-    int statement;
+    int animation_state;
 public:
     QuCharacter();
     QuCharacter(int instance_id);
