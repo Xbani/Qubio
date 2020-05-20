@@ -25,7 +25,9 @@ SOURCES += \
     objects/entities/quunplayablecharacter.cpp \
     objects/quentity.cpp \
     objects/qublock.cpp \
-    objects/quobject.cpp
+    objects/quobject.cpp \
+    rooms/quui.cpp \
+    rooms/ui/quuimainmenu.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -36,7 +38,9 @@ HEADERS += \
     objects/entities/quunplayablecharacter.h \
     objects/quentity.h \
     objects/qublock.h \
-    objects/quobject.h
+    objects/quobject.h \
+    rooms/quui.h \
+    rooms/ui/quuimainmenu.h
 
 FORMS += \
     mainwindow.ui
