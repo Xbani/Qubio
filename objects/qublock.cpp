@@ -7,7 +7,7 @@ QuBlock::QuBlock():QuBlock(0)
 
 QuBlock::QuBlock(int texture_id)
 {
-    texture_id=texture_id;
+    this->texture_id=texture_id;
     QString path=QString(":/resources/block");
     path.append(QString::number(texture_id));
     path.append(".png");
