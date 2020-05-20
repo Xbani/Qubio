@@ -7,5 +7,6 @@
         <file>resources/sprites/ui/buttons/button2.png</file>
         <file>resources/sprites/ui/buttons/button3.png</file>
         <file>resources/sprites/ui/buttons/button4.png</file>
+        <file>resources/sprites/ui/buttons/button5.png</file>
     </qresource>
 </RCC>
