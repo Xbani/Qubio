@@ -27,6 +27,7 @@ SOURCES += \
     objects/qublock.cpp \
     objects/quobject.cpp \
     objects/ui/buttons/qubuttonsolo.cpp \
+    objects/ui/buttons/qubuttontitle.cpp \
     objects/ui/qubutton.cpp \
     objects/ui/buttons/qubuttonmulti.cpp \
     rooms/quui.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     objects/qublock.h \
     objects/quobject.h \
     objects/ui/buttons/qubuttonsolo.h \
+    objects/ui/buttons/qubuttontitle.h \
     objects/ui/qubutton.h \
     objects/ui/buttons/qubuttonmulti.h \
     rooms/quui.h \
