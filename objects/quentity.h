@@ -14,6 +14,7 @@ class QuEntity : public QuObject
 {
 private:
     int instance_id;
+    bool mutex;
     QVector2D position;
     QVector2D speed;
     QVector2D acceleration;
@@ -31,6 +32,17 @@ public:
 public:
     static const int PLAYABLE_CHARACTER_ID=1;
     static const int UNPLAYABLE_CHARACTER_ID=2;
+public:
+    bool getMutex()
+    {
+        if(mutex)
+            return false;
+        mutex=true;
+        return true;
+    }
+    void releaseMutex(){
+        mutex=false;
+    }
 };
 
 #endif // QUENTITY_H
