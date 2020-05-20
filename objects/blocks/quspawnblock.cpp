@@ -9,7 +9,7 @@ QuSpawnBlock::QuSpawnBlock()
 
 QRectF QuSpawnBlock::boundingRect() const
 {
-    return QRectF(0,0,0,0);
+    return QRectF(0,0,8*QuObject::PIXEL_SIZE,8*QuObject::PIXEL_SIZE);
 }
 
 void QuSpawnBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

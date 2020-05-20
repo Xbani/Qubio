@@ -16,7 +16,7 @@ QuSolidBlock::QuSolidBlock(int texture_block_id):QuBlock(texture_block_id)
 QRectF QuSolidBlock::boundingRect() const
 {
     QSize sprite_size=getSprite().size();
-    return QRectF(0,0,sprite_size.width(),sprite_size.height());
+    return QRectF(0,0,sprite_size.width()*QuObject::PIXEL_SIZE,sprite_size.height()*QuObject::PIXEL_SIZE);
 }
 
 void QuSolidBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

@@ -15,7 +15,7 @@ void QuCharacter::step()
 
 QRectF QuCharacter::boundingRect() const
 {
-    return QRectF(0,0,0,0);//TODO
+    return QRectF(0,0,0*QuObject::PIXEL_SIZE,0*QuObject::PIXEL_SIZE);//TODO
 }
 
 void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
