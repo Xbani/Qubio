@@ -18,4 +18,4 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 };
 
-#endif // QUBUTTONSOLO_H
+#endif // QUBUTTONMULTI_H
