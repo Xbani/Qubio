@@ -25,6 +25,8 @@ public:
     QuUIMainMenu();
     QuUIMainMenu(qreal x, qreal y, qreal width, qreal height, QObject * parent = nullptr);
 
+    void toUIMultiplayer();
+
     void init();
 
     // QGraphicsScene interface

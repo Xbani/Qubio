@@ -3,7 +3,7 @@
 
 #include <QGraphicsScene>
 
-
+class QuGameEngine;
 /**
  * @brief The QuUI class
  * @details Basic UI Scene class

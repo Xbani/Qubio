@@ -3,14 +3,23 @@
 #include <QDebug>
 #include <QPainter>
 #include <iostream>
+#include <qugameengine.h>
 QuUIMainMenu::QuUIMainMenu()
 {
     init();
 }
 
-QuUIMainMenu::QuUIMainMenu(qreal x, qreal y, qreal width, qreal height, QObject *parent):QuUI(x,y,width,height)
+QuUIMainMenu::QuUIMainMenu(qreal x, qreal y, qreal width, qreal height, QObject *parent):QuUI(x,y,width,height,parent)
 {
     init();
+}
+
+void QuUIMainMenu::toUIMultiplayer()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        game_engine->toUIMultiplayer();
+    }
 }
 
 void QuUIMainMenu::init()
