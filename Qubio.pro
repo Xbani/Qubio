@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Reseau/Client/quclient.cpp \
     main.cpp \
     mainwindow.cpp \
     objects/blocks/qusolidblock.cpp \
@@ -28,6 +29,8 @@ SOURCES += \
     objects/quobject.cpp
 
 HEADERS += \
+    Reseau/Client/quclient.h \
+    Reseau/messagetype.h \
     mainwindow.h \
     objects/blocks/qusolidblock.h \
     objects/blocks/quspawnblock.h \
