@@ -21,12 +21,20 @@ void QuUIMainMenu::toUIMultiplayer()
         game_engine->toUIMultiplayer();
     }
 }
+void QuUIMainMenu::back()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        delete game_engine;
+    }
+}
 
 void QuUIMainMenu::init()
 {
     button_solo= new QuButtonSolo();
     button_multi= new QuButtonMulti();
     button_title= new QuButtonTitle();
+    button_close= new QuButtonClose();
     text_box= new QuTextBox();
 
     button_solo->setX(width()/3);
@@ -38,12 +46,16 @@ void QuUIMainMenu::init()
     button_title->setX(width()/2);
     button_title->setY(height()/3);
 
+    button_close->setX(7*width()/8);
+    button_close->setY(height()/8);
+
     text_box->setX(width()/2);
     text_box->setY(4*height()/5);
 
     addItem(button_solo);
     addItem(button_multi);
     addItem(button_title);
+    addItem(button_close);
     addItem(text_box);
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));

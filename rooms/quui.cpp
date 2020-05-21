@@ -1,5 +1,7 @@
 #include "quui.h"
 
+#include <qugameengine.h>
+
 QuUI::QuUI()
 {
 

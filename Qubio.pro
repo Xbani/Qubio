@@ -26,6 +26,7 @@ SOURCES += \
     objects/quentity.cpp \
     objects/qublock.cpp \
     objects/quobject.cpp \
+    objects/ui/buttons/qubuttonclose.cpp \
     objects/ui/buttons/qubuttonhost.cpp \
     objects/ui/buttons/qubuttonjoin.cpp \
     objects/ui/buttons/qubuttonsolo.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     objects/quentity.h \
     objects/qublock.h \
     objects/quobject.h \
+    objects/ui/buttons/qubuttonclose.h \
     objects/ui/buttons/qubuttonhost.h \
     objects/ui/buttons/qubuttonjoin.h \
     objects/ui/buttons/qubuttonsolo.h \

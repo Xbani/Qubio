@@ -3,6 +3,7 @@
 
 #include <rooms/quui.h>
 
+#include <objects/ui/buttons/qubuttonclose.h>
 #include <objects/ui/buttons/qubuttonmulti.h>
 #include <objects/ui/buttons/qubuttonsolo.h>
 #include <objects/ui/buttons/qubuttontitle.h>
@@ -20,12 +21,14 @@ private:
     QuButtonSolo * button_solo;
     QuButtonMulti * button_multi;
     QuButtonTitle * button_title;
+    QuButtonClose * button_close;
     QuTextBox * text_box;
 public:
     QuUIMainMenu();
     QuUIMainMenu(qreal x, qreal y, qreal width, qreal height, QObject * parent = nullptr);
 
     void toUIMultiplayer();
+    void back() override;
 
     void init();
 

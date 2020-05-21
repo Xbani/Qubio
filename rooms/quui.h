@@ -13,6 +13,8 @@ class QuUI : public QGraphicsScene
 public:
     QuUI();
     QuUI(qreal x, qreal y, qreal width, qreal height, QObject * parent = nullptr);
+
+    virtual void back()=0;
 };
 
 #endif // QUUI_H
