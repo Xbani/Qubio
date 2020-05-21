@@ -16,6 +16,7 @@ private:
     QGraphicsView * view;
 public:
     QuGameEngine();
+    ~QuGameEngine();
 
     void toUIMultiplayer();
     void toUIMainMenu();

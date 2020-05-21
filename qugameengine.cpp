@@ -8,6 +8,11 @@ QuGameEngine::QuGameEngine()
     create();
 }
 
+QuGameEngine::~QuGameEngine()
+{
+    view->close();
+}
+
 void QuGameEngine::toUIMultiplayer()
 {
     view->setScene(uiMultiplayer);
