@@ -29,6 +29,14 @@ void QuUIMultiplayer::toUIHost()
     }
 }
 
+void QuUIMultiplayer::toUIJoin()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        game_engine->toUIJoin();
+    }
+}
+
 void QuUIMultiplayer::init(){
     button_host= new QuButtonHost();
     button_join= new QuButtonJoin();

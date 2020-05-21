@@ -39,6 +39,7 @@ SOURCES += \
     qugameengine.cpp \
     rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
+    rooms/ui/quuijoin.cpp \
     rooms/ui/quuimainmenu.cpp \
     rooms/ui/quuimultiplayer.cpp
 
@@ -65,6 +66,7 @@ HEADERS += \
     qugameengine.h \
     rooms/ui/quuihost.h \
     rooms/quui.h \
+    rooms/ui/quuijoin.h \
     rooms/ui/quuimainmenu.h \
     rooms/ui/quuimultiplayer.h
 

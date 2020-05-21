@@ -22,6 +22,7 @@ public:
 
     void back() override;
     void toUIHost();
+    void toUIJoin();
     void init();
 
     // QGraphicsScene interface

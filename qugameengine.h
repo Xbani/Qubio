@@ -2,6 +2,7 @@
 #define QUGAMEENGINE_H
 
 #include <rooms/ui/quuihost.h>
+#include <rooms/ui/quuijoin.h>
 #include <rooms/ui/quuimainmenu.h>
 #include <rooms/ui/quuimultiplayer.h>
 
@@ -15,6 +16,7 @@ private:
     QuUIMainMenu * uiMainMenu;
     QuUIMultiplayer * uiMultiplayer;
     QuUIHost * uiHost;
+    QuUIJoin * uiJoin;
 
     QGraphicsView * view;
 public:
@@ -24,6 +26,7 @@ public:
     void toUIMultiplayer();
     void toUIMainMenu();
     void toUIHost();
+    void toUIJoin();
 
     void create();
 

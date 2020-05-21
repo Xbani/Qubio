@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include <rooms/ui/quuimultiplayer.h>
+
 QuButtonJoin::QuButtonJoin():QuButton(6,7)
 {
 
@@ -9,5 +11,6 @@ QuButtonJoin::QuButtonJoin():QuButton(6,7)
 
 void QuButtonJoin::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "Join Clicked"; //TODO
+    QuUIMultiplayer *uiMultiplayer=dynamic_cast<QuUIMultiplayer *>(scene());
+    uiMultiplayer->toUIJoin();
 }
