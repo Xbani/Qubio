@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    network/qusocket.cpp \
     objects/blocks/qusolidblock.cpp \
     objects/blocks/quspawnblock.cpp \
     objects/entities/qucharacter.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    network/qusocket.h \
     objects/blocks/qusolidblock.h \
     objects/blocks/quspawnblock.h \
     objects/entities/qucharacter.h \
