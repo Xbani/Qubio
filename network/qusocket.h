@@ -6,7 +6,6 @@
 
 class QuSocket : public QObject
 {
-    Q_OBJECT
 
 public:
     explicit QuSocket(QObject *parent = nullptr);
