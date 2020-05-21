@@ -15,6 +15,7 @@ private:
     QString text;
 public:
     QuTextBox();
+    QuTextBox(QString default_text);
     QString getText();
 
 public:

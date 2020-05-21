@@ -37,6 +37,7 @@ SOURCES += \
     objects/ui/buttons/qubuttonmulti.cpp \
     objects/ui/qutextbox.cpp \
     qugameengine.cpp \
+    rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
     rooms/ui/quuimainmenu.cpp \
     rooms/ui/quuimultiplayer.cpp
@@ -62,6 +63,7 @@ HEADERS += \
     objects/ui/buttons/qubuttonmulti.h \
     objects/ui/qutextbox.h \
     qugameengine.h \
+    rooms/ui/quuihost.h \
     rooms/quui.h \
     rooms/ui/quuimainmenu.h \
     rooms/ui/quuimultiplayer.h

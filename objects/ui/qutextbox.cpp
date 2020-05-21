@@ -15,6 +15,11 @@ QuTextBox::QuTextBox()
 
 }
 
+QuTextBox::QuTextBox(QString default_text):QuTextBox()
+{
+    text=default_text;
+}
+
 QString QuTextBox::getText()
 {
     return text;

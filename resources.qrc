@@ -16,5 +16,7 @@
         <file>resources/sprites/ui/buttons/button9.png</file>
         <file>resources/sprites/ui/buttons/button10.png</file>
         <file>resources/sprites/ui/buttons/button11.png</file>
+        <file>resources/sprites/ui/buttons/button12.png</file>
+        <file>resources/sprites/ui/buttons/button13.png</file>
     </qresource>
 </RCC>

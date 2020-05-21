@@ -21,7 +21,7 @@ public:
     QuUIMultiplayer(qreal x, qreal y, qreal width, qreal height, QObject * parent = nullptr);
 
     void back() override;
-
+    void toUIHost();
     void init();
 
     // QGraphicsScene interface

@@ -6,7 +6,8 @@ QuButtonGoJoin::QuButtonGoJoin():QuButton(12,13)
 {
 
 }
+
 void QuButtonGoJoin::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "Host Clicked"; //TODO
+    qDebug() << "GoJoin Clicked"; //TODO
 }

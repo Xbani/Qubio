@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include <rooms/ui/quuimultiplayer.h>
+
 QuButtonHost::QuButtonHost():QuButton(8,9)
 {
 
@@ -9,5 +11,6 @@ QuButtonHost::QuButtonHost():QuButton(8,9)
 
 void QuButtonHost::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "Host Clicked"; //TODO
+    QuUIMultiplayer *uiMultiplayer=dynamic_cast<QuUIMultiplayer *>(scene());
+    uiMultiplayer->toUIHost();
 }
