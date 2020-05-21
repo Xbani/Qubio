@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 QuButton::QuButton():QuButton(0,0)
 {
 
@@ -12,7 +13,8 @@ QuButton::QuButton():QuButton(0,0)
 QuButton::QuButton(int texture_id, int texture_hover_id)
 {
     setAcceptHoverEvents(true);
-
+    setAcceptedMouseButtons(Qt::LeftButton);
+    setFlags(ItemIsFocusable);
     this->texture_id=texture_id;
     this->texture_hover_id=texture_hover_id;
 
@@ -43,7 +45,7 @@ void QuButton::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     QSize sprite_size=sprite.size();
     painter->fillRect(boundingRect(),scene()->backgroundBrush());
     if(!mouse_is_hover)
-        painter->drawImage(boundingRect(),sprite,QRectF(0,0,sprite_size.width(),sprite_size.height()));
+        painter->drawImage(boundingRect(),sprite,sprite.rect());
     else
         painter->drawImage(boundingRect(),sprite_hover,QRectF(0,0,sprite_size.width(),sprite_size.height()));
 }
@@ -68,4 +70,9 @@ QJsonObject QuButton::toJSON()
 void QuButton::fromJSON(QJsonObject qJsonObject)
 {
     //do nothing
+}
+
+void QuButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    event->accept();
 }

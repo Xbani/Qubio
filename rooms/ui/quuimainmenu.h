@@ -7,6 +7,8 @@
 #include <objects/ui/buttons/qubuttonsolo.h>
 #include <objects/ui/buttons/qubuttontitle.h>
 
+#include <objects/ui/qutextbox.h>
+
 
 /**
  * @brief The QuUIMainMenu class
@@ -18,6 +20,7 @@ private:
     QuButtonSolo * button_solo;
     QuButtonMulti * button_multi;
     QuButtonTitle * button_title;
+    QuTextBox * text_box;
 public:
     QuUIMainMenu();
     QuUIMainMenu(qreal x, qreal y, qreal width, qreal height, QObject * parent = nullptr);

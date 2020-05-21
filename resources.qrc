@@ -8,5 +8,7 @@
         <file>resources/sprites/ui/buttons/button3.png</file>
         <file>resources/sprites/ui/buttons/button4.png</file>
         <file>resources/sprites/ui/buttons/button5.png</file>
+        <file>resources/sprites/ui/textbox.png</file>
+        <file>resources/fonts/Fipps-Regular.ttf</file>
     </qresource>
 </RCC>

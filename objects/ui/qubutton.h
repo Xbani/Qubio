@@ -35,6 +35,10 @@ protected:
 public:
     QJsonObject toJSON();
     void fromJSON(QJsonObject qJsonObject);
+
+    // QGraphicsItem interface
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // QUBUTTON_H

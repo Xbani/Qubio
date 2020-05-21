@@ -10,7 +10,7 @@
 class QuGameEngine
 {
 private:
-    QuUIMainMenu * scene;
+    QuUIMainMenu * uiMainMenu;
     QGraphicsView * view;
 public:
     QuGameEngine();

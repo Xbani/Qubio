@@ -1,5 +1,7 @@
 #include "qubuttonsolo.h"
 
+#include <QDebug>
+
 QuButtonSolo::QuButtonSolo():QuButton(3,4)
 {
 
@@ -7,5 +9,5 @@ QuButtonSolo::QuButtonSolo():QuButton(3,4)
 
 void QuButtonSolo::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    //TODO
+    qDebug() << "Solo Clicked"; //TODO
 }

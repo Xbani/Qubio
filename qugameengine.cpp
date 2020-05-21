@@ -1,5 +1,8 @@
 #include "qugameengine.h"
 
+#include <QFontDatabase>
+#include <QDebug>
+
 QuGameEngine::QuGameEngine()
 {
     create();
@@ -7,12 +10,8 @@ QuGameEngine::QuGameEngine()
 
 void QuGameEngine::create()
 {
-    scene = new QuUIMainMenu(0,0,64*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE);
+    uiMainMenu = new QuUIMainMenu(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE);
     view = new QGraphicsView();
-    view->setScene(scene);
+    view->setScene(uiMainMenu);
     view->show();
-
-    //Add roomMenu
-    scene->init();
-
 }

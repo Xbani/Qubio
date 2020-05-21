@@ -18,6 +18,7 @@ void QuUIMainMenu::init()
     button_solo= new QuButtonSolo();
     button_multi= new QuButtonMulti();
     button_title= new QuButtonTitle();
+    text_box= new QuTextBox();
 
     button_solo->setX(width()/3);
     button_solo->setY(height()/2);
@@ -28,9 +29,13 @@ void QuUIMainMenu::init()
     button_title->setX(width()/2);
     button_title->setY(height()/3);
 
+    text_box->setX(width()/2);
+    text_box->setY(4*height()/5);
+
     addItem(button_solo);
     addItem(button_multi);
     addItem(button_title);
+    addItem(text_box);
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 }
