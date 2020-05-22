@@ -34,7 +34,7 @@ public:
     ~QuClient();
 
     void connectToServer(QHostAddress &ipServer, int &portServer);
-    void recieveEntities(QJsonObject *jsonEntities);
+    void receiveEntities(QJsonObject *jsonEntities);
     void startGame();
     void endGame();
     void sendEntity(QJsonObject *jsonEntity);

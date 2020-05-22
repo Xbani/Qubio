@@ -25,6 +25,21 @@ QuClient::~QuClient()
     delete(serverDatagram);
 }
 
+void QuClient::receiveEntities(QJsonObject *jsonEntities)
+{
+
+}
+
+void QuClient::startGame()
+{
+
+}
+
+void QuClient::endGame()
+{
+
+}
+
 void QuClient::sendEntity(QJsonObject *jsonEntity)
 {
     lastIdMessageSend++;
@@ -33,6 +48,21 @@ void QuClient::sendEntity(QJsonObject *jsonEntity)
     QJsonDocument jsonDoc(*jsonEntity);
     serverDatagram->setData(jsonDoc.toBinaryData());
     quSocketClient->send(serverDatagram);
+}
+
+void QuClient::receiveMap(QJsonObject *jsonMap)
+{
+
+}
+
+void QuClient::receivePlayerId(QJsonObject *jsonPlayerId)
+{
+
+}
+
+void QuClient::receivePlayerList(QJsonObject *jsonPlayerList)
+{
+
 }
 
 void QuClient::run(){

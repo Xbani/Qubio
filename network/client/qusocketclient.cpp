@@ -19,7 +19,7 @@ void QuSocketClient::receive(){
         *jsonObj = jsonDoc->object();
         switch (jsonObj->value("messageType").toInt()) {
             case MessageType::sendEntity:
-                quClient->recieveEntities(jsonObj);
+                quClient->receiveEntities(jsonObj);
             break;
             case MessageType::idPlayer :
                 quClient->receivePlayerId(jsonObj);
