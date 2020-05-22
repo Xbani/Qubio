@@ -18,7 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    network/client/qugameclient.cpp \
+    network/client/quclient.cpp \
     network/client/qusocketclient.cpp \
     network/qusocket.cpp \
     objects/blocks/qusolidblock.cpp \
@@ -31,7 +31,7 @@ SOURCES += \
     objects/quobject.cpp
 
 HEADERS += \
-    network/client/qugameclient.h \
+    network/client/quclient.h \
     network/client/qusocketclient.h \
     network/messagetype.h \
     mainwindow.h \

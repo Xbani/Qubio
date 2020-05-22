@@ -3,19 +3,15 @@
 
 #include "network/qusocket.h"
 
-#include "network/client/qugameclient.h"
-
-//#include "quclient.h"
-//#include "network/client/quclient.h"
-
+class QuClient;
 class QuSocketClient : public QuSocket
 {
 
 private:
-    QuGameClient *quClient;
+    QuClient *quClient;
 
 public:
-    QuSocketClient(QuGameClient *testquClient/*, QObject *parent = nullptr*/);
+    QuSocketClient(QuClient *testquClient, QObject *parent = nullptr);
 
     void receive() override;
 
