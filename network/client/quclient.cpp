@@ -1,8 +1,12 @@
 #include "quclient.h"
 #include <QNetworkDatagram>
 #include <QJsonDocument>
+#include <QJsonArray>
 #include "network/client/qusocketclient.h"
 #include "network/MessageType.h"
+#include "qugameengine.h"
+#include "rooms/qugame.h"
+#include "objects/quentity.h"
 
 
 QuClient::QuClient(QHostAddress &ipServer, int &portServer,
@@ -27,7 +31,15 @@ QuClient::~QuClient()
 
 void QuClient::receiveEntities(QJsonObject *jsonEntities)
 {
+    if((*jsonEntities)["messageId"].toInt() > lastIdMessageReceive){
+        lastIdMessageReceive = (*jsonEntities)["messageId"].toInt();
+        QJsonArray jsonPlayerArray = (*jsonEntities)["entities"].toArray();
 
+        for (int entityId = 0; entityId < jsonPlayerArray.count(); entityId++){
+            QJsonValue entityValue = jsonPlayerArray.at(entityId);
+            quGameEngine->getQuGame()->getEntities().take(entityValue["instanceId"].toInt())->fromJSON(entityValue.toObject());
+        }
+    }
 }
 
 void QuClient::startGame()
@@ -57,11 +69,19 @@ void QuClient::receiveMap(QJsonObject *jsonMap)
 
 void QuClient::receivePlayerId(QJsonObject *jsonPlayerId)
 {
-
+    quGameEngine->setPlayerId((*jsonPlayerId)["playerId"].toInt());
+    lastIdMessageReceive = (*jsonPlayerId)["messageId"].toInt();
 }
 
 void QuClient::receivePlayerList(QJsonObject *jsonPlayerList)
 {
+    if((*jsonPlayerList)["messageId"].toInt() > lastIdMessageReceive){
+        lastIdMessageReceive = (*jsonPlayerList)["messageId"].toInt();
+        QJsonArray *jsonPlayerArray = new QJsonArray();
+        *jsonPlayerArray = (*jsonPlayerList)["playerList"].toArray();
+        //fonction a oscar
+        //TODO
+    }
 
 }
 
