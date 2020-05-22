@@ -7,7 +7,7 @@
 
 class QuButton : public QuObject
 {
-private:
+protected:
     QImage sprite;
     QImage sprite_hover;
     int texture_id;

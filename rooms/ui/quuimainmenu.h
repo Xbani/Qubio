@@ -5,6 +5,7 @@
 
 #include <objects/ui/buttons/qubuttonclose.h>
 #include <objects/ui/buttons/qubuttonmulti.h>
+#include <objects/ui/buttons/qubuttonpersocolor.h>
 #include <objects/ui/buttons/qubuttonsolo.h>
 #include <objects/ui/buttons/qubuttontitle.h>
 
@@ -22,6 +23,8 @@ private:
     QuButtonMulti * button_multi;
     QuButtonTitle * button_title;
     QuButtonClose * button_close;
+    QuButtonPersoColor * button_perso_color;
+
     QuTextBox * text_box;
 public:
     QuUIMainMenu();

@@ -31,17 +31,20 @@ SOURCES += \
     objects/ui/buttons/qubuttongojoin.cpp \
     objects/ui/buttons/qubuttonhost.cpp \
     objects/ui/buttons/qubuttonjoin.cpp \
+    objects/ui/buttons/qubuttonpersocolor.cpp \
     objects/ui/buttons/qubuttonsolo.cpp \
     objects/ui/buttons/qubuttontitle.cpp \
     objects/ui/qubutton.cpp \
     objects/ui/buttons/qubuttonmulti.cpp \
+    objects/ui/quplayerinfo.cpp \
     objects/ui/qutextbox.cpp \
     qugameengine.cpp \
     rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
     rooms/ui/quuijoin.cpp \
     rooms/ui/quuimainmenu.cpp \
-    rooms/ui/quuimultiplayer.cpp
+    rooms/ui/quuimultiplayer.cpp \
+    tools/qutoolsprite.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -58,17 +61,20 @@ HEADERS += \
     objects/ui/buttons/qubuttongojoin.h \
     objects/ui/buttons/qubuttonhost.h \
     objects/ui/buttons/qubuttonjoin.h \
+    objects/ui/buttons/qubuttonpersocolor.h \
     objects/ui/buttons/qubuttonsolo.h \
     objects/ui/buttons/qubuttontitle.h \
     objects/ui/qubutton.h \
     objects/ui/buttons/qubuttonmulti.h \
+    objects/ui/quplayerinfo.h \
     objects/ui/qutextbox.h \
     qugameengine.h \
     rooms/ui/quuihost.h \
     rooms/quui.h \
     rooms/ui/quuijoin.h \
     rooms/ui/quuimainmenu.h \
-    rooms/ui/quuimultiplayer.h
+    rooms/ui/quuimultiplayer.h \
+    tools/qutoolsprite.h
 
 FORMS += \
     mainwindow.ui
