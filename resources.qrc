@@ -1,6 +1,24 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file>resources/sprites/blocks/block0.png</file>
-	<file>resources/sprites/blocks/block1.png</file>
-</qresource>
+<RCC>
+    <qresource prefix="/">
+        <file>resources/sprites/blocks/block0.png</file>
+        <file>resources/sprites/blocks/block1.png</file>
+        <file>resources/sprites/ui/buttons/button0.png</file>
+        <file>resources/sprites/ui/buttons/button1.png</file>
+        <file>resources/sprites/ui/buttons/button2.png</file>
+        <file>resources/sprites/ui/buttons/button3.png</file>
+        <file>resources/sprites/ui/buttons/button4.png</file>
+        <file>resources/sprites/ui/buttons/button5.png</file>
+        <file>resources/sprites/ui/textbox.png</file>
+        <file>resources/fonts/Fipps-Regular.ttf</file>
+        <file>resources/sprites/ui/buttons/button6.png</file>
+        <file>resources/sprites/ui/buttons/button7.png</file>
+        <file>resources/sprites/ui/buttons/button8.png</file>
+        <file>resources/sprites/ui/buttons/button9.png</file>
+        <file>resources/sprites/ui/buttons/button10.png</file>
+        <file>resources/sprites/ui/buttons/button11.png</file>
+        <file>resources/sprites/ui/buttons/button12.png</file>
+        <file>resources/sprites/ui/buttons/button13.png</file>
+        <file>resources/sprites/ui/playerinfo.png</file>
+        <file>resources/sprites/ui/buttons/button14.png</file>
+    </qresource>
 </RCC>
