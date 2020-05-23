@@ -48,7 +48,8 @@ QJsonObject QuTextBox::toJSON()
 {
     return QJsonObject(); //nothing to do
 }
-void QuTextBox::fromJSON(QJsonObject qJsonObject)
+
+void QuTextBox::fromJSON(QJsonObject &qJsonObject)
 {
     //nothing to do
 }

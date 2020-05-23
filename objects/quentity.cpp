@@ -15,12 +15,3 @@ int QuEntity::getInstanceId()
     return instance_id;
 }
 
-QVector2D QuEntity::getAcceleration()
-{
-    return acceleration;
-}
-
-void QuEntity::setAcceleration(QVector2D acceleration)
-{
-    this->acceleration=acceleration;
-}

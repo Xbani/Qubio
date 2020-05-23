@@ -67,7 +67,7 @@ QJsonObject QuButton::toJSON()
     return QJsonObject();
 }
 
-void QuButton::fromJSON(QJsonObject qJsonObject)
+void QuButton::fromJSON(QJsonObject &qJsonObject)
 {
     //do nothing
 }
