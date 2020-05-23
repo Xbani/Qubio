@@ -16,12 +16,10 @@ public:
 
     // QuObject interface
 public:
-    QJsonObject toJSON();
-    void fromJSON(QJsonObject qJsonObject);
 
     // QuEntity interface
 public:
-    int getClassId();
+    int getClassId() override;
 };
 
 #endif // QUUNPLAYABLECHARACTER_H
