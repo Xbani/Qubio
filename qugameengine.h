@@ -45,6 +45,8 @@ public:
     inline bool getIsHost() const {return isHost;};
     inline void setIsHost(int isHost) {this->isHost = isHost;};
 
+    inline QString getNickname()const {return "todo getNickname in quGameEngine";};
+    inline float getSkinColor() const {return 76.3;};
 };
 
 #endif // QUGAMEENGINE_H

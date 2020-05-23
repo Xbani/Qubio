@@ -13,6 +13,7 @@ private:
 public:
     QuGame();
     inline QMap<int,QuEntity*> getEntities() const {return entities;};
+    void newMapFromJson(QJsonObject* JsonMap);
 
 };
 

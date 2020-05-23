@@ -4,3 +4,8 @@ QuGame::QuGame()
 {
 
 }
+
+void QuGame::newMapFromJson(QJsonObject *jsonMap)
+{
+
+}

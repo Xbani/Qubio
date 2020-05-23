@@ -1,4 +1,8 @@
 #include "qugameengine.h"
+#include <rooms/ui/quuihost.h>
+#include <rooms/ui/quuijoin.h>
+#include <rooms/ui/quuimainmenu.h>
+#include <rooms/ui/quuimultiplayer.h>
 
 #include <QFontDatabase>
 #include <QDebug>
