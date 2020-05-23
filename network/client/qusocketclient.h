@@ -11,7 +11,7 @@ private:
     QuClient *quClient;
 
 public:
-    QuSocketClient(QuClient *testquClient, QObject *parent = nullptr);
+    QuSocketClient(QuClient *quClient, QObject *parent = nullptr);
 
     void receive() override;
 

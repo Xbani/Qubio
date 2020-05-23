@@ -30,7 +30,7 @@ QJsonObject QuSolidBlock::toJSON()
     return QJsonObject(); //TODO
 }
 
-void QuSolidBlock::fromJSON(QJsonObject qJsonObject)
+void QuSolidBlock::fromJSON(QJsonObject &qJsonObject)
 {
     //TODO
 }
