@@ -20,6 +20,10 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     network/qusocket.cpp \
+    network/server/quexpectedanswer.cpp \
+    network/server/quinfoclient.cpp \
+    network/server/quserver.cpp \
+    network/server/qusocketserver.cpp \
     objects/blocks/qusolidblock.cpp \
     objects/blocks/quspawnblock.cpp \
     objects/entities/qucharacter.cpp \
@@ -34,6 +38,10 @@ HEADERS += \
     network/messagetype.h \
     mainwindow.h \
     network/qusocket.h \
+    network/server/quexpectedanswer.h \
+    network/server/quinfoclient.h \
+    network/server/quserver.h \
+    network/server/qusocketserver.h \
     objects/blocks/qusolidblock.h \
     objects/blocks/quspawnblock.h \
     objects/entities/qucharacter.h \
