@@ -30,6 +30,7 @@ SOURCES += \
     objects/qublock.cpp \
     objects/quobject.cpp \
     objects/ui/buttons/qubuttonclose.cpp \
+    objects/ui/buttons/qubuttongogame.cpp \
     objects/ui/buttons/qubuttongohost.cpp \
     objects/ui/buttons/qubuttongojoin.cpp \
     objects/ui/buttons/qubuttonhost.cpp \
@@ -48,6 +49,7 @@ SOURCES += \
     rooms/ui/quuijoin.cpp \
     rooms/ui/quuimainmenu.cpp \
     rooms/ui/quuimultiplayer.cpp \
+    rooms/ui/quuiwaitingroom.cpp \
     tools/qutoolsprite.cpp
 
 HEADERS += \
@@ -65,6 +67,7 @@ HEADERS += \
     objects/qublock.h \
     objects/quobject.h \
     objects/ui/buttons/qubuttonclose.h \
+    objects/ui/buttons/qubuttongogame.h \
     objects/ui/buttons/qubuttongohost.h \
     objects/ui/buttons/qubuttongojoin.h \
     objects/ui/buttons/qubuttonhost.h \
@@ -83,6 +86,7 @@ HEADERS += \
     rooms/ui/quuijoin.h \
     rooms/ui/quuimainmenu.h \
     rooms/ui/quuimultiplayer.h \
+    rooms/ui/quuiwaitingroom.h \
     tools/qutoolsprite.h
 
 FORMS += \

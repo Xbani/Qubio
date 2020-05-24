@@ -10,7 +10,6 @@ QuButtonPersoColor::QuButtonPersoColor():QuButton(14,14)
 
 void QuButtonPersoColor::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug("ahuehue");
     hue+=30;
     sprite=QuToolSprite::SetSpriteCharacterHUE(hue);
     sprite_hover=sprite;
