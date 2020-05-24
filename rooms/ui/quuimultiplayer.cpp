@@ -16,7 +16,7 @@ QuUIMultiplayer::QuUIMultiplayer(qreal x, qreal y, qreal width, qreal height, QO
 void QuUIMultiplayer::back()
 {
     if(parent()!=nullptr){
-        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
         game_engine->toUIMainMenu();
     }
 }
@@ -24,7 +24,7 @@ void QuUIMultiplayer::back()
 void QuUIMultiplayer::toUIHost()
 {
     if(parent()!=nullptr){
-        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
         game_engine->toUIHost();
     }
 }
@@ -32,7 +32,7 @@ void QuUIMultiplayer::toUIHost()
 void QuUIMultiplayer::toUIJoin()
 {
     if(parent()!=nullptr){
-        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
         game_engine->toUIJoin();
     }
 }
