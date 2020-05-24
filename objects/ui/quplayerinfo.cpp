@@ -46,7 +46,7 @@ QJsonObject QuPlayerInfo::toJSON()
     return QJsonObject(); //do nothing
 }
 
-void QuPlayerInfo::fromJSON(QJsonObject qJsonObject)
+void QuPlayerInfo::fromJSON(QJsonObject &qJsonObject)
 {
     //do nothing
 }
