@@ -22,6 +22,8 @@ public:
 
     void toUIWaitingRoom();
     void back() override;
+    QString getIp();
+    QString getPort();
 
     void init();
 

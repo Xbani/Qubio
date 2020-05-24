@@ -8,11 +8,17 @@
 
 #include <QGraphicsView>
 
+#include <network/client/qusocketclient.h>
+
 class QuUIMainMenu;
 class QuUIMultiplayer;
 class QuUIHost;
 class QuUIJoin;
+class QuUIWaitingRoom;
 class QuGame;
+class QuClient;
+class QHostAddress;
+
 class QuGameEngine: public QObject
 {
     Q_OBJECT
@@ -21,7 +27,12 @@ private:
     QuUIMultiplayer * uiMultiplayer;
     QuUIHost * uiHost;
     QuUIJoin * uiJoin;
+    QuUIWaitingRoom * uiWaitingRoomHost;
+    QuUIWaitingRoom * uiWaitingRoomJoin;
+
     QuGame *quGame;
+
+    QuClient *quClient;
 
     QGraphicsView * view;
 
@@ -36,6 +47,14 @@ public:
     void toUIMainMenu();
     void toUIHost();
     void toUIJoin();
+    void fromUIJoinToWaitingRoom();
+    void fromUIHostToWaitingRoom();
+
+    QHostAddress getIpJoin();
+    int getPortJoin();
+
+    QString getIpHost();
+    QString getPortHost();
 
     void create();
 

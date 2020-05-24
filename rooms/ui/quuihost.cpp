@@ -12,12 +12,45 @@ QuUIHost::QuUIHost(qreal x, qreal y, qreal width, qreal height, QObject *parent)
     init();
 }
 
+void QuUIHost::toUIWaitingRoom()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        game_engine->fromUIHostToWaitingRoom();
+    }
+}
+
 void QuUIHost::back()
 {
     if(parent()!=nullptr){
         QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
         game_engine->toUIMultiplayer();
     }
+}
+
+QString QuUIHost::getIp()
+{
+    QString full_text=text_box_ip->getText();
+    if(full_text.contains(":")){
+        QString ip= full_text;
+        while (!ip.endsWith(":")) {
+            ip.chop(1);
+        }
+        ip.chop(1);
+    }
+    return full_text;
+}
+QString QuUIHost::getPort(){
+    QString full_text=text_box_ip->getText();
+    if(!full_text.contains(":")){
+        QString ip= full_text;
+        while (!ip.startsWith(":")) {
+            ip.remove(1);
+        }
+        ip.remove(1);
+        return ip;
+    }
+    return "26676";
 }
 
 void QuUIHost::init()

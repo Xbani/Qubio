@@ -12,7 +12,7 @@
 
 
 
-class quUIWaitingRoom : public QuUI
+class QuUIWaitingRoom : public QuUI
 {
     Q_OBJECT
 private:
@@ -23,8 +23,8 @@ private:
     bool is_host;
 
 public:
-    quUIWaitingRoom();
-    quUIWaitingRoom(qreal x, qreal y, qreal width, qreal height, bool is_host, QObject * parent = nullptr);
+    QuUIWaitingRoom();
+    QuUIWaitingRoom(qreal x, qreal y, qreal width, qreal height, bool is_host, QObject * parent = nullptr);
 
     void toGame();
     void init();

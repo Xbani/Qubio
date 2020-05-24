@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include <rooms/ui/quuihost.h>
+
 QuButtonGoHost::QuButtonGoHost():QuButton(12,13)
 {
 
@@ -9,5 +11,6 @@ QuButtonGoHost::QuButtonGoHost():QuButton(12,13)
 
 void QuButtonGoHost::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "GoHost Clicked"; //TODO
+    QuUIHost *uiHost=dynamic_cast<QuUIHost *>(scene());
+    uiHost->toUIWaitingRoom();
 }

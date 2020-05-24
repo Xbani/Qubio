@@ -7,6 +7,10 @@
 #include <QFontDatabase>
 #include <QDebug>
 
+#include <network/client/quclient.h>
+
+#include <rooms/ui/quuiwaitingroom.h>
+
 QuGameEngine::QuGameEngine()
 {
     create();
@@ -37,12 +41,39 @@ void QuGameEngine::toUIJoin()
     view->setScene(uiJoin);
 }
 
+void QuGameEngine::fromUIJoinToWaitingRoom()
+{
+    quClient= new QuClient(getIpJoin(),getPortJoin(),this,this);
+    quClient->start();
+    view->setScene(uiWaitingRoomJoin);
+
+}
+
+void QuGameEngine::fromUIHostToWaitingRoom()
+{
+    quClient= new QuClient(getIpJoin(),getPortJoin(),this,this);
+    quClient->start();
+    view->setScene(uiWaitingRoomJoin);
+}
+
+QHostAddress QuGameEngine::getIpJoin()
+{
+    return QHostAddress(uiJoin->getIp());
+}
+
+int QuGameEngine::getPortJoin()
+{
+    return uiJoin->getPort().toInt();
+}
+
 void QuGameEngine::create()
 {
     uiMainMenu = new QuUIMainMenu(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
     uiMultiplayer = new QuUIMultiplayer(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
     uiHost = new QuUIHost(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
     uiJoin = new QuUIJoin(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
+    uiWaitingRoomHost = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,true,this);
+    uiWaitingRoomJoin = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,false,this);
     view = new QGraphicsView();
     view->setScene(uiMainMenu);
     view->show();

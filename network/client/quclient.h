@@ -39,7 +39,7 @@ private:
     int lastIdMessageReceive;
 
 public:
-    explicit QuClient(QHostAddress &ipClient, int &portClient,
+    explicit QuClient(QHostAddress ipClient, int portClient,
                       QuGameEngine *quGameEngine, QObject *parent = nullptr);
     ~QuClient();
 
@@ -48,7 +48,7 @@ public:
      * @param ipServer the ip of server
      * @param portServer port of connetction to the server
      */
-    void connectToServer(QHostAddress &ipServer, int &portServer);
+    void connectToServer(QHostAddress ipServer, int portServer);
     /**
      * @brief receiveEntities receive the entities from the server
      * @param jsonEntities the json that containe the entities

@@ -7,23 +7,23 @@
 #include <QJsonValue>
 
 
-quUIWaitingRoom::quUIWaitingRoom()
+QuUIWaitingRoom::QuUIWaitingRoom()
 {
     init();
 }
 
-quUIWaitingRoom::quUIWaitingRoom(qreal x, qreal y, qreal width, qreal height, bool is_host, QObject *parent):QuUI(x,y,width,height,parent)
+QuUIWaitingRoom::QuUIWaitingRoom(qreal x, qreal y, qreal width, qreal height, bool is_host, QObject *parent):QuUI(x,y,width,height,parent)
 {
     this->is_host=is_host;
     init();
 }
 
-void quUIWaitingRoom::toGame()
+void QuUIWaitingRoom::toGame()
 {
     qDebug() << "toGame !";
 }
 
-void quUIWaitingRoom::init()
+void QuUIWaitingRoom::init()
 {
     button_close= new QuButtonClose();
 
@@ -34,17 +34,17 @@ void quUIWaitingRoom::init()
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 
-    connect(this,&quUIWaitingRoom::newPlayerList,this,&quUIWaitingRoom::updatePlayerInfo);
+    connect(this,&QuUIWaitingRoom::newPlayerList,this,&QuUIWaitingRoom::updatePlayerInfo);
 }
 
-void quUIWaitingRoom::setPlayersJSON(QJsonArray *players_json)
+void QuUIWaitingRoom::setPlayersJSON(QJsonArray *players_json)
 {
     this->players_json=players_json;
     emit newPlayerList();
 }
 
 
-void quUIWaitingRoom::updatePlayerInfo()
+void QuUIWaitingRoom::updatePlayerInfo()
 {
     player_info_map.clear();
     int i;
@@ -56,7 +56,7 @@ void quUIWaitingRoom::updatePlayerInfo()
 
 }
 
-void quUIWaitingRoom::back()
+void QuUIWaitingRoom::back()
 {
     if(is_host){
         if(parent()!=nullptr){

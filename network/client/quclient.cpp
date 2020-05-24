@@ -11,7 +11,7 @@
 #include "objects/quentity.h"
 
 
-QuClient::QuClient(QHostAddress &ipClient, int &portClient,
+QuClient::QuClient(QHostAddress ipClient, int portClient,
                    QuGameEngine *quGameEngine, QObject *parent): QThread(parent)
 {
     serverDatagram = new QNetworkDatagram();
@@ -32,7 +32,7 @@ QuClient::~QuClient()
     delete(serverDatagram);
 }
 
-void QuClient::connectToServer(QHostAddress &ipServer, int &portServer)
+void QuClient::connectToServer(QHostAddress ipServer, int portServer)
 {
     this->ipServer = ipServer;
     this->portServer = portServer;
