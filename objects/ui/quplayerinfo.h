@@ -20,13 +20,13 @@ public:
 
     // QGraphicsItem interface
 public:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     // QuObject interface
 public:
-    QJsonObject toJSON();
-    void fromJSON(QJsonObject qJsonObject);
+    QJsonObject toJSON() override;
+    void fromJSON(QJsonObject &qJsonObject) override;
 };
 
 #endif // QUPLAYERINFO_H

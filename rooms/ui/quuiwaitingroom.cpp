@@ -2,6 +2,9 @@
 
 #include <qugameengine.h>
 #include <QDebug>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
 
 
 quUIWaitingRoom::quUIWaitingRoom()
@@ -30,11 +33,14 @@ void quUIWaitingRoom::init()
     addItem(button_close);
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));
+
+    connect(this,&quUIWaitingRoom::newPlayerList,this,&quUIWaitingRoom::updatePlayerInfo);
 }
 
 void quUIWaitingRoom::setPlayersJSON(QJsonArray *players_json)
 {
     this->players_json=players_json;
+    emit newPlayerList();
 }
 
 
@@ -43,9 +49,9 @@ void quUIWaitingRoom::updatePlayerInfo()
     player_info_map.clear();
     int i;
     for(i=0 ; i < players_json->size() ; ++i){
-        QJsonArray player_json=players_json[i];
-        QuPlayerInfo* player_info= new QuPlayerInfo(player_json[1].toString(),player_json[2].toDouble());
-        player_info_map.insert(player_json[0].toInt(),player_info);
+        QJsonObject playerJson = QJsonValue(players_json[i]).toObject();
+        QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["nickname"].toString(),playerJson["skin"].toDouble());
+        player_info_map.insert(playerJson["playerId"].toInt(),player_info);
     }
 
 }

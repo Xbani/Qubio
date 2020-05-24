@@ -14,6 +14,7 @@
 
 class quUIWaitingRoom : public QuUI
 {
+    Q_OBJECT
 private:
     QJsonArray * players_json;
     QMap<int,QuPlayerInfo *> player_info_map;
@@ -33,6 +34,9 @@ public:
     // QuUI interface
 public:
     void back();
+
+signals:
+    void newPlayerList();
 };
 
 #endif // QUUIWAITINGROOM_H
