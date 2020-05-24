@@ -22,7 +22,7 @@ QJsonObject QuSpawnBlock::toJSON()
     return QJsonObject(); //TODO
 }
 
-void QuSpawnBlock::fromJSON(QJsonObject qJsonObject)
+void QuSpawnBlock::fromJSON(QJsonObject &qJsonObject)
 {
     //TODO
 }

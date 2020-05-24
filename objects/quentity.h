@@ -26,8 +26,14 @@ public:
     virtual int getClassId()    = 0;
     int getInstanceId();
 
-    QVector2D getAcceleration();
-    void setAcceleration(QVector2D);
+    inline QVector2D getPosition() const {return position;};
+    inline void setPosition(QVector2D position ) {this->position = position;};
+
+    inline QVector2D getSpeed() const {return speed;};
+    inline void setSpeed(QVector2D speed ) {this->speed = speed;};
+
+    inline QVector2D getAcceleration() const {return acceleration;};
+    inline void setAcceleration(QVector2D acceleration ) {this->acceleration = acceleration;};
 
 public:
     static const int PLAYABLE_CHARACTER_ID=1;

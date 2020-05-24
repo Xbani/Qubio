@@ -21,9 +21,11 @@ public:
 
     // QGraphicsItem interface
 public:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+    QJsonObject toJSON() override;
+    void fromJSON(QJsonObject &qJsonObject) override;
 
 private:
     static const int STATIC_RIGHT =  1;
