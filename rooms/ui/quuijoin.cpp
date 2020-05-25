@@ -42,7 +42,7 @@ QString QuUIJoin::getIp()
 }
 QString QuUIJoin::getPort(){
     QString full_text=text_box_ip->getText();
-    if(!full_text.contains(":")){
+    if(full_text.contains(":")){
         QString ip= full_text;
         while (!ip.startsWith(":")) {
             ip.remove(1);

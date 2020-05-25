@@ -20,7 +20,7 @@ QuClient::QuClient(QHostAddress ipClient, int portClient,
     this->quGameEngine = quGameEngine;
     lastIdMessageSend = 0;
     lastIdMessageReceive = 0;
-    quSocketClient = new QuSocketClient(this,this);
+    quSocketClient = new QuSocketClient(this, this);
 }
 
 void QuClient::run(){

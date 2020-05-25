@@ -43,7 +43,7 @@ void QuGameEngine::toUIJoin()
 
 void QuGameEngine::fromUIJoinToWaitingRoom()
 {
-    quClient= new QuClient(getIpJoin(),getPortJoin(),this,this);
+    quClient= new QuClient(getIpJoin(),getPortJoin(),this);
     quClient->start();
     view->setScene(uiWaitingRoomJoin);
 
@@ -51,7 +51,7 @@ void QuGameEngine::fromUIJoinToWaitingRoom()
 
 void QuGameEngine::fromUIHostToWaitingRoom()
 {
-    quClient= new QuClient(getIpJoin(),getPortJoin(),this,this);
+    quClient= new QuClient(getIpJoin(),getPortJoin(),this);
     quClient->start();
     view->setScene(uiWaitingRoomJoin);
 }
