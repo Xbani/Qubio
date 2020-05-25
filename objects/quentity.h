@@ -14,10 +14,11 @@ class QuEntity : public QuObject
 {
 private:
     int instance_id;
-    bool mutex;
-    QVector2D position;
+    QPointF previousPosition;
     QVector2D speed;
     QVector2D acceleration;
+    bool previouslyOnGround;
+    bool mutex;
 
 public:
     QuEntity();
@@ -26,14 +27,23 @@ public:
     virtual int getClassId()    = 0;
     int getInstanceId();
 
-    inline QVector2D getPosition() const {return position;};
-    inline void setPosition(QVector2D position ) {this->position = position;};
+    inline bool getPreviouslyOnGround() const {return previouslyOnGround;}
+    inline void setPreviouslyOnGround(bool value) {previouslyOnGround = value;}
 
-    inline QVector2D getSpeed() const {return speed;};
-    inline void setSpeed(QVector2D speed ) {this->speed = speed;};
+    inline QPointF getPreviousPosition() const {return previousPosition;}
+    inline void setPreviousPosition(QPointF previousPosition) {this->previousPosition = previousPosition;}
+    inline void setPreviousPositionX(float value) {previousPosition.setX(value);}
+    inline void setPreviousPositionY(float value) {previousPosition.setY(value);}
 
-    inline QVector2D getAcceleration() const {return acceleration;};
-    inline void setAcceleration(QVector2D acceleration ) {this->acceleration = acceleration;};
+    inline QVector2D getSpeed() const {return speed;}
+    inline void setSpeed(QVector2D speed) {this->speed = speed;}
+    inline void setSpeedX(float value) {speed.setX(value);}
+    inline void setSpeedY(float value) {speed.setY(value);}
+
+    inline  QVector2D getAcceleration() const {return acceleration;}
+    inline void setAcceleration(QVector2D acceleration) {this->acceleration = acceleration;}
+    inline void setAccelerationX(float value) {acceleration.setX(value);}
+    inline void setAccelerationY(float value) {acceleration.setY(value);}
 
 public:
     static const int PLAYABLE_CHARACTER_ID=1;

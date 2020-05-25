@@ -23,6 +23,8 @@ public:
 public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    QPainterPath shape() const override;
+    void advance(int step) override;
 
     QJsonObject toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;

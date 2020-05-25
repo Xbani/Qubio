@@ -20,5 +20,6 @@
         <file>resources/sprites/ui/buttons/button13.png</file>
         <file>resources/sprites/ui/playerinfo.png</file>
         <file>resources/sprites/ui/buttons/button14.png</file>
+        <file>resources/sprites/character/perso.png</file>
     </qresource>
 </RCC>

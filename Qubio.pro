@@ -42,6 +42,7 @@ SOURCES += \
     objects/ui/buttons/qubuttonmulti.cpp \
     objects/ui/quplayerinfo.cpp \
     objects/ui/qutextbox.cpp \
+    physicsconst.cpp \
     qugameengine.cpp \
     rooms/qugame.cpp \
     rooms/ui/quuihost.cpp \
@@ -79,6 +80,7 @@ HEADERS += \
     objects/ui/buttons/qubuttonmulti.h \
     objects/ui/quplayerinfo.h \
     objects/ui/qutextbox.h \
+    physicsconst.h \
     qugameengine.h \
     rooms/qugame.h \
     rooms/ui/quuihost.h \
