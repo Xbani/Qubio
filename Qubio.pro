@@ -44,6 +44,7 @@ SOURCES += \
     objects/ui/qutextbox.cpp \
     qugameengine.cpp \
     rooms/qugame.cpp \
+    rooms/qumapbuilder.cpp \
     rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
     rooms/ui/quuijoin.cpp \
@@ -81,6 +82,7 @@ HEADERS += \
     objects/ui/qutextbox.h \
     qugameengine.h \
     rooms/qugame.h \
+    rooms/qumapbuilder.h \
     rooms/ui/quuihost.h \
     rooms/quui.h \
     rooms/ui/quuijoin.h \
