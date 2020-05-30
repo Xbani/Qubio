@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/sprites/blocks/block0.png</file>
-        <file>resources/sprites/blocks/block1.png</file>
         <file>resources/sprites/ui/buttons/button0.png</file>
         <file>resources/sprites/ui/buttons/button1.png</file>
         <file>resources/sprites/ui/buttons/button2.png</file>
@@ -20,5 +18,10 @@
         <file>resources/sprites/ui/buttons/button13.png</file>
         <file>resources/sprites/ui/playerinfo.png</file>
         <file>resources/sprites/ui/buttons/button14.png</file>
+        <file>resources/sprites/blocks/bridge.png</file>
+        <file>resources/sprites/blocks/cloud.png</file>
+        <file>resources/sprites/blocks/error.png</file>
+        <file>resources/sprites/blocks/stairs.png</file>
+        <file>resources/sprites/blocks/wall.png</file>
     </qresource>
 </RCC>
