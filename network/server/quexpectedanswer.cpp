@@ -1,6 +1,7 @@
 #include "quexpectedanswer.h"
 
-QuExpectedAnswer::QuExpectedAnswer(QObject *parent) : QObject(parent)
+QuExpectedAnswer::QuExpectedAnswer(int messageSentId, MessageType answerType, QObject *parent) : QObject(parent)
 {
-
+    this->messageSentId = messageSentId;
+    this->answerType = answerType;
 }

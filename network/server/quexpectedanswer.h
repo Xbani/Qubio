@@ -15,10 +15,6 @@ public:
     inline MessageType getAnswerType() const { return this->answerType; }
 private:
     /**
-     * @brief playerId
-     */
-    int playerId;
-    /**
      * @brief messageSentId is the id of the message sent by the server
      */
     int messageSentId;

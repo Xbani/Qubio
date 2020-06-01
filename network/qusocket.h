@@ -9,10 +9,12 @@ class QuSocket : public QObject
     Q_OBJECT
 
 public:
-    explicit QuSocket(QObject *parent = nullptr);
-    void send(QNetworkDatagram datagram);
+    explicit QuSocket(QObject* parent = nullptr);
+    void send(QNetworkDatagram* datagram);
     void init(QHostAddress ip, int port);
     virtual void receive() = 0;
+
+    inline QUdpSocket* getUdpSocket() const { return udpSocket; };
 
 private:
     QUdpSocket *udpSocket;

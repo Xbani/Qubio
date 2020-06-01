@@ -3,7 +3,9 @@
 
 QuInfoClient::QuInfoClient(QObject *parent) : QObject(parent)
 {
-
+    mapReception = false;
+    playersListReception = false;
+    isHost = false;
 }
 
 void QuInfoClient::addExpectedAnswer(int messageSentId, MessageType answerType)

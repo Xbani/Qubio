@@ -34,8 +34,16 @@ public:
     inline void setIp(const QHostAddress &value) { this->ip = value; };
 
     inline int getPort() const { return this->port; };
-    inline void setPort(int value) { this->port = value; }
+    inline void setPort(int value) { this->port = value; };
 
+    inline bool getMapReception() const { return this->mapReception; };
+    inline void setMapReception(bool boolValue)  { this->mapReception = boolValue; };
+
+    inline bool getPlayersListReception() const { return this->playersListReception; };
+    inline void setPlayersListReception(bool boolValue) { this->playersListReception = boolValue; };
+
+    inline bool getIsHost() const { return this->isHost; };
+    inline void setIsHost(bool boolValue) { this->isHost = boolValue; };
     /**
      * @brief addExpectedAnswer adds an expected answer to a message sent
      * in the map of expected answers
@@ -57,6 +65,15 @@ private:
     int skin;
     QHostAddress ip;
     int port;
+    /**
+     * @brief mapReception is true if the map is received by the client
+     */
+    bool mapReception;
+    /**
+     * @brief playersListReception is true if the players list is received by the client
+     */
+    bool playersListReception;
+    bool isHost;
     /**
      * @brief expectedAnswersMap a map.
      * Key : the message sent id.

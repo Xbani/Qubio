@@ -3,6 +3,7 @@
 
 #include <QJsonObject>
 #include <QMap>
+#include <QHostAddress>
 
 class QuSocketServer;
 class QuInfoClient;
@@ -27,35 +28,39 @@ public:
      * @brief sendEntities sends the entities of the game
      * to everyone
      */
-    void sendEntities();
+    void sendEntitiesToAll();
     /**
      * @brief newPlayerConnect handles the connection of a new player
      */
-    void newPlayerConnect(QJsonObject);
+    void newPlayerConnect(QJsonObject* jsonConnection, QHostAddress ip, int port);
     /**
      * @brief sendMap sends the map to a player
      */
-    void sendMap(); //param to add
+    void sendMap(QuInfoClient* quInfoClient); //param TODO
+    /**
+     * @brief sendMapToAll sends the new map to all the clients
+     */
+    void sendMapToAll();
     /**
      * @brief sendPlayersList sends the players list to everyone
      */
-    void sendPlayersList(); //param to add
+    void sendPlayersListToAll(); //param to add
     /**
      * @brief aPlayerWon
      */
-    void aPlayerWon(QJsonObject);
+    void aPlayerWon(QJsonObject*);
     /**
-     * @brief answer handles the answers of the clients
+     * @brief handleClientAnswer handles the answers of the clients
      */
-    void answer(QJsonObject);
+    void handleClientAnswer(QJsonObject*);
     /**
      * @brief receiveNewMap receives the map from the client host
      */
-    void receiveNewMap(QJsonObject*);
+    void receiveNewMap(QJsonObject* jsonMap);
     /**
      * @brief receiveEntities receives the entities from the clients
      */
-    void receiveEntities(QJsonObject*);
+    void receiveEntities(QJsonObject* jsonEntities);
 private:
     /**
      * @brief jsonEntities a map
@@ -84,6 +89,7 @@ private:
      * Value : client information.
      */
     QMap<int, QuInfoClient*> clientsInfoMap;
+    int lastMessageIdSent;
+    int lastPlayerIdGiven;
 };
-
 #endif // QUSERVER_H

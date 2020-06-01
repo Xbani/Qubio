@@ -3,6 +3,7 @@
 #include "network/qusocket.h"
 #include <QNetworkDatagram>
 #include <QString>
+class QuServer;
 
 class QuSocketServer : public QuSocket
 {
@@ -21,12 +22,16 @@ public:
      * @brief redirects the message to a function
      */
     void receive() override;
+    /**
+     * @brief addDatagram adds a datagram to the list "datagramList"
+     */
+    void addDatagram(QNetworkDatagram* datagram);
 private:
     /**
      * @brief datagramList the list of datagrams of all clients
      */
     QVector<QNetworkDatagram*> datagramList;
-    //QuServer *quServer; //à activer après avoir fait le QuServer + à ajouter au construc
+    QuServer *quServer; // à ajouter au construc
 };
 
 #endif // QUSOCKETSERVER_H
