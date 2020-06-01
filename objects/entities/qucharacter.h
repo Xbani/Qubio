@@ -21,6 +21,10 @@ public:
 
     // QGraphicsItem interface
 public:
+
+    inline int getAnimationState() const {return animation_state;}
+    inline void setAnimationState(int animation_state) {this->animation_state = animation_state;}
+
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     QPainterPath shape() const override;
@@ -29,7 +33,7 @@ public:
     QJsonObject toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
 
-private:
+public:
     static const int STATIC_RIGHT =  1;
     static const int  STATIC_LEFT = -1;
     static const int   MOVE_RIGHT =  2;

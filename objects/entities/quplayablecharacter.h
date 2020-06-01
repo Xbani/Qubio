@@ -22,6 +22,7 @@ public:
     // QuEntity interface
 public:
     int getClassId() override;
+    void advance(int step) override;
 };
 
 #endif // QUPLAYABLECHARACTER_H

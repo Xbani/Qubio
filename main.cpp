@@ -5,6 +5,7 @@
 #include "objects\qublock.h"
 #include "objects\\blocks\qusolidblock.h"
 #include "objects\\entities\quplayablecharacter.h"
+#include "objects\\entities\quunplayablecharacter.h"
 
 #include <QApplication>
 #include <QtWidgets>
@@ -22,6 +23,10 @@ int main(int argc, char *argv[])
     QuPlayableCharacter* mainCharacter = new QuPlayableCharacter();
     mainCharacter->setPos(300, 200);
     scene.addItem(mainCharacter);
+
+    QuCharacter* character = new QuUnplayableCharacter();
+    character->setPos(700, 200);
+    scene.addItem(character);
 
     QuSolidBlock* block1 = new QuSolidBlock(1);
     block1->setPos(300,600);
