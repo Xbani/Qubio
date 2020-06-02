@@ -101,7 +101,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
-
-DISTFILES += \
-    resources/sprites/ui/buttons/button15.png \
-    resources/sprites/ui/buttons/button16.png
