@@ -23,7 +23,8 @@ void QuGame::init()
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 
     // create scene objects (pointers), object-> setPos(x,y), addItem(object);
-    QuPlayableCharacter * mainCharacter = new QuPlayableCharacter();
+    QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(0);
+    setFocusItem(mainCharacter);
     mainCharacter->setPos(300, 200);
     addItem(mainCharacter);
 

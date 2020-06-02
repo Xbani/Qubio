@@ -10,8 +10,13 @@
  */
 class QuPlayableCharacter : public QuCharacter
 {
+
+private:
+    bool key_up;
+    bool key_right;
+    bool key_down;
+    bool key_left;
 public:
-    QuPlayableCharacter();
     QuPlayableCharacter(int instance_id);
     void moveRight();
     void moveLeft();
@@ -25,6 +30,11 @@ public:
 public:
     int getClassId() override;
     void advance(int step) override;
+
+    // QGraphicsItem interface
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 };
 
 #endif // QUPLAYABLECHARACTER_H

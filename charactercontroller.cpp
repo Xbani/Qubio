@@ -2,11 +2,6 @@
 
 #include <QDebug>
 
-CharacterController::CharacterController()
-{
-
-}
-
 void CharacterController::keyPressEvent(QKeyEvent *event)
 {
     qDebug() << "LEFT";

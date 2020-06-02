@@ -1,7 +1,6 @@
 #include "quplayablecharacter.h"
 #include "quphysicsconst.h"
-#include "objects\\blocks\qusolidblock.h"
-#include "windows.h"
+#include "objects/blocks/qusolidblock.h"
 
 #include "qucharacter.h"
 #include <QDebug>
@@ -13,15 +12,17 @@
 #include <QGraphicsScene>
 #include <iostream>
 #include <QtMath>
+#include <QKeyEvent>
 
-QuPlayableCharacter::QuPlayableCharacter()
-{
-
-}
 
 QuPlayableCharacter::QuPlayableCharacter(int instance_id):QuCharacter(instance_id)
 {
-
+    setFlags(ItemIsFocusable);
+    setFocus();
+    key_up=0;
+    key_right=0;
+    key_down=0;
+    key_left=0;
 }
 
 void QuPlayableCharacter::moveRight()
@@ -53,8 +54,8 @@ void QuPlayableCharacter::advance(int step)
      * ----------------MOVEMENTS BUTTON EVENTS----------------------
      * #############################################################
      */
-
-    if(GetKeyState(VK_LEFT) & 0x8000 && !(GetKeyState(VK_RIGHT) & 0x8000))
+    setFocus();
+    if(key_left && !key_right)
     {
         if (getAnimationState() == MOVE_RIGHT or getAnimationState() == JUMP_RIGHT)
         {
@@ -66,7 +67,7 @@ void QuPlayableCharacter::advance(int step)
         if (getPreviouslyOnGround()) setAnimationState(MOVE_LEFT);
     }
 
-    if(GetKeyState(VK_RIGHT) & 0x8000 && !(GetKeyState(VK_LEFT) & 0x8000))
+    if(key_right && !key_left)
     {
         if (getAnimationState() == MOVE_LEFT or getAnimationState() == JUMP_LEFT)
         {
@@ -78,23 +79,23 @@ void QuPlayableCharacter::advance(int step)
         if (getPreviouslyOnGround()) setAnimationState(MOVE_RIGHT);
     }
 
-    if(GetKeyState(VK_UP) & 0x8000 && getPreviouslyOnGround())
+    if(key_up && getPreviouslyOnGround())
     {
         setAccelerationY(getAcceleration().y() - QuPhysicsConst::ACC_JUMP);
         getAnimationState() == MOVE_RIGHT or getAnimationState() == STATIC_RIGHT ? setAnimationState(JUMP_RIGHT) : setAnimationState(JUMP_LEFT);
     }
 
-    if(GetKeyState(VK_LEFT) & 0x8000 && GetKeyState(VK_RIGHT) & 0x8000)
+    if(key_left && key_right)
     {
         setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         setAcceleration({0,QuPhysicsConst::G_FORCE});
         getAnimationState() == MOVE_RIGHT and getPreviouslyOnGround() ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
     }
 
-    if (!(GetKeyState(VK_LEFT) & 0x8000)
-            and !(GetKeyState(VK_RIGHT) & 0x8000)
-            and !(GetKeyState(VK_UP) & 0x8000  && getPreviouslyOnGround())
-            and !(GetKeyState(VK_LEFT) & 0x8000 && GetKeyState(VK_RIGHT) & 0x8000))
+    if (!key_left
+            and !key_right
+            and !(key_up && getPreviouslyOnGround())
+            and !(key_left && key_right))
     {
         setAcceleration({0,QuPhysicsConst::G_FORCE});
         setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
@@ -253,4 +254,60 @@ void QuPlayableCharacter::advance(int step)
             qDebug() << "collisionBottomRight";
         }
     }
+}
+
+void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)
+{
+    // Call functions on your character here.
+       switch (event->key())
+       {
+       case Qt::Key_Right:
+           //playableCharacter.moveLeft(); // For example
+           qDebug() << "Right";
+           key_right=true;
+           break;
+       case Qt::Key_Left:
+           //playableCharacter.moveRight(); // For example
+           qDebug() << "Left";
+           key_left=true;
+           break;
+       case Qt::Key_Up:
+           //playableCharacter.moveRight(); // For example
+           qDebug() << "Up";
+           key_up=true;
+           break;
+       case Qt::Key_Down:
+           //playableCharacter.moveRight(); // For example
+           qDebug() << "Down";
+           key_down=true;
+           break;
+       }
+}
+
+void QuPlayableCharacter::keyReleaseEvent(QKeyEvent *event)
+{
+    // Call functions on your character here.
+       switch (event->key())
+       {
+       case Qt::Key_Right:
+           //playableCharacter.moveLeft(); // For example
+           qDebug() << "RightR";
+           key_right=false;
+           break;
+       case Qt::Key_Left:
+           //playableCharacter.moveRight(); // For example
+           qDebug() << "LeftR";
+           key_left=false;
+           break;
+       case Qt::Key_Up:
+           //playableCharacter.moveRight(); // For example
+           qDebug() << "UpR";
+           key_up=false;
+           break;
+       case Qt::Key_Down:
+           //playableCharacter.moveRight(); // For example
+           qDebug() << "DownR";
+           key_down=false;
+           break;
+       }
 }

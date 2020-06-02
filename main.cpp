@@ -1,6 +1,6 @@
-#include "mainwindow.h"
 #include "qugameengine.h"
 #include <QApplication>
+
 
 int main(int argc, char *argv[])
 {

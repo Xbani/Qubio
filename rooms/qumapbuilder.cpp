@@ -8,8 +8,8 @@
 #include <QPushButton>
 
 #include <objects/blocks/qusolidblock.h>
-#include <network/MessageType.h>
-#include <objects/EnumBlock/qulistblock.h>
+#include <network/messagetype.h>
+#include <objects/enumblock/qulistblock.h>
 #include <QSignalMapper>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>

@@ -5,7 +5,7 @@
 #include <QList>
 #include <QJsonValue>
 #include "network/client/qusocketclient.h"
-#include "network/MessageType.h"
+#include "network/messagetype.h"
 #include "qugameengine.h"
 #include "rooms/qugame.h"
 #include "objects/quentity.h"
