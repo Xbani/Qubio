@@ -21,6 +21,14 @@ void QuUIMainMenu::toUIMultiplayer()
         game_engine->toUIMultiplayer();
     }
 }
+
+void QuUIMainMenu::toUISolo()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        game_engine->toQuGame();
+    }
+}
 void QuUIMainMenu::back()
 {
     if(parent()!=nullptr){
@@ -36,6 +44,8 @@ void QuUIMainMenu::init()
     button_title= new QuButtonTitle();
     button_close= new QuButtonClose();
     button_perso_color= new QuButtonPersoColor();
+    button_map_builder= new QuButtonMapBuilder();
+
     text_box= new QuTextBox();
 
     button_solo->setX(width()/3);
@@ -50,6 +60,9 @@ void QuUIMainMenu::init()
     button_close->setX(7*width()/8);
     button_close->setY(height()/8);
 
+    button_map_builder->setX(7*width()/8);
+    button_map_builder->setY(7*height()/8);
+
     text_box->setX(width()/2);
     text_box->setY(4*height()/5);
 
@@ -61,7 +74,10 @@ void QuUIMainMenu::init()
     addItem(button_title);
     addItem(button_close);
     addItem(button_perso_color);
+    addItem(button_map_builder);
+
     addItem(text_box);
+
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 }

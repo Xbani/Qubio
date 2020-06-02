@@ -11,6 +11,8 @@
 
 #include <rooms/ui/quuiwaitingroom.h>
 
+#include <rooms/qugame.h>
+
 QuGameEngine::QuGameEngine()
 {
     create();
@@ -39,6 +41,12 @@ void QuGameEngine::toUIHost()
 void QuGameEngine::toUIJoin()
 {
     view->setScene(uiJoin);
+}
+
+void QuGameEngine::toQuGame()
+{
+    quGame = new QuGame();
+    view->setScene(quGame);
 }
 
 void QuGameEngine::fromUIJoinToWaitingRoom()

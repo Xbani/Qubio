@@ -35,6 +35,7 @@ SOURCES += \
     objects/ui/buttons/qubuttongojoin.cpp \
     objects/ui/buttons/qubuttonhost.cpp \
     objects/ui/buttons/qubuttonjoin.cpp \
+    objects/ui/buttons/qubuttonmapbuilder.cpp \
     objects/ui/buttons/qubuttonpersocolor.cpp \
     objects/ui/buttons/qubuttonsolo.cpp \
     objects/ui/buttons/qubuttontitle.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     objects/ui/buttons/qubuttongojoin.h \
     objects/ui/buttons/qubuttonhost.h \
     objects/ui/buttons/qubuttonjoin.h \
+    objects/ui/buttons/qubuttonmapbuilder.h \
     objects/ui/buttons/qubuttonpersocolor.h \
     objects/ui/buttons/qubuttonsolo.h \
     objects/ui/buttons/qubuttontitle.h \
@@ -99,3 +101,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    resources/sprites/ui/buttons/button15.png \
+    resources/sprites/ui/buttons/button16.png

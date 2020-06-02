@@ -14,7 +14,11 @@ public:
     QuGame();
     inline QMap<int,QuEntity*> getEntities() const {return entities;};
     void newMapFromJson(QJsonObject* JsonMap);
+    void init();
 
+    // QGraphicsScene interface
+protected:
+    void drawBackground(QPainter *painter, const QRectF &rect);
 };
 
 #endif // QUGAME_H

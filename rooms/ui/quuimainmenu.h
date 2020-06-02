@@ -4,6 +4,7 @@
 #include <rooms/quui.h>
 
 #include <objects/ui/buttons/qubuttonclose.h>
+#include <objects/ui/buttons/qubuttonmapbuilder.h>
 #include <objects/ui/buttons/qubuttonmulti.h>
 #include <objects/ui/buttons/qubuttonpersocolor.h>
 #include <objects/ui/buttons/qubuttonsolo.h>
@@ -24,6 +25,7 @@ private:
     QuButtonTitle * button_title;
     QuButtonClose * button_close;
     QuButtonPersoColor * button_perso_color;
+    QuButtonMapBuilder * button_map_builder;
 
     QuTextBox * text_box;
 public:
@@ -31,6 +33,7 @@ public:
     QuUIMainMenu(qreal x, qreal y, qreal width, qreal height, QObject * parent = nullptr);
 
     void toUIMultiplayer();
+    void toUISolo();
     void back() override;
 
     void init();

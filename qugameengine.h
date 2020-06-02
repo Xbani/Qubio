@@ -47,6 +47,7 @@ public:
     void toUIMainMenu();
     void toUIHost();
     void toUIJoin();
+    void toQuGame();
     void fromUIJoinToWaitingRoom();
     void fromUIHostToWaitingRoom();
 
