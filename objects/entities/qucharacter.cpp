@@ -4,7 +4,6 @@
 #include <QBrush>
 #include <QPainter>
 #include <QGuiApplication>
-#include "windows.h"
 #include <QObject>
 #include <QTimer>
 #include <QGraphicsScene>
