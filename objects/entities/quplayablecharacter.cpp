@@ -1,5 +1,6 @@
 #include "quplayablecharacter.h"
-#include "physicsconst.h"
+#include "quphysicsconst.h"
+#include "objects\\blocks\qusolidblock.h"
 #include "windows.h"
 
 #include "qucharacter.h"
@@ -23,9 +24,19 @@ QuPlayableCharacter::QuPlayableCharacter(int instance_id):QuCharacter(instance_i
 
 }
 
-void QuPlayableCharacter::move()
+void QuPlayableCharacter::moveRight()
 {
-    //TODO ( KEYCHECK AND UPDATE ACCELERATION INSTEAD)
+
+}
+
+void QuPlayableCharacter::moveLeft()
+{
+
+}
+
+void QuPlayableCharacter::moveJump()
+{
+
 }
 
 int QuPlayableCharacter::getClassId()
@@ -47,11 +58,11 @@ void QuPlayableCharacter::advance(int step)
     {
         if (getAnimationState() == MOVE_RIGHT or getAnimationState() == JUMP_RIGHT)
         {
-            setAcceleration({0,PhysicsConst::G_FORCE});
-            setSpeedX(getSpeed().x()/PhysicsConst::INERTIA);
+            setAcceleration({0,QuPhysicsConst::G_FORCE});
+            setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         }
-        setAccelerationX(getAcceleration().x() - PhysicsConst::ACC_LATERAL_MOUVEMENT);
-        setAccelerationY(PhysicsConst::G_FORCE);
+        setAccelerationX(getAcceleration().x() - QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
+        setAccelerationY(QuPhysicsConst::G_FORCE);
         if (getPreviouslyOnGround()) setAnimationState(MOVE_LEFT);
     }
 
@@ -59,24 +70,24 @@ void QuPlayableCharacter::advance(int step)
     {
         if (getAnimationState() == MOVE_LEFT or getAnimationState() == JUMP_LEFT)
         {
-            setAcceleration({0,PhysicsConst::G_FORCE});
-            setSpeedX(getSpeed().x()/PhysicsConst::INERTIA);
+            setAcceleration({0,QuPhysicsConst::G_FORCE});
+            setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         }
-        setAccelerationX(getAcceleration().x() + PhysicsConst::ACC_LATERAL_MOUVEMENT);
-        setAccelerationY(PhysicsConst::G_FORCE);
+        setAccelerationX(getAcceleration().x() + QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
+        setAccelerationY(QuPhysicsConst::G_FORCE);
         if (getPreviouslyOnGround()) setAnimationState(MOVE_RIGHT);
     }
 
     if(GetKeyState(VK_UP) & 0x8000 && getPreviouslyOnGround())
     {
-        setAccelerationY(getAcceleration().y() - PhysicsConst::ACC_JUMP);
+        setAccelerationY(getAcceleration().y() - QuPhysicsConst::ACC_JUMP);
         getAnimationState() == MOVE_RIGHT or getAnimationState() == STATIC_RIGHT ? setAnimationState(JUMP_RIGHT) : setAnimationState(JUMP_LEFT);
     }
 
     if(GetKeyState(VK_LEFT) & 0x8000 && GetKeyState(VK_RIGHT) & 0x8000)
     {
-        setSpeedX(getSpeed().x()/PhysicsConst::INERTIA);
-        setAcceleration({0,PhysicsConst::G_FORCE});
+        setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
+        setAcceleration({0,QuPhysicsConst::G_FORCE});
         getAnimationState() == MOVE_RIGHT and getPreviouslyOnGround() ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
     }
 
@@ -85,8 +96,8 @@ void QuPlayableCharacter::advance(int step)
             and !(GetKeyState(VK_UP) & 0x8000  && getPreviouslyOnGround())
             and !(GetKeyState(VK_LEFT) & 0x8000 && GetKeyState(VK_RIGHT) & 0x8000))
     {
-        setAcceleration({0,PhysicsConst::G_FORCE});
-        setSpeedX(getSpeed().x()/PhysicsConst::INERTIA);
+        setAcceleration({0,QuPhysicsConst::G_FORCE});
+        setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         getPreviouslyOnGround() and getAnimationState() == JUMP_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
         getAnimationState() == MOVE_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
     };
@@ -96,6 +107,12 @@ void QuPlayableCharacter::advance(int step)
      * ###################################################################################
      */
 
+
+    QuSolidBlock topCollidingObject;
+    QuSolidBlock bottomCollidingObject;
+    QuSolidBlock leftCollidingObject;
+    QuSolidBlock rightCollidingObject;
+
     QList <QGraphicsItem*> listCollision = scene()->collidingItems(this);
 
     //if there are no collision
@@ -103,15 +120,15 @@ void QuPlayableCharacter::advance(int step)
     {
         //we check if new latteral speed is higher than MAX_VITESSE_LATERAL
         QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
-        if (qAbs(newSpeed.x()) > PhysicsConst::MAX_VITESSE_LATERAL)
+        if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_HORIZONTALE)
         {
-            (newSpeed.x() < 0) ? setSpeedX(-PhysicsConst::MAX_VITESSE_LATERAL) : setSpeedX(PhysicsConst::MAX_VITESSE_LATERAL);
+            (newSpeed.x() < 0) ? setSpeedX(-QuPhysicsConst::MAX_VITESSE_HORIZONTALE) : setSpeedX(QuPhysicsConst::MAX_VITESSE_HORIZONTALE);
         } else {
             setSpeedX(newSpeed.x());
         }
-        if (qAbs(newSpeed.y()) > PhysicsConst::MAX_VITESSE_VERTICAL)
+        if (qAbs(newSpeed.y()) > QuPhysicsConst::MAX_VITESSE_VERTICALE)
         {
-            (newSpeed.y() < 0) ? setSpeedY(-PhysicsConst::MAX_VITESSE_VERTICAL) : setSpeedY(PhysicsConst::MAX_VITESSE_VERTICAL);
+            (newSpeed.y() < 0) ? setSpeedY(-QuPhysicsConst::MAX_VITESSE_VERTICALE) : setSpeedY(QuPhysicsConst::MAX_VITESSE_VERTICALE);
         } else {
             setSpeedY(newSpeed.y());
         }
@@ -122,15 +139,17 @@ void QuPlayableCharacter::advance(int step)
         setPreviouslyOnGround(false);
     }
 
-    //if collision
+    //if collisions
     else
     {
-        //two kind of collision
-        bool collisionLeftOrRight = false;
+        // two kind of collision
         bool collisionTop = false;
         bool collisionBottom = false;
+        bool collisionLeft = false;
+        bool collisionRight = false;
+
         //loop for all object colliding with the character, stop at the end of the list or if the two kind of collision appeared
-        for (int i = 0; i<listCollision.size() and !(collisionLeftOrRight and collisionTop and collisionBottom); i++) {
+        for (int i = 0; i<listCollision.size() and !(collisionTop and collisionBottom and collisionLeft and collisionRight); i++) {
 
             QVector2D centerToCenter = {float(pos().x() - listCollision[i]->pos().x()), float(pos().y() - listCollision[i]->pos().y())};
 
@@ -138,58 +157,100 @@ void QuPlayableCharacter::advance(int step)
             qreal sinAngle = qSin(angleWithAbscisse);
             qreal cosAngle = qCos(angleWithAbscisse);
 
-            //three scenarios
+            // four scenarios
 
-            //collision from the bottom
-            if (sinAngle >= PhysicsConst::APPROX_COS_PI_4)
+            // collision from the top
+            if (sinAngle <= -QuPhysicsConst::APPROX_COS_PI_4)
+            {
+                collisionTop = true;
+                topCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
+            }
+
+            // collision from the bottom
+            if (sinAngle >= QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionBottom = true;
                 setPreviouslyOnGround(true);
+                bottomCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
             }
 
-            //collision from the top
-            if (sinAngle <= -PhysicsConst::APPROX_COS_PI_4)
+            // collision from the left
+            if (cosAngle >= QuPhysicsConst::APPROX_COS_PI_4)
             {
-                collisionTop = true;
+                collisionLeft = true;
+                leftCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
             }
 
-            //collision from the left or the right
-            if (cosAngle <= -PhysicsConst::APPROX_COS_PI_4 or cosAngle >= PhysicsConst::APPROX_COS_PI_4)
+            // collision from the right
+            if (cosAngle <= -QuPhysicsConst::APPROX_COS_PI_4)
             {
-                collisionLeftOrRight = true;
+                collisionRight = true;
+                rightCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
             }
         }
 
         //update speed and position
+
         if (collisionTop or collisionBottom)
         {
             //we check if new latteral speedx is higher than MAX_VITESSE_LATERAL
             QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
-            if (qAbs(newSpeed.x()) > PhysicsConst::MAX_VITESSE_LATERAL)
+            if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_HORIZONTALE)
             {
-                (newSpeed.x() < 0) ? setSpeedX(-PhysicsConst::MAX_VITESSE_LATERAL) : setSpeedX(PhysicsConst::MAX_VITESSE_LATERAL);
+                (newSpeed.x() < 0) ? setSpeedX(-QuPhysicsConst::MAX_VITESSE_HORIZONTALE) : setSpeedX(QuPhysicsConst::MAX_VITESSE_HORIZONTALE);
             } else {
                 setSpeedX(newSpeed.x());
             }
 
-            //update speed, position, previousPosition and previouslyOnGround
+            //update speed, position, previousPosition
             setSpeedX(getSpeed().x()+getAcceleration().x()/60l);
             setSpeedY(0);
-            setPos(x()+getSpeed().x()/60l*64, getPreviousPosition().y());
+
+            //repositionning of the character : bottom of the object if collisionTop, top of the object if collisionBottom
+            setX(x()+getSpeed().x()/60l*64);
+            collisionTop ? setY(topCollidingObject.y() + topCollidingObject.boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject.y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
         }
 
-        else if (collisionLeftOrRight)
+        else if (collisionLeft or collisionRight)
         {
             setSpeedX(0);
             setSpeedY(getSpeed().y()+getAcceleration().y()/60l);
-            setPos(getPreviousPosition().x(), y()+getSpeed().y()/60l*64);
-        }
 
-        else //(collisionLeftOrRight and collisionTopOrBottom)
+            //repositionning of the character : left of the object if collisionRight, right of the object if collisionLeft
+            setY(y()+getSpeed().y()/60l*64);
+            collisionLeft ? setX(leftCollidingObject.x() + leftCollidingObject.boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject.x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
+            qDebug() << "collisionLeftRight";
+        }
+        else if (collisionTop and collisionLeft)
         {
             setSpeedX(0);
             setSpeedY(0);
-            setPos(getPreviousPosition());
+            setPos(leftCollidingObject.x() + leftCollidingObject.boundingRect().width() + QuPhysicsConst::QUANTUM, topCollidingObject.y() + topCollidingObject.boundingRect().height() + QuPhysicsConst::QUANTUM);
+            qDebug() << "collisionTopLeft";
+        }
+
+        else if (collisionTop and collisionRight)
+        {
+            setSpeedX(0);
+            setSpeedY(0);
+            setPos(rightCollidingObject.x() - boundingRect().width() - QuPhysicsConst::QUANTUM, topCollidingObject.y() + topCollidingObject.boundingRect().height() + QuPhysicsConst::QUANTUM);
+            qDebug() << "collisionTopRight";
+        }
+
+        else if (collisionBottom and collisionLeft)
+        {
+            setSpeedX(0);
+            setSpeedY(0);
+            setPos(leftCollidingObject.x() + leftCollidingObject.boundingRect().width() + QuPhysicsConst::QUANTUM, bottomCollidingObject.y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
+            qDebug() << "collisionBottomLeft";
+        }
+
+        else if (collisionBottom and collisionRight)
+        {
+            setSpeedX(0);
+            setSpeedY(0);
+            setPos(rightCollidingObject.x() - boundingRect().width() - QuPhysicsConst::QUANTUM, bottomCollidingObject.y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
+            qDebug() << "collisionBottomRight";
         }
     }
 }

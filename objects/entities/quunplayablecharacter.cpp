@@ -1,5 +1,5 @@
 #include "quunplayablecharacter.h"
-#include "physicsconst.h"
+#include "quphysicsconst.h"
 #include "windows.h"
 
 #include "qucharacter.h"
@@ -53,15 +53,15 @@ void QuCharacter::advance(int step)
     {
         //we check if new latteral speed is higher than MAX_VITESSE_LATERAL
         QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
-        if (qAbs(newSpeed.x()) > PhysicsConst::MAX_VITESSE_LATERAL)
+        if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_VERTICALE)
         {
-            (newSpeed.x() < 0) ? setSpeedX(-PhysicsConst::MAX_VITESSE_LATERAL) : setSpeedX(PhysicsConst::MAX_VITESSE_LATERAL);
+            (newSpeed.x() < 0) ? setSpeedX(-QuPhysicsConst::MAX_VITESSE_VERTICALE) : setSpeedX(QuPhysicsConst::MAX_VITESSE_VERTICALE);
         } else {
             setSpeedX(newSpeed.x());
         }
-        if (qAbs(newSpeed.y()) > PhysicsConst::MAX_VITESSE_VERTICAL)
+        if (qAbs(newSpeed.y()) > QuPhysicsConst::MAX_VITESSE_VERTICALE)
         {
-            (newSpeed.y() < 0) ? setSpeedY(-PhysicsConst::MAX_VITESSE_VERTICAL) : setSpeedY(PhysicsConst::MAX_VITESSE_VERTICAL);
+            (newSpeed.y() < 0) ? setSpeedY(-QuPhysicsConst::MAX_VITESSE_VERTICALE) : setSpeedY(QuPhysicsConst::MAX_VITESSE_VERTICALE);
         } else {
             setSpeedY(newSpeed.y());
         }
@@ -91,20 +91,20 @@ void QuCharacter::advance(int step)
             //three scenarios
 
             //collision from the bottom
-            if (sinAngle >= PhysicsConst::APPROX_COS_PI_4)
+            if (sinAngle >= QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionBottom = true;
                 setPreviouslyOnGround(true);
             }
 
             //collision from the top
-            if (sinAngle <= -PhysicsConst::APPROX_COS_PI_4)
+            if (sinAngle <= -QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionTop = true;
             }
 
             //collision from the left or the right
-            if (cosAngle <= -PhysicsConst::APPROX_COS_PI_4 or cosAngle >= PhysicsConst::APPROX_COS_PI_4)
+            if (cosAngle <= -QuPhysicsConst::APPROX_COS_PI_4 or cosAngle >= QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionLeftOrRight = true;
             }
@@ -115,9 +115,9 @@ void QuCharacter::advance(int step)
         {
             //we check if new latteral speedx is higher than MAX_VITESSE_LATERAL
             QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
-            if (qAbs(newSpeed.x()) > PhysicsConst::MAX_VITESSE_LATERAL)
+            if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_VERTICALE)
             {
-                (newSpeed.x() < 0) ? setSpeedX(-PhysicsConst::MAX_VITESSE_LATERAL) : setSpeedX(PhysicsConst::MAX_VITESSE_LATERAL);
+                (newSpeed.x() < 0) ? setSpeedX(-QuPhysicsConst::MAX_VITESSE_VERTICALE) : setSpeedX(QuPhysicsConst::MAX_VITESSE_VERTICALE);
             } else {
                 setSpeedX(newSpeed.x());
             }

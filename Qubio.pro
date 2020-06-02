@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    charactercontroller.cpp \
     main.cpp \
     mainwindow.cpp \
     network/client/quclient.cpp \
@@ -42,8 +43,8 @@ SOURCES += \
     objects/ui/buttons/qubuttonmulti.cpp \
     objects/ui/quplayerinfo.cpp \
     objects/ui/qutextbox.cpp \
-    physicsconst.cpp \
     qugameengine.cpp \
+    quphysicsconst.cpp \
     rooms/qugame.cpp \
     rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
@@ -54,6 +55,7 @@ SOURCES += \
     tools/qutoolsprite.cpp
 
 HEADERS += \
+    charactercontroller.h \
     network/client/quclient.h \
     network/client/qusocketclient.h \
     network/messagetype.h \
@@ -80,8 +82,8 @@ HEADERS += \
     objects/ui/buttons/qubuttonmulti.h \
     objects/ui/quplayerinfo.h \
     objects/ui/qutextbox.h \
-    physicsconst.h \
     qugameengine.h \
+    quphysicsconst.h \
     rooms/qugame.h \
     rooms/ui/quuihost.h \
     rooms/quui.h \

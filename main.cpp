@@ -6,6 +6,7 @@
 #include "objects\\blocks\qusolidblock.h"
 #include "objects\\entities\quplayablecharacter.h"
 #include "objects\\entities\quunplayablecharacter.h"
+#include "charactercontroller.h"
 
 #include <QApplication>
 #include <QtWidgets>
@@ -23,10 +24,6 @@ int main(int argc, char *argv[])
     QuPlayableCharacter* mainCharacter = new QuPlayableCharacter();
     mainCharacter->setPos(300, 200);
     scene.addItem(mainCharacter);
-
-    QuCharacter* character = new QuUnplayableCharacter();
-    character->setPos(700, 200);
-    scene.addItem(character);
 
     QuSolidBlock* block1 = new QuSolidBlock(1);
     block1->setPos(300,600);
@@ -119,6 +116,66 @@ int main(int argc, char *argv[])
     QuSolidBlock* block23 = new QuSolidBlock(1);
     block23->setPos(650,400);
     scene.addItem(block23);
+
+    QuSolidBlock* block24 = new QuSolidBlock(1);
+    block24->setPos(1180,600);
+    scene.addItem(block24);
+
+    QuSolidBlock* block25 = new QuSolidBlock(1);
+    block25->setPos(1260,600);
+    scene.addItem(block25);
+
+    QuSolidBlock* block26 = new QuSolidBlock(1);
+    block26->setPos(1340,600);
+    scene.addItem(block26);
+
+    QuSolidBlock* block27 = new QuSolidBlock(1);
+    block27->setPos(1420,600);
+    scene.addItem(block27);
+
+    QuSolidBlock* block28 = new QuSolidBlock(1);
+    block28->setPos(1500,600);
+    scene.addItem(block28);
+
+    QuSolidBlock* block29 = new QuSolidBlock(1);
+    block29->setPos(1580,600);
+    scene.addItem(block29);
+
+    QuSolidBlock* block30 = new QuSolidBlock(1);
+    block30->setPos(1660,600);
+    scene.addItem(block30);
+
+    QuSolidBlock* block31 = new QuSolidBlock(1);
+    block31->setPos(1740,600);
+    scene.addItem(block31);
+
+    QuSolidBlock* block32 = new QuSolidBlock(1);
+    block32->setPos(1820,600);
+    scene.addItem(block32);
+
+    QuSolidBlock* block33 = new QuSolidBlock(1);
+    block33->setPos(1900,600);
+    scene.addItem(block33);
+
+    QuSolidBlock* block34 = new QuSolidBlock(1);
+    block34->setPos(1980,600);
+    scene.addItem(block34);
+
+    QuSolidBlock* block35 = new QuSolidBlock(1);
+    block35->setPos(2060,600);
+    scene.addItem(block35);
+
+    QuSolidBlock* block36 = new QuSolidBlock(1);
+    block36->setPos(2140,600);
+    scene.addItem(block36);
+
+    QuSolidBlock* block37 = new QuSolidBlock(1);
+    block37->setPos(2220,600);
+    scene.addItem(block37);
+
+    QuSolidBlock* block38 = new QuSolidBlock(1);
+    block38->setPos(2300,600);
+    scene.addItem(block38);
 
     // create view
     QGraphicsView view(&scene);

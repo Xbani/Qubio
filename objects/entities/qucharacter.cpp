@@ -1,5 +1,5 @@
 #include "qucharacter.h"
-#include "physicsconst.h"
+#include "quphysicsconst.h"
 #include <QDebug>
 #include <QBrush>
 #include <QPainter>
@@ -16,7 +16,7 @@
 
 QuCharacter::QuCharacter()
 {
-    setAcceleration({0,PhysicsConst::G_FORCE});
+    setAcceleration({0,QuPhysicsConst::G_FORCE});
 }
 
 QuCharacter::QuCharacter(int instance_id):QuEntity(instance_id)
@@ -26,12 +26,12 @@ QuCharacter::QuCharacter(int instance_id):QuEntity(instance_id)
 
 QRectF QuCharacter::boundingRect() const
 {
-    return QRect(0,16,64,56);
+    return QRectF(0,0,QuObject::PIXEL_SIZE*6,QuObject::PIXEL_SIZE*6);
 }
 
 void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/perso.png"),QRectF(0,2,8,6));
+    painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/perso.png"),QRectF(1,2,6,6));
 }
 
 QPainterPath QuCharacter::shape() const

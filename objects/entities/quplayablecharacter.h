@@ -13,7 +13,9 @@ class QuPlayableCharacter : public QuCharacter
 public:
     QuPlayableCharacter();
     QuPlayableCharacter(int instance_id);
-    void move();
+    void moveRight();
+    void moveLeft();
+    void moveJump();
 
     // QuObject interface
 public:
