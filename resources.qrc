@@ -6,8 +6,6 @@
         <file>resources/sprites/ui/buttons/button3.png</file>
         <file>resources/sprites/ui/buttons/button4.png</file>
         <file>resources/sprites/ui/buttons/button5.png</file>
-        <file>resources/sprites/ui/textbox.png</file>
-        <file>resources/fonts/Fipps-Regular.ttf</file>
         <file>resources/sprites/ui/buttons/button6.png</file>
         <file>resources/sprites/ui/buttons/button7.png</file>
         <file>resources/sprites/ui/buttons/button8.png</file>
@@ -16,14 +14,18 @@
         <file>resources/sprites/ui/buttons/button11.png</file>
         <file>resources/sprites/ui/buttons/button12.png</file>
         <file>resources/sprites/ui/buttons/button13.png</file>
-        <file>resources/sprites/ui/playerinfo.png</file>
         <file>resources/sprites/ui/buttons/button14.png</file>
+		<file>resources/sprites/ui/buttons/button15.png</file>
+        <file>resources/sprites/ui/buttons/button16.png</file>
+		<file>resources/sprites/ui/textbox.png</file>
+        <file>resources/fonts/Fipps-Regular.ttf</file>
+        <file>resources/sprites/ui/playerinfo.png</file>
         <file>resources/sprites/blocks/Bridge.png</file>
         <file>resources/sprites/blocks/Cloud.png</file>
         <file>resources/sprites/blocks/Error.png</file>
         <file>resources/sprites/blocks/Stairs.png</file>
         <file>resources/sprites/blocks/Stone.png</file>
-        <file>resources/sprites/ui/buttons/button15.png</file>
-        <file>resources/sprites/ui/buttons/button16.png</file>
+        <file>resources/sprites/blocks/Grass.png</file>
+        <file>resources/sprites/blocks/WoodPlank.png</file>
     </qresource>
 </RCC>

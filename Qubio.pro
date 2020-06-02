@@ -21,6 +21,7 @@ SOURCES += \
     network/client/quclient.cpp \
     network/client/qusocketclient.cpp \
     network/qusocket.cpp \
+    objects/EnumBlock/qulistblock.cpp \
     objects/blocks/qusolidblock.cpp \
     objects/blocks/quspawnblock.cpp \
     objects/entities/qucharacter.cpp \
@@ -44,7 +45,9 @@ SOURCES += \
     objects/ui/quplayerinfo.cpp \
     objects/ui/qutextbox.cpp \
     qugameengine.cpp \
+    rooms/qubuildermapframe.cpp \
     rooms/qugame.cpp \
+    rooms/qumapbuilder.cpp \
     rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
     rooms/ui/quuijoin.cpp \
@@ -59,6 +62,7 @@ HEADERS += \
     network/messagetype.h \
     mainwindow.h \
     network/qusocket.h \
+    objects/EnumBlock/qulistblock.h \
     objects/blocks/qusolidblock.h \
     objects/blocks/quspawnblock.h \
     objects/entities/qucharacter.h \
@@ -82,7 +86,9 @@ HEADERS += \
     objects/ui/quplayerinfo.h \
     objects/ui/qutextbox.h \
     qugameengine.h \
+    rooms/qubuildermapframe.h \
     rooms/qugame.h \
+    rooms/qumapbuilder.h \
     rooms/ui/quuihost.h \
     rooms/quui.h \
     rooms/ui/quuijoin.h \
@@ -92,7 +98,8 @@ HEADERS += \
     tools/qutoolsprite.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    rooms/qubuildermapframe.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
