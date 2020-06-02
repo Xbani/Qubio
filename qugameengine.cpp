@@ -6,6 +6,7 @@
 
 #include <QFontDatabase>
 #include <QDebug>
+#include <QTimer>
 
 #include <network/client/quclient.h>
 
@@ -45,8 +46,10 @@ void QuGameEngine::toUIJoin()
 
 void QuGameEngine::toQuGame()
 {
-    quGame = new QuGame();
+    quGame = new QuGame(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
     view->setScene(quGame);
+    timer->start(1000 / 60);
+    connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
 }
 
 void QuGameEngine::fromUIJoinToWaitingRoom()
@@ -92,4 +95,9 @@ void QuGameEngine::create()
     view = new QGraphicsView();
     view->setScene(uiMainMenu);
     view->show();
+    timer = new QTimer;
+    timer->setInterval(1000/60l);
+    timer->stop();
+
+
 }

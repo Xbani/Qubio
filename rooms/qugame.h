@@ -11,7 +11,7 @@ private:
 
 
 public:
-    QuGame();
+    QuGame(qreal x, qreal y, qreal width, qreal height, QObject *parent);
     inline QMap<int,QuEntity*> getEntities() const {return entities;};
     void newMapFromJson(QJsonObject* JsonMap);
     void init();

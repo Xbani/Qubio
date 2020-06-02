@@ -32,6 +32,7 @@ private:
     QuUIWaitingRoom * uiWaitingRoomHost;
     QuUIWaitingRoom * uiWaitingRoomJoin;
     QuBuilderMapFrame * quBuilderMapFrame;
+    QTimer * timer;
 
     QuGame *quGame;
 
@@ -74,3 +75,5 @@ public:
 };
 
 #endif // QUGAMEENGINE_H
+
+
