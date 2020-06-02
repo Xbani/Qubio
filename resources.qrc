@@ -20,15 +20,12 @@
         <file>resources/sprites/ui/buttons/button13.png</file>
         <file>resources/sprites/ui/playerinfo.png</file>
         <file>resources/sprites/ui/buttons/button14.png</file>
-<<<<<<< Updated upstream
-=======
-        <file>resources/sprites/blocks/bridge.png</file>
-        <file>resources/sprites/blocks/cloud.png</file>
-        <file>resources/sprites/blocks/error.png</file>
-        <file>resources/sprites/blocks/stairs.png</file>
-        <file>resources/sprites/blocks/wall.png</file>
+        <file>resources/sprites/blocks/Bridge.png</file>
+        <file>resources/sprites/blocks/Cloud.png</file>
+        <file>resources/sprites/blocks/Error.png</file>
+        <file>resources/sprites/blocks/Stairs.png</file>
+        <file>resources/sprites/blocks/Stone.png</file>
         <file>resources/sprites/ui/buttons/button15.png</file>
         <file>resources/sprites/ui/buttons/button16.png</file>
->>>>>>> Stashed changes
     </qresource>
 </RCC>
