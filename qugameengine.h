@@ -10,6 +10,8 @@
 
 #include <network/client/qusocketclient.h>
 
+#include <rooms/qubuildermapframe.h>
+
 class QuUIMainMenu;
 class QuUIMultiplayer;
 class QuUIHost;
@@ -29,6 +31,7 @@ private:
     QuUIJoin * uiJoin;
     QuUIWaitingRoom * uiWaitingRoomHost;
     QuUIWaitingRoom * uiWaitingRoomJoin;
+    QuBuilderMapFrame * quBuilderMapFrame;
 
     QuGame *quGame;
 
@@ -50,6 +53,7 @@ public:
     void toQuGame();
     void fromUIJoinToWaitingRoom();
     void fromUIHostToWaitingRoom();
+    void toBuilderMapFrame();
 
     QHostAddress getIpJoin();
     int getPortJoin();

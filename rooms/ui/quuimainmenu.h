@@ -34,6 +34,7 @@ public:
 
     void toUIMultiplayer();
     void toUISolo();
+    void toBuilderMainFrame();
     void back() override;
 
     void init();

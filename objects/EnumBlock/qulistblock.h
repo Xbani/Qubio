@@ -8,7 +8,7 @@ class QuListBlock : public QObject
       Q_OBJECT
 public:
      QuListBlock();
-     enum SolidBlock {//Error,
+     enum SolidBlock {Error,
                       Stone,
                       WoodPlank,
                       Grass,

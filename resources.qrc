@@ -15,9 +15,9 @@
         <file>resources/sprites/ui/buttons/button12.png</file>
         <file>resources/sprites/ui/buttons/button13.png</file>
         <file>resources/sprites/ui/buttons/button14.png</file>
-		<file>resources/sprites/ui/buttons/button15.png</file>
+        <file>resources/sprites/ui/buttons/button15.png</file>
         <file>resources/sprites/ui/buttons/button16.png</file>
-		<file>resources/sprites/ui/textbox.png</file>
+        <file>resources/sprites/ui/textbox.png</file>
         <file>resources/fonts/Fipps-Regular.ttf</file>
         <file>resources/sprites/ui/playerinfo.png</file>
         <file>resources/sprites/blocks/Bridge.png</file>

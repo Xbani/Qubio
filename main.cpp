@@ -14,11 +14,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //QuGameEngine w;
-    QGraphicsView *view;
-    view = new QGraphicsView();
-    QuBuilderMapFrame *frame = new QuBuilderMapFrame(view);
-    //view->show();
-    frame->show();
+    QuGameEngine w;
     return a.exec();
 }

@@ -64,6 +64,11 @@ void QuGameEngine::fromUIHostToWaitingRoom()
     view->setScene(uiWaitingRoomJoin);
 }
 
+void QuGameEngine::toBuilderMapFrame()
+{
+    quBuilderMapFrame->show();
+}
+
 QHostAddress QuGameEngine::getIpJoin()
 {
     return QHostAddress(uiJoin->getIp());
@@ -82,6 +87,8 @@ void QuGameEngine::create()
     uiJoin = new QuUIJoin(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
     uiWaitingRoomHost = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,true,this);
     uiWaitingRoomJoin = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,false,this);
+    quBuilderMapFrame = new QuBuilderMapFrame(new QGraphicsView());
+
     view = new QGraphicsView();
     view->setScene(uiMainMenu);
     view->show();

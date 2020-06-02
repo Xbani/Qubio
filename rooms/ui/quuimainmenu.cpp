@@ -29,6 +29,14 @@ void QuUIMainMenu::toUISolo()
         game_engine->toQuGame();
     }
 }
+
+void QuUIMainMenu::toBuilderMainFrame()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        game_engine->toBuilderMapFrame();
+    }
+}
 void QuUIMainMenu::back()
 {
     if(parent()!=nullptr){
