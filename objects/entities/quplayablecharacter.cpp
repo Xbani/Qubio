@@ -1,6 +1,6 @@
 #include "quplayablecharacter.h"
 #include "quphysicsconst.h"
-#include "objects\\blocks\qusolidblock.h"
+#include "objects/blocks/qusolidblock.h"
 #include "windows.h"
 
 #include "qucharacter.h"

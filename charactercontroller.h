@@ -3,7 +3,7 @@
 #include <QKeyEvent>
 #include <QGraphicsView>
 
-#include "objects\\entities\quplayablecharacter.h"
+#include "objects/entities/quplayablecharacter.h"
 
 
 class CharacterController : public QGraphicsView

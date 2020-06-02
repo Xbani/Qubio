@@ -1,6 +1,5 @@
 #include "quunplayablecharacter.h"
 #include "quphysicsconst.h"
-#include "windows.h"
 
 #include "qucharacter.h"
 #include <QDebug>
