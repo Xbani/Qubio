@@ -20,6 +20,7 @@
         <file>resources/sprites/ui/textbox.png</file>
         <file>resources/fonts/Fipps-Regular.ttf</file>
         <file>resources/sprites/ui/playerinfo.png</file>
+        
         <file>resources/sprites/blocks/Bridge.png</file>
         <file>resources/sprites/blocks/Cloud.png</file>
         <file>resources/sprites/blocks/Error.png</file>
@@ -27,5 +28,7 @@
         <file>resources/sprites/blocks/Stone.png</file>
         <file>resources/sprites/blocks/Grass.png</file>
         <file>resources/sprites/blocks/WoodPlank.png</file>
+
+        <file>resources/sprites/character/perso.png</file>
     </qresource>
 </RCC>
