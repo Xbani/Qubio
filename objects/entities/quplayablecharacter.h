@@ -16,11 +16,9 @@ private:
     bool key_right;
     bool key_down;
     bool key_left;
+
 public:
     QuPlayableCharacter(int instance_id);
-    void moveRight();
-    void moveLeft();
-    void moveJump();
 
     // QuObject interface
 public:

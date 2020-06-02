@@ -25,21 +25,6 @@ QuPlayableCharacter::QuPlayableCharacter(int instance_id):QuCharacter(instance_i
     key_left=0;
 }
 
-void QuPlayableCharacter::moveRight()
-{
-
-}
-
-void QuPlayableCharacter::moveLeft()
-{
-
-}
-
-void QuPlayableCharacter::moveJump()
-{
-
-}
-
 int QuPlayableCharacter::getClassId()
 {
     return QuEntity::PLAYABLE_CHARACTER_ID;
@@ -263,22 +248,18 @@ void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)
        {
        case Qt::Key_Right:
            //playableCharacter.moveLeft(); // For example
-           qDebug() << "Right";
            key_right=true;
            break;
        case Qt::Key_Left:
            //playableCharacter.moveRight(); // For example
-           qDebug() << "Left";
            key_left=true;
            break;
        case Qt::Key_Up:
            //playableCharacter.moveRight(); // For example
-           qDebug() << "Up";
            key_up=true;
            break;
        case Qt::Key_Down:
            //playableCharacter.moveRight(); // For example
-           qDebug() << "Down";
            key_down=true;
            break;
        }
@@ -291,22 +272,18 @@ void QuPlayableCharacter::keyReleaseEvent(QKeyEvent *event)
        {
        case Qt::Key_Right:
            //playableCharacter.moveLeft(); // For example
-           qDebug() << "RightR";
            key_right=false;
            break;
        case Qt::Key_Left:
            //playableCharacter.moveRight(); // For example
-           qDebug() << "LeftR";
            key_left=false;
            break;
        case Qt::Key_Up:
            //playableCharacter.moveRight(); // For example
-           qDebug() << "UpR";
            key_up=false;
            break;
        case Qt::Key_Down:
            //playableCharacter.moveRight(); // For example
-           qDebug() << "DownR";
            key_down=false;
            break;
        }
