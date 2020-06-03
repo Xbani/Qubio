@@ -80,21 +80,29 @@ void QuGameEngine::toBuilderMapFrame()
 
 QHostAddress QuGameEngine::getIpJoin()
 {
+    if(uiJoin->getIp()=="localhost"){
+        return QHostAddress::LocalHost;
+    }
     return QHostAddress(uiJoin->getIp());
 }
 
 int QuGameEngine::getPortJoin()
 {
+    qDebug() << "getPortJoin() " << uiJoin->getPort().toInt();
     return uiJoin->getPort().toInt();
 }
 
 QHostAddress QuGameEngine::getIpHost()
 {
+    if(uiHost->getIp()=="localhost"){
+        return QHostAddress::LocalHost;
+    }
     return QHostAddress(uiHost->getIp());
 }
 
 int QuGameEngine::getPortHost()
 {
+    qDebug() << "getPortHost() " << uiHost->getPort().toInt();
     return uiHost->getPort().toInt();
 }
 
