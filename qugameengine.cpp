@@ -70,7 +70,7 @@ void QuGameEngine::fromUIHostToWaitingRoom()
     else
         quClient = new QuClient(QHostAddress::LocalHost,25667,this);
     quClient->connectToServer(QHostAddress::LocalHost, 25666);
-    view->setScene(uiWaitingRoomJoin);
+    view->setScene(uiWaitingRoomHost);
 }
 
 void QuGameEngine::toBuilderMapFrame()

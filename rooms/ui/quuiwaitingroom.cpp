@@ -27,6 +27,7 @@ void QuUIWaitingRoom::toGame()
 void QuUIWaitingRoom::init()
 {
     button_close= new QuButtonClose();
+    qDebug() << "is host : " << is_host;
     button_go_game = new QuButtonGoGame(is_host);
 
     button_close->setX(7*width()/8);
