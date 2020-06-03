@@ -4,4 +4,5 @@ QuExpectedAnswer::QuExpectedAnswer(int messageSentId, MessageType answerType, QO
 {
     this->messageSentId = messageSentId;
     this->answerType = answerType;
+    this->counterForTimeOut = 0;
 }

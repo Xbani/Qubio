@@ -4,6 +4,8 @@
 #include <QJsonObject>
 #include <QMap>
 #include <QHostAddress>
+#include <QTimer>
+#include <QObject>
 
 class QuSocketServer;
 class QuInfoClient;
@@ -11,8 +13,9 @@ class QuInfoClient;
 /**
  * @brief The QuServer class handles the communication client-server
  */
-class QuServer
+class QuServer : public QObject
 {
+    Q_OBJECT
 public:
     QuServer();
     /**
@@ -24,11 +27,6 @@ public:
      * @brief endGame
      */
     void endGame();
-    /**
-     * @brief sendEntities sends the entities of the game
-     * to everyone
-     */
-    void sendEntitiesToAll();
     /**
      * @brief newPlayerConnect handles the connection of a new player
      */
@@ -61,6 +59,18 @@ public:
      * @brief receiveEntities receives the entities from the clients
      */
     void receiveEntities(QJsonObject* jsonEntities);
+
+public slots :
+    /**
+     * @brief sendEntities sends the entities of the game
+     * to everyone
+     */
+    void sendEntitiesToAll();
+    /**
+     * @brief handlePlayersConnection
+     */
+    void handlePlayersConnection();
+
 private:
     /**
      * @brief jsonEntities a map
@@ -91,5 +101,8 @@ private:
     QMap<int, QuInfoClient*> clientsInfoMap;
     int lastMessageIdSent;
     int lastPlayerIdGiven;
+    QTimer* timer;
+    const int INTERVAL_TIME_ENTITIES = 16;
+    const int INTERVAL_TIME_CHECK_CONNECTION = 5000;
 };
 #endif // QUSERVER_H

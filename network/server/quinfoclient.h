@@ -44,6 +44,8 @@ public:
 
     inline bool getIsHost() const { return this->isHost; };
     inline void setIsHost(bool boolValue) { this->isHost = boolValue; };
+
+    inline QMap<int, QuExpectedAnswer*> getIExpectedAnswersMap() const { return this->expectedAnswersMap; };
     /**
      * @brief addExpectedAnswer adds an expected answer to a message sent
      * in the map of expected answers

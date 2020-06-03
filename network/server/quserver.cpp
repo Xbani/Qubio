@@ -1,18 +1,24 @@
-#include <QJsonObject>
+//#include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QJsonValue>
-
+//#include <QJsonValue>
+#include <QTimer>
 #include "quserver.h"
 #include "quinfoclient.h"
 #include "qusocketserver.h"
 #include "network/MessageType.h"
+#include "quexpectedanswer.h"
 
 QuServer::QuServer()
 {
     lastMessageIdSent = 0;
     lastPlayerIdGiven = 0;
     jsonMap = nullptr;
+    timer = new QTimer(this);
+    timer->setInterval(INTERVAL_TIME_CHECK_CONNECTION);
+    //this->timer->callOnTimeout(this, SLOT(handlePlayersConnection()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
+    timer->start();
 }
 
 void QuServer::startGame()
@@ -30,11 +36,17 @@ void QuServer::startGame()
     qJsonObject["messageType"] = MessageType::startGameByServer;
     QJsonDocument qJsonDocument(qJsonObject);
     (this->quSocketServer)->sendToAll(qJsonDocument.toBinaryData());
+
+    disconnect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
+    //We send the info too the players every x ms
+    timer->setInterval(INTERVAL_TIME_ENTITIES);
+    //this->timer->callOnTimeout(this, SLOT(sendEntitiesToAll()));
+    timer->start();
 }
 
 void QuServer::endGame()
 {
-
+    this->timer->stop();
 }
 
 void QuServer::sendEntitiesToAll()
@@ -112,7 +124,6 @@ void QuServer::sendMapToAll() {
 void QuServer::sendPlayersListToAll()
 {
     QJsonArray jsonArrayPlayers;
-    lastMessageIdSent ++;
     foreach(QuInfoClient *quInfoClient, clientsInfoMap) {
         QJsonObject jsonPlayer;
         jsonPlayer["playerId"] = quInfoClient->getPlayerId();
@@ -121,7 +132,6 @@ void QuServer::sendPlayersListToAll()
         jsonPlayer["ready"] = quInfoClient->getMapReception() && quInfoClient->getPlayersListReception();
         QJsonValue jsonValuePlayer(jsonPlayer);
         jsonArrayPlayers.append(jsonValuePlayer);
-        quInfoClient->addExpectedAnswer(lastMessageIdSent, MessageType::listPlayers);
      }
     QJsonObject jsonPlayerList;
     jsonPlayerList["playerList"] = jsonArrayPlayers;
@@ -170,13 +180,55 @@ void QuServer::receiveNewMap(QJsonObject * jsonMap)
 void QuServer::receiveEntities(QJsonObject * jsonEntities)
 {
     QJsonArray jsonEntitiesArray = (*jsonEntities)["entities"].toArray();
-        for (int i = 0; i < jsonEntitiesArray.size() ; ++i)
-        {
-            QJsonObject* object = new QJsonObject();
-            *object = jsonEntitiesArray[i].toObject();
-            if ((*object)["messageId"].toInt() > lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt())) {
-                lastMsgIdsOfEntitiesMap.insert((*object)["messageId"].toInt(), lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt()));
-                jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
-            }
+    for (int i = 0; i < jsonEntitiesArray.size() ; ++i)
+    {
+        QJsonObject* object = new QJsonObject();
+        *object = jsonEntitiesArray[i].toObject();
+        if ((*object)["messageId"].toInt() > lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt())) {
+            lastMsgIdsOfEntitiesMap.insert((*object)["messageId"].toInt(), lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt()));
+            jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
         }
+    }
+}
+
+void QuServer::handlePlayersConnection()
+{
+    lastMessageIdSent++;
+    foreach(QuInfoClient *quInfoClient, clientsInfoMap) {
+        bool playersListAnswerWaiting = false;
+        foreach(QuExpectedAnswer *quExpectedAnswer, quInfoClient->getIExpectedAnswersMap()) {
+            quExpectedAnswer->incrementCounterForTimeOut();
+            if(quExpectedAnswer->getCounterForTimeOut() > 2) {
+                if(quExpectedAnswer->getAnswerType() == MessageType::sendMap) {
+                    QNetworkDatagram* datagram = new QNetworkDatagram();
+                    datagram->setDestination(quInfoClient->getIp(), quInfoClient->getPort());
+                    (*jsonMap)["messageId"] = lastMessageIdSent;
+                    (*jsonMap)["messageType"] = MessageType::sendMap;
+                    QJsonDocument qJsonDocument(*jsonMap);
+                    datagram->setData(qJsonDocument.toBinaryData());
+                    (this->quSocketServer)->send(datagram);
+                }
+                else if(quExpectedAnswer->getAnswerType() == MessageType::connection) {
+                    QNetworkDatagram *datagram = new QNetworkDatagram();
+                    datagram->setDestination(quInfoClient->getIp(), quInfoClient->getPort());
+                    QJsonObject qJsonObject;
+                    qJsonObject["messageId"] = lastMessageIdSent;
+                    qJsonObject["messageType"] = MessageType::connection;
+                    qJsonObject["playerId"] = quInfoClient->getPlayerId();
+                    QJsonDocument qJsonDocument(qJsonObject);
+                    datagram->setData(qJsonDocument.toBinaryData());
+                    this->quSocketServer->send(datagram);
+                }
+            }
+            else if(quExpectedAnswer->getAnswerType() == MessageType::listPlayers) {
+                playersListAnswerWaiting = true;
+                quExpectedAnswer->setMessageSentId(lastMessageIdSent);
+            }
+
+        }
+        if(playersListAnswerWaiting == false) {
+            quInfoClient->addExpectedAnswer(lastMessageIdSent, MessageType::listPlayers);
+        }
+    }
+    this->sendPlayersListToAll();
 }

@@ -34,7 +34,7 @@ void QuSocketServer::receive()
                     quServer->newPlayerConnect(jsonObj, datagram.senderAddress(), datagram.senderPort());
                 break;
                 case MessageType::answer:
-                    quServer->answer(jsonObj);
+                    quServer->handleClientAnswer(jsonObj);
                 break;
                 case MessageType::newMap:
                     quServer->receiveNewMap(jsonObj);

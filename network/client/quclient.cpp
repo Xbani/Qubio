@@ -4,3 +4,8 @@ QuClient::QuClient(QObject *parent) : QThread(parent)
 {
 
 }
+
+void QuClient::run()
+{
+
+}
