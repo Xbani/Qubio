@@ -12,7 +12,7 @@ public:
      * @brief QuSocketServer constructor
      * @param parent
      */
-    QuSocketServer(QObject *parent = nullptr);
+    QuSocketServer(QuServer* quServer, QObject *parent = nullptr);
     /**
      * @brief sendToAll sends the 'data' using datagrams of 'datagramList'
      * @param data

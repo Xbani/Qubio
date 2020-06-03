@@ -2,11 +2,12 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <network/MessageType.h>
+#include "network/messagetype.h"
 #include "network/server/quserver.h"
 
-QuSocketServer::QuSocketServer(QObject *parent) : QuSocket(parent)
+QuSocketServer::QuSocketServer(QuServer* quServer,QObject *parent) : QuSocket(parent)
 {
+    this->quServer = quServer;
 
 }
 
@@ -24,6 +25,7 @@ void QuSocketServer::receive()
             QNetworkDatagram datagram = getUdpSocket()->receiveDatagram();
             QJsonDocument *jsonDoc = new QJsonDocument();
             jsonDoc->fromBinaryData(datagram.data()); //transform binary data into a json doc
+            qDebug()<<datagram.data();
             QJsonObject *jsonObj = new QJsonObject();
             *jsonObj = jsonDoc->object();
             switch (jsonObj->value("messageType").toInt()) {

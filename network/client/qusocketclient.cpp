@@ -15,6 +15,7 @@ void QuSocketClient::receive(){
         QNetworkDatagram datagram = getUdpSocket()->receiveDatagram();
         QJsonDocument *jsonDoc = new QJsonDocument();
         jsonDoc->fromBinaryData(datagram.data());
+        qDebug()<<datagram.data();
         QJsonObject *jsonObj = new QJsonObject();
         *jsonObj = jsonDoc->object();
         switch (jsonObj->value("messageType").toInt()) {
@@ -27,10 +28,10 @@ void QuSocketClient::receive(){
             case MessageType::sendMap:
                 quClient->receiveMap(jsonObj);
             break;
-            case MessageType::listPlayer:
+            case MessageType::listPlayers:
                 quClient->receivePlayersList(jsonObj);
             break;
-            case MessageType::startGame:
+            case MessageType::startGameByServer:
                 quClient->startGame();
             break;
             case MessageType::endGame:

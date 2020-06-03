@@ -17,7 +17,7 @@ class QuServer : public QObject
 {
     Q_OBJECT
 public:
-    QuServer();
+    QuServer(QHostAddress ipServer, int portServer, QObject *parent = nullptr);
     /**
      * @brief startGame sends a message to everyone
      * to tell them that the game begins

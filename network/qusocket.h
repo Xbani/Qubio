@@ -15,8 +15,6 @@ public:
     virtual void receive() = 0;
     inline QUdpSocket* getUdpSocket() const {return udpSocket;};
 
-    inline QUdpSocket* getUdpSocket() const { return udpSocket; };
-
 private:
     QUdpSocket *udpSocket;
 

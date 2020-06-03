@@ -12,7 +12,7 @@
 
 
 QuClient::QuClient(QHostAddress ipClient, int portClient,
-                   QuGameEngine *quGameEngine, QObject *parent): QThread(parent)
+                   QuGameEngine *quGameEngine, QObject *parent): QObject(parent)
 {
     serverDatagram = new QNetworkDatagram();
     this->ipClient = ipClient;
@@ -21,10 +21,8 @@ QuClient::QuClient(QHostAddress ipClient, int portClient,
     lastIdMessageSend = 0;
     lastIdMessageReceive = 0;
     quSocketClient = new QuSocketClient(this, this);
-}
-
-void QuClient::run(){
     quSocketClient->init(ipClient,portClient);
+    qDebug()<<"client créer";
 }
 
 QuClient::~QuClient()
@@ -43,6 +41,8 @@ void QuClient::connectToServer(QHostAddress ipServer, int portServer)
     jsonConnection["messageType"] = MessageType::connection;
     jsonConnection["nickname"] = quGameEngine->getNickname();
     jsonConnection["skin"] = quGameEngine->getSkinColor();
+    jsonConnection["isHost"] = quGameEngine->getIsHost();
+    qDebug()<<"connection";
     quSocketClient->send(serverDatagram);
 }
 

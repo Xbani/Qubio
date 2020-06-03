@@ -9,16 +9,22 @@
 #include "network/MessageType.h"
 #include "quexpectedanswer.h"
 
-QuServer::QuServer()
+QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObject(parent)
 {
     lastMessageIdSent = 0;
     lastPlayerIdGiven = 0;
     jsonMap = nullptr;
+
+    quSocketServer = new QuSocketServer(this);
+    quSocketServer->init(ipServer,portServer);
+    //connect(quSocketServer->getUdpSocket(), &QUdpSocket::readyRead,
+    //        quSocketServer, &QuSocketServer::receive);
     timer = new QTimer(this);
     timer->setInterval(INTERVAL_TIME_CHECK_CONNECTION);
     //this->timer->callOnTimeout(this, SLOT(handlePlayersConnection()));
     connect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     timer->start();
+    qDebug()<<"server créer";
 }
 
 void QuServer::startGame()
