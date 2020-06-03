@@ -59,6 +59,7 @@ void QuServer::sendEntitiesToAll()
     QJsonArray jsonArrayEntities;
     lastMessageIdSent ++;
     foreach(QJsonObject *jsonEntity, jsonEntitiesMap) {
+        qDebug()<<"foreach";
         QJsonValue jsonValueEntity(*jsonEntity);
         jsonArrayEntities.append(jsonValueEntity);
      }
@@ -67,6 +68,7 @@ void QuServer::sendEntitiesToAll()
     jsonEntitiesList["messageId"] = lastMessageIdSent;
     jsonEntitiesList["messageType"] = MessageType::sendEntity;
     QJsonDocument qJsonDocument(jsonEntitiesList);
+    qDebug()<<qJsonDocument.toJson(QJsonDocument::Compact);
     (this->quSocketServer)->sendToAll(qJsonDocument.toJson(QJsonDocument::Compact));
 }
 
@@ -194,12 +196,16 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
     QJsonArray jsonEntitiesArray = (*jsonEntities)["entities"].toArray();
     for (int i = 0; i < jsonEntitiesArray.size() ; ++i)
     {
+
+        qDebug()<<"dans le for";
         QJsonObject* object = new QJsonObject();
         *object = jsonEntitiesArray[i].toObject();
         if ((*object)["messageId"].toInt() > lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt())) {
+            qDebug()<<"dans le if";
             lastMsgIdsOfEntitiesMap.insert((*object)["messageId"].toInt(), lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt()));
             jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
-        }
+        }else if(!lastMsgIdsOfEntitiesMap.contains((*jsonEntities)["entities"].toInt()))
+            jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
     }
 }
 
