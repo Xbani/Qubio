@@ -164,6 +164,12 @@ void QuServer::handleClientAnswer(QJsonObject * jsonClientAnswer)
                     case MessageType::idPlayer:
                         sendMap(quInfoClient);
                         break;
+                    case MessageType::sendMap:
+                        quInfoClient->setMapReception(true);
+                        break;
+                    case MessageType::listPlayers:
+                        quInfoClient->setPlayersListReception(true);
+                        break;
                 }
             } else {
                 return;

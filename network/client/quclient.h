@@ -59,6 +59,7 @@ public:
      */
     void startGame();
 
+    void askStartGame();
     void endGame();
     /**
      * @brief sendEntity send one entity tothe server

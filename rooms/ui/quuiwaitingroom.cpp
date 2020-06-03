@@ -68,6 +68,14 @@ void QuUIWaitingRoom::updatePlayerInfo()
 
 }
 
+void QuUIWaitingRoom::startGame()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
+        game_engine->askStartGame();
+    }
+}
+
 void QuUIWaitingRoom::back()
 {
     if(is_host){

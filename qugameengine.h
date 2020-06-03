@@ -55,9 +55,11 @@ public:
     void toUIHost();
     void toUIJoin();
     void toQuGame();
+    void toQuGameMultiPlayers();
     void fromUIJoinToWaitingRoom();
     void fromUIHostToWaitingRoom();
     void toBuilderMapFrame();
+    void askStartGame();
 
     QHostAddress getIpJoin();
     int getPortJoin();

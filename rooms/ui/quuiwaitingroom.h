@@ -32,6 +32,7 @@ public:
     void init();
     void setPlayersJSON(QJsonArray * players_json);
     void updatePlayerInfo();
+    void startGame();
 
     // QuUI interface
 public:

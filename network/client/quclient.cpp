@@ -88,7 +88,19 @@ void QuClient::receiveEntities(QJsonObject *jsonEntities)
 
 void QuClient::startGame()
 {
+    quGameEngine->toQuGameMultiPlayers();
+}
 
+void QuClient::askStartGame()
+{
+    ++lastIdMessageSend;
+    QJsonObject askStart;
+    askStart["messageId"] = lastIdMessageSend;
+    askStart["messageType"] = MessageType::startGameRequest;
+    askStart["playerId"] = quGameEngine->getPlayerId();
+    QJsonDocument jsonDoc(askStart);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
 }
 
 void QuClient::endGame()
