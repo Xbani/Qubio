@@ -13,11 +13,10 @@ QuSocketClient::QuSocketClient(QuClient *quClient, QObject *parent):QuSocket(par
 void QuSocketClient::receive(){
     while (getUdpSocket()->hasPendingDatagrams()) {
         QNetworkDatagram datagram = getUdpSocket()->receiveDatagram();
-        QJsonDocument *jsonDoc = new QJsonDocument();
-        jsonDoc->fromBinaryData(datagram.data());
-        qDebug()<<datagram.data();
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(datagram.data());
         QJsonObject *jsonObj = new QJsonObject();
-        *jsonObj = jsonDoc->object();
+        *jsonObj = jsonDoc.object();
+        qDebug()<<"client"<<jsonDoc.toJson(QJsonDocument::Compact);
         switch (jsonObj->value("messageType").toInt()) {
             case MessageType::sendEntity:
                 quClient->receiveEntities(jsonObj);

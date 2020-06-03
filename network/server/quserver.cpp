@@ -41,7 +41,7 @@ void QuServer::startGame()
     qJsonObject["messageId"] = lastMessageIdSent;
     qJsonObject["messageType"] = MessageType::startGameByServer;
     QJsonDocument qJsonDocument(qJsonObject);
-    (this->quSocketServer)->sendToAll(qJsonDocument.toBinaryData());
+    (this->quSocketServer)->sendToAll(qJsonDocument.toJson(QJsonDocument::Compact));
 
     disconnect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     //We send the info too the players every x ms
@@ -68,7 +68,7 @@ void QuServer::sendEntitiesToAll()
     jsonEntitiesList["messageId"] = lastMessageIdSent;
     jsonEntitiesList["messageType"] = MessageType::sendEntity;
     QJsonDocument qJsonDocument(jsonEntitiesList);
-    (this->quSocketServer)->sendToAll(qJsonDocument.toBinaryData());
+    (this->quSocketServer)->sendToAll(qJsonDocument.toJson(QJsonDocument::Compact));
 }
 
 void QuServer::newPlayerConnect(QJsonObject *jsonConnection, QHostAddress ip, int port)
@@ -83,6 +83,7 @@ void QuServer::newPlayerConnect(QJsonObject *jsonConnection, QHostAddress ip, in
     //give an id to the player
     ++lastPlayerIdGiven;
     quInfoClient->setPlayerId(lastPlayerIdGiven);
+    clientsInfoMap.insert(lastPlayerIdGiven, quInfoClient);
     //we add the datagrams to the datagram list & send the id to the new player
     QNetworkDatagram *datagram = new QNetworkDatagram();
     datagram->setDestination(ip, port);
@@ -90,13 +91,13 @@ void QuServer::newPlayerConnect(QJsonObject *jsonConnection, QHostAddress ip, in
     QJsonObject qJsonObject;
     ++lastMessageIdSent;
     qJsonObject["messageId"] = lastMessageIdSent;
-    qJsonObject["messageType"] = MessageType::connection;
+    qJsonObject["messageType"] = MessageType::idPlayer;
     qJsonObject["playerId"] = quInfoClient->getPlayerId();
     QJsonDocument qJsonDocument(qJsonObject);
-    datagram->setData(qJsonDocument.toBinaryData());
+    datagram->setData(qJsonDocument.toJson(QJsonDocument::Compact));
     this->quSocketServer->send(datagram);
     //We expect an answer to the msg sent
-    quInfoClient->addExpectedAnswer(lastMessageIdSent, MessageType::connection);
+    quInfoClient->addExpectedAnswer(lastMessageIdSent, MessageType::idPlayer);
     //A new player is connected so all the clients hasn't received the updated players list yet
     foreach(QuInfoClient *quInfoClient, clientsInfoMap) {
         quInfoClient->setPlayersListReception(false);
@@ -111,7 +112,7 @@ void QuServer::sendMap(QuInfoClient * quInfoClient)
     (*jsonMap)["messageType"] = MessageType::sendMap;
     QJsonDocument qJsonDocument(*jsonMap);
     datagram->setDestination(quInfoClient->getIp(), quInfoClient->getPort());
-    datagram->setData(qJsonDocument.toBinaryData());
+    datagram->setData(qJsonDocument.toJson(QJsonDocument::Compact));
     (this->quSocketServer)->send(datagram);
     quInfoClient->addExpectedAnswer(lastMessageIdSent, MessageType::sendMap);
 }
@@ -121,7 +122,7 @@ void QuServer::sendMapToAll() {
     (*jsonMap)["messageId"] = lastMessageIdSent;
     (*jsonMap)["messageType"] = MessageType::sendMap;
     QJsonDocument qJsonDocument(*jsonMap);
-    (this->quSocketServer)->sendToAll(qJsonDocument.toBinaryData());
+    (this->quSocketServer)->sendToAll(qJsonDocument.toJson(QJsonDocument::Compact));
     foreach(QuInfoClient *quInfoClient, clientsInfoMap) {
         quInfoClient->addExpectedAnswer(lastMessageIdSent, MessageType::sendMap);
     }
@@ -144,7 +145,7 @@ void QuServer::sendPlayersListToAll()
     jsonPlayerList["messageId"] = lastMessageIdSent;
     jsonPlayerList["messageType"] = MessageType::listPlayers;
     QJsonDocument qJsonDocument(jsonPlayerList);
-    (this->quSocketServer)->sendToAll(qJsonDocument.toBinaryData());
+    (this->quSocketServer)->sendToAll(qJsonDocument.toJson(QJsonDocument::Compact));
 }
 
 void QuServer::aPlayerWon(QJsonObject *)
@@ -199,7 +200,7 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
 
 void QuServer::handlePlayersConnection()
 {
-    lastMessageIdSent++;
+  ++lastMessageIdSent;
     foreach(QuInfoClient *quInfoClient, clientsInfoMap) {
         bool playersListAnswerWaiting = false;
         foreach(QuExpectedAnswer *quExpectedAnswer, quInfoClient->getIExpectedAnswersMap()) {
@@ -208,21 +209,21 @@ void QuServer::handlePlayersConnection()
                 if(quExpectedAnswer->getAnswerType() == MessageType::sendMap) {
                     QNetworkDatagram* datagram = new QNetworkDatagram();
                     datagram->setDestination(quInfoClient->getIp(), quInfoClient->getPort());
-                    (*jsonMap)["messageId"] = lastMessageIdSent;
+                    (*jsonMap)["messageId"] = quExpectedAnswer->getMessageSentId();
                     (*jsonMap)["messageType"] = MessageType::sendMap;
                     QJsonDocument qJsonDocument(*jsonMap);
-                    datagram->setData(qJsonDocument.toBinaryData());
+                    datagram->setData(qJsonDocument.toJson(QJsonDocument::Compact));
                     (this->quSocketServer)->send(datagram);
                 }
-                else if(quExpectedAnswer->getAnswerType() == MessageType::connection) {
+                else if(quExpectedAnswer->getAnswerType() == MessageType::idPlayer) {
                     QNetworkDatagram *datagram = new QNetworkDatagram();
                     datagram->setDestination(quInfoClient->getIp(), quInfoClient->getPort());
                     QJsonObject qJsonObject;
-                    qJsonObject["messageId"] = lastMessageIdSent;
-                    qJsonObject["messageType"] = MessageType::connection;
+                    qJsonObject["messageId"] = quExpectedAnswer->getMessageSentId();
+                    qJsonObject["messageType"] = MessageType::idPlayer;
                     qJsonObject["playerId"] = quInfoClient->getPlayerId();
                     QJsonDocument qJsonDocument(qJsonObject);
-                    datagram->setData(qJsonDocument.toBinaryData());
+                    datagram->setData(qJsonDocument.toJson(QJsonDocument::Compact));
                     this->quSocketServer->send(datagram);
                 }
             }

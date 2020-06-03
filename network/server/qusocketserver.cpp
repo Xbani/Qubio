@@ -23,11 +23,13 @@ void QuSocketServer::receive()
 {
     while (getUdpSocket()->hasPendingDatagrams()) {
             QNetworkDatagram datagram = getUdpSocket()->receiveDatagram();
-            QJsonDocument *jsonDoc = new QJsonDocument();
-            jsonDoc->fromBinaryData(datagram.data()); //transform binary data into a json doc
-            qDebug()<<datagram.data();
+           QJsonDocument jsonDoc = QJsonDocument::fromJson(datagram.data()); //transform binary data into a json doc
             QJsonObject *jsonObj = new QJsonObject();
-            *jsonObj = jsonDoc->object();
+            *jsonObj = jsonDoc.object();
+
+            QJsonDocument debug(*jsonObj);
+            qDebug()<<"serveur"<<debug.toJson(QJsonDocument::Compact);
+
             switch (jsonObj->value("messageType").toInt()) {
                 case MessageType::sendEntity:
                     quServer->receiveEntities(jsonObj);

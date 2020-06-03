@@ -42,7 +42,9 @@ void QuClient::connectToServer(QHostAddress ipServer, int portServer)
     jsonConnection["nickname"] = quGameEngine->getNickname();
     jsonConnection["skin"] = quGameEngine->getSkinColor();
     jsonConnection["isHost"] = quGameEngine->getIsHost();
+    QJsonDocument docConnection(jsonConnection);
     qDebug()<<"connection";
+    serverDatagram->setData(docConnection.toJson(QJsonDocument::Compact));
     quSocketClient->send(serverDatagram);
 }
 
@@ -105,7 +107,7 @@ void QuClient::sendEntity(QJsonObject *jsonEntity)
     jsonToSend["entities"] = jsonArrayEntities;
 
     QJsonDocument jsonDoc(jsonToSend);
-    serverDatagram->setData(jsonDoc.toBinaryData());
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
     quSocketClient->send(serverDatagram);
 }
 
