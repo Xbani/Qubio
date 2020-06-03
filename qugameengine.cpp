@@ -54,6 +54,18 @@ void QuGameEngine::toQuGame()
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
 }
 
+void QuGameEngine::toQuGameMultiPlayers()
+{
+    quGame = new QuGame(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
+    if (isHost)
+        quGame->createPlayers(uiWaitingRoomHost->getQuPlayerInfos());
+    else
+        quGame->createPlayers(uiWaitingRoomJoin->getQuPlayerInfos());
+    view->setScene(quGame);
+    timer->start(1000 / 60);
+    connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
+}
+
 void QuGameEngine::fromUIJoinToWaitingRoom()
 {
     quClient = new QuClient(QHostAddress::LocalHost,25667,this);
@@ -76,6 +88,11 @@ void QuGameEngine::fromUIHostToWaitingRoom()
 void QuGameEngine::toBuilderMapFrame()
 {
     quBuilderMapFrame->show();
+}
+
+void QuGameEngine::askStartGame()
+{
+    quClient->askStartGame();
 }
 
 QHostAddress QuGameEngine::getIpJoin()

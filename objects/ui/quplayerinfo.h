@@ -25,9 +25,11 @@ public:
 
 public:
     inline int getPlayerId() const {return player_id;};
+    inline int getPlayerHue() const {return player_hue;};
+    inline QString getPlayerName() const {return player_name;};
     // QuObject interface
 public:
-    QJsonObject toJSON() override;
+    QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
 };
 

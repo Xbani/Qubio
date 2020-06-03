@@ -46,8 +46,7 @@ void QuServer::startGame()
     disconnect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     //We send the info too the players every x ms
     timer->setInterval(INTERVAL_TIME_ENTITIES);
-    //this->timer->callOnTimeout(this, SLOT(sendEntitiesToAll()));
-    timer->start();
+    connect(timer, SIGNAL(timeout()), this, SLOT(sendEntitiesToAll()));
 }
 
 void QuServer::endGame()
@@ -163,6 +162,12 @@ void QuServer::handleClientAnswer(QJsonObject * jsonClientAnswer)
                 switch ((*jsonClientAnswer)["answerMessageType"].toInt()) {
                     case MessageType::idPlayer:
                         sendMap(quInfoClient);
+                        break;
+                    case MessageType::sendMap:
+                        quInfoClient->setMapReception(true);
+                        break;
+                    case MessageType::listPlayers:
+                        quInfoClient->setPlayersListReception(true);
                         break;
                 }
             } else {

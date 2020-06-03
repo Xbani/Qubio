@@ -56,9 +56,11 @@ public:
     void toUIHost();
     void toUIJoin();
     void toQuGame();
+    void toQuGameMultiPlayers();
     void fromUIJoinToWaitingRoom();
     void fromUIHostToWaitingRoom();
     void toBuilderMapFrame();
+    void askStartGame();
 
     QHostAddress getIpJoin();
     int getPortJoin();
@@ -79,8 +81,7 @@ public:
 
     inline QString getNickname()const {return uiMainMenu->getNickName();};
     inline int getSkinColor() const {return uiMainMenu->getColorHUE();};
+    inline QuClient * getQuClient() const {return quClient;};
 };
 
 #endif // QUGAMEENGINE_H
-
-

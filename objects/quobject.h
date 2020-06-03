@@ -12,7 +12,7 @@ class QuObject : public QGraphicsItem
 {
 public:
     QuObject();
-    virtual QJsonObject toJSON()   = 0;
+    virtual QJsonObject* toJSON()   = 0;
     virtual void fromJSON(QJsonObject &qJsonObject) = 0;
 public:
     static const int PIXEL_SIZE=8;

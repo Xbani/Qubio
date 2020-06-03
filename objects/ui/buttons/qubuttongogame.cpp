@@ -1,5 +1,5 @@
 #include "qubuttongogame.h"
-
+#include "rooms/ui/quuiwaitingroom.h"
 #include <QDebug>
 
 QuButtonGoGame::QuButtonGoGame():QuButtonGoGame(false)
@@ -18,7 +18,8 @@ QuButtonGoGame::QuButtonGoGame(bool is_host):QuButton(12,13)
 void QuButtonGoGame::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if(is_host){
-        qDebug() << "GoGame as Host"; //TODO
+        QuUIWaitingRoom *uiMainMenu=dynamic_cast<QuUIWaitingRoom *>(scene());
+        uiMainMenu->startGame();
     }
     else{
        qDebug() << "GoGame as no host"; //TODO
