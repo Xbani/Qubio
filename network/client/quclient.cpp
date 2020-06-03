@@ -114,16 +114,35 @@ void QuClient::sendEntity(QJsonObject *jsonEntity)
 
 void QuClient::receiveMap(QJsonObject *jsonMap)
 {
-    if((*jsonMap)["messageId"].toInt() > lastIdMessageReceive){
-        lastIdMessageReceive = (*jsonMap)["messageId"].toInt();
-        quGameEngine->getQuGame()->newMapFromJson(jsonMap);
-    }
+    lastIdMessageReceive = (*jsonMap)["messageId"].toInt();
+    quGameEngine->getQuGame()->newMapFromJson(jsonMap);
+    ++lastIdMessageSend;
+    QJsonObject answer;
+    answer["messageId"] = lastIdMessageSend;
+    answer["messageType"] = MessageType::answer;
+    answer["playerId"] = quGameEngine->getPlayerId();
+    answer["answerMessageId"] = (*jsonMap)["messageId"].toInt();
+    answer["answerMessageType"] = (*jsonMap)["messageType"].toInt();
+    QJsonDocument jsonDoc(answer);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
 }
 
 void QuClient::receivePlayerId(QJsonObject *jsonPlayerId)
 {
     quGameEngine->setPlayerId((*jsonPlayerId)["playerId"].toInt());
     lastIdMessageReceive = (*jsonPlayerId)["messageId"].toInt();
+
+    ++lastIdMessageSend;
+    QJsonObject answer;
+    answer["messageId"] = lastIdMessageSend;
+    answer["messageType"] = MessageType::answer;
+    answer["playerId"] = quGameEngine->getPlayerId();
+    answer["answerMessageId"] = (*jsonPlayerId)["messageId"].toInt();
+    answer["answerMessageType"] = (*jsonPlayerId)["messageType"].toInt();
+    QJsonDocument jsonDoc(answer);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
 }
 
 void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
@@ -132,8 +151,20 @@ void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
         lastIdMessageReceive = (*jsonPlayerList)["messageId"].toInt();
         QJsonArray *jsonPlayerArray = new QJsonArray();
         *jsonPlayerArray = (*jsonPlayerList)["playerList"].toArray();
+		
         QuUIWaitingRoom *quUIWaitingRoom = dynamic_cast<QuUIWaitingRoom *>(quGameEngine->getCurrentRoom());
         quUIWaitingRoom->setPlayersJSON(jsonPlayerArray);
+
+        ++lastIdMessageSend;
+        QJsonObject answer;
+        answer["messageId"] = lastIdMessageSend;
+        answer["messageType"] = MessageType::answer;
+        answer["playerId"] = quGameEngine->getPlayerId();
+        answer["answerMessageId"] = (*jsonPlayerList)["messageId"].toInt();
+        answer["answerMessageType"] = (*jsonPlayerList)["messageType"].toInt();
+        QJsonDocument jsonDoc(answer);
+        serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+        quSocketClient->send(serverDatagram);
     }
 }
 

@@ -82,46 +82,47 @@ QPainterPath QuCharacter::shape() const
 
 QJsonObject QuCharacter::toJSON()
 {
-//    QJsonObject jsonCharacter;
-//    QJsonArray jsonArrayPosition;
-//    QJsonArray jsonArrayspeed;
-//    QJsonArray jsonArrayAcceleration;
+    QJsonObject jsonCharacter;
+    QJsonArray jsonArrayPosition;
+    QJsonArray jsonArrayspeed;
+    QJsonArray jsonArrayAcceleration;
 
-//    jsonCharacter["instanceId"] = getInstanceId();
-//    jsonCharacter["classId"] = getClassId();
+    jsonCharacter["instanceId"] = getInstanceId();
+    jsonCharacter["classId"] = getClassId();
 
-//    jsonArrayPosition.append(getPosition().x());
-//    jsonArrayPosition.append(getPosition().y());
-//    jsonCharacter["position"] = jsonArrayPosition;
+    jsonArrayPosition.append(pos().x());
+    jsonArrayPosition.append(pos().y());
+    jsonCharacter["position"] = jsonArrayPosition;
 
-//    jsonArrayspeed.append(getSpeed().x());
-//    jsonArrayspeed.append(getSpeed().y());
-//    jsonCharacter["speed"] = jsonArrayspeed;
+    jsonArrayspeed.append(getSpeed().x());
+    jsonArrayspeed.append(getSpeed().y());
+    jsonCharacter["speed"] = jsonArrayspeed;
 
-//    jsonArrayAcceleration.append(getAcceleration().x());
-//    jsonArrayAcceleration.append(getAcceleration().y());
-//    jsonCharacter["acceleration"] = jsonArrayAcceleration;
+    jsonArrayAcceleration.append(getAcceleration().x());
+    jsonArrayAcceleration.append(getAcceleration().y());
+    jsonCharacter["acceleration"] = jsonArrayAcceleration;
 
-//    return jsonCharacter;
+    return jsonCharacter;
 }
 
 void QuCharacter::fromJSON(QJsonObject &qJsonObject)
 {
-//    if(getInstanceId() == qJsonObject["instanceId"].toInt()){
-//        QJsonArray jsonArray = qJsonObject["position"].toArray();
-//        QVector2D vector2d;
-//        vector2d.setX(jsonArray.at(0).toDouble());
-//        vector2d.setX(jsonArray.at(1).toDouble());
-//        setPosition(vector2d);
+    if(getInstanceId() == qJsonObject["instanceId"].toInt()){
+        QJsonArray jsonArray = qJsonObject["position"].toArray();
+        QPointF QpoitF;
+        QpoitF.setX(jsonArray.at(0).toDouble());
+        QpoitF.setY(jsonArray.at(1).toDouble());
+        setPos(QpoitF);
 
-//        jsonArray = qJsonObject["speed"].toArray();
-//        vector2d.setX(jsonArray.at(0).toDouble());
-//        vector2d.setX(jsonArray.at(1).toDouble());
-//        setSpeed(vector2d);
+        QVector2D vector2d;
+        jsonArray = qJsonObject["speed"].toArray();
+        vector2d.setX(jsonArray.at(0).toDouble());
+        vector2d.setY(jsonArray.at(1).toDouble());
+        setSpeed(vector2d);
 
-//        jsonArray = qJsonObject["acceleration"].toArray();
-//        vector2d.setX(jsonArray.at(0).toDouble());
-//        vector2d.setX(jsonArray.at(1).toDouble());
-//        setAcceleration(vector2d);
-//    }
+        jsonArray = qJsonObject["acceleration"].toArray();
+        vector2d.setX(jsonArray.at(0).toDouble());
+        vector2d.setY(jsonArray.at(1).toDouble());
+        setAcceleration(vector2d);
+    }
 }

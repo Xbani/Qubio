@@ -13,7 +13,7 @@ QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObje
 {
     lastMessageIdSent = 0;
     lastPlayerIdGiven = 0;
-    jsonMap = nullptr;
+    jsonMap = new QJsonObject();
 
     quSocketServer = new QuSocketServer(this);
     quSocketServer->init(ipServer,portServer);
