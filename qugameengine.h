@@ -70,6 +70,8 @@ public:
     void create();
 
     inline QuGame* getQuGame() const {return quGame;};
+    inline QuUIWaitingRoom* getWaitingRoomHost() const {return uiWaitingRoomHost;};
+    inline QuUIWaitingRoom* getWaitingRoomJoin() const {return uiWaitingRoomJoin;};
     inline QuUI * getCurrentRoom() const {return dynamic_cast<QuUI *>(view->scene());}
     inline int getPlayerId() const {return playerId;};
     inline void setPlayerId(int playerId) {this->playerId = playerId;};
