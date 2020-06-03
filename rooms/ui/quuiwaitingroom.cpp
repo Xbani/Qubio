@@ -26,11 +26,16 @@ void QuUIWaitingRoom::toGame()
 void QuUIWaitingRoom::init()
 {
     button_close= new QuButtonClose();
+    button_go_game = new QuButtonGoGame(is_host);
 
     button_close->setX(7*width()/8);
     button_close->setY(height()/8);
 
+    button_go_game->setX(7*width()/8);
+    button_go_game->setY(7*height()/8);
+
     addItem(button_close);
+    addItem(button_go_game);
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 
@@ -52,6 +57,7 @@ void QuUIWaitingRoom::updatePlayerInfo()
         QJsonObject playerJson = QJsonValue(players_json[i]).toObject();
         QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["nickname"].toString(),playerJson["skin"].toDouble());
         player_info_map.insert(playerJson["playerId"].toInt(),player_info);
+        addItem(player_info);
     }
 
 }

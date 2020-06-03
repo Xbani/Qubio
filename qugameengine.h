@@ -11,6 +11,7 @@
 #include <network/client/qusocketclient.h>
 
 #include <rooms/qubuildermapframe.h>
+#include <rooms/quui.h>
 
 class QuUIMainMenu;
 class QuUIMultiplayer;
@@ -67,6 +68,7 @@ public:
     void create();
 
     inline QuGame* getQuGame() const {return quGame;};
+    inline QuUI * getCurrentRoom() const {return dynamic_cast<QuUI *>(view->scene());}
     inline int getPlayerId() const {return playerId;};
     inline void setPlayerId(int playerId) {this->playerId = playerId;};
     inline bool getIsHost() const {return isHost;};

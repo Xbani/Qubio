@@ -7,6 +7,7 @@
 #include <rooms/quui.h>
 
 #include <objects/ui/buttons/qubuttonclose.h>
+#include <objects/ui/buttons/qubuttongogame.h>
 
 #include <objects/ui/quplayerinfo.h>
 
@@ -19,6 +20,7 @@ private:
     QJsonArray * players_json;
     QMap<int,QuPlayerInfo *> player_info_map;
     QuButtonClose * button_close;
+    QuButtonGoGame * button_go_game;
 
     bool is_host;
 

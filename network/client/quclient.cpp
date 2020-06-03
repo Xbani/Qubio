@@ -9,6 +9,7 @@
 #include "qugameengine.h"
 #include "rooms/qugame.h"
 #include "objects/quentity.h"
+#include <rooms/ui/quuiwaitingroom.h>
 
 
 QuClient::QuClient(QHostAddress ipClient, int portClient,
@@ -131,9 +132,8 @@ void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
         lastIdMessageReceive = (*jsonPlayerList)["messageId"].toInt();
         QJsonArray *jsonPlayerArray = new QJsonArray();
         *jsonPlayerArray = (*jsonPlayerList)["playerList"].toArray();
-        //fonction a oscar
-        //TODO
-
+        QuUIWaitingRoom *quUIWaitingRoom = dynamic_cast<QuUIWaitingRoom *>(quGameEngine->getCurrentRoom());
+        quUIWaitingRoom->setPlayersJSON(jsonPlayerArray);
     }
 }
 
