@@ -45,9 +45,9 @@ QString QuUIJoin::getPort(){
     if(full_text.contains(":")){
         QString ip= full_text;
         while (!ip.startsWith(":")) {
-            ip.remove(1);
+            ip.remove(0,1);
         }
-        ip.remove(1);
+        ip.remove(0,1);
         return ip;
     }
     return "26676";
