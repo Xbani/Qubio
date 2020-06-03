@@ -13,14 +13,17 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-QuCharacter::QuCharacter()
-{
-    setAcceleration({0,QuPhysicsConst::G_FORCE});
-}
 
 QuCharacter::QuCharacter(int instance_id):QuEntity(instance_id)
 {
-
+    setAcceleration({0,QuPhysicsConst::G_FORCE});
+    animation_state = STATIC_LEFT;
+    strite_static_left  = QImage(":/resources/sprites/character/character_STATIC.png");
+    strite_static_right = QImage(":/resources/sprites/character/character_STATIC.png").mirrored(true, false);
+    strite_move_left    = QImage(":/resources/sprites/character/character_MOVE.png");
+    strite_move_right   = QImage(":/resources/sprites/character/character_MOVE.png").mirrored(true, false);
+    strite_jump_left    = QImage(":/resources/sprites/character/character_JUMP.png");
+    strite_jump_right   = QImage(":/resources/sprites/character/character_JUMP.png").mirrored(true, false);
 }
 
 QRectF QuCharacter::boundingRect() const
@@ -30,20 +33,34 @@ QRectF QuCharacter::boundingRect() const
 
 void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_JUMP.png"),QRectF(1,2,6,6));
-    qDebug() << animation_state;
-    if (animation_state == STATIC_RIGHT  || animation_state == STATIC_LEFT) {
-        painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_STATIC.png"),QRectF(1,2,6,6));
-        qDebug() << "STATIC";
+    QImage * sprite;
+
+    switch( animation_state )
+    {
+    case STATIC_RIGHT:
+        sprite = &strite_static_right;
+        break ;
+    case STATIC_LEFT :
+        sprite = &strite_static_left;
+        break ;
+    case MOVE_RIGHT :
+        sprite = &strite_move_right;
+        break ;
+    case MOVE_LEFT:
+        sprite = &strite_move_left;
+        break ;
+    case JUMP_RIGHT :
+        sprite = &strite_jump_right;
+        break ;
+    case JUMP_LEFT:
+        sprite = &strite_jump_left;
+        break ;
+    default:
+        qDebug() << "animation_stats invalid at the animation moment";
+        sprite = &strite_static_right;
     }
-    else if (animation_state == MOVE_RIGHT  || animation_state == MOVE_LEFT) {
-        painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_MOVE.png"),QRectF(1,2,6,6));
-        qDebug() << "MOVE";
-    }
-    else {
-        painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_JUMP.png"),QRectF(1,2,6,6));
-        qDebug() << "JUMP";
-    }
+    //QRectF paint_rect = boundingRect().adjust(boundingRect().x, boundingRect().y, boundingRect().width(), boundingRect().height());
+    painter->drawImage(boundingRect(), *sprite,QRectF(0,2,8,6));
 
 }
 
