@@ -151,9 +151,16 @@ void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
         lastIdMessageReceive = (*jsonPlayerList)["messageId"].toInt();
         QJsonArray *jsonPlayerArray = new QJsonArray();
         *jsonPlayerArray = (*jsonPlayerList)["playerList"].toArray();
-		
-        QuUIWaitingRoom *quUIWaitingRoom = dynamic_cast<QuUIWaitingRoom *>(quGameEngine->getCurrentRoom());
-        quUIWaitingRoom->setPlayersJSON(jsonPlayerArray);
+
+        QuUIWaitingRoom *quUIWaitingRoom;
+        if(quGameEngine->getIsHost()){
+            qDebug() << "isHost";
+            quUIWaitingRoom = quGameEngine->getWaitingRoomHost();
+        }
+        else{
+            qDebug() << "isJoin";
+            quUIWaitingRoom = quGameEngine->getWaitingRoomJoin();
+        }
 
         ++lastIdMessageSend;
         QJsonObject answer;
