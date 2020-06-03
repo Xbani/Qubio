@@ -14,7 +14,6 @@ class QuEntity : public QuObject
 {
 private:
     int instance_id;
-    QPointF previousPosition;
     QVector2D speed;
     QVector2D acceleration;
     bool previouslyOnGround;
@@ -30,10 +29,6 @@ public:
     inline bool getPreviouslyOnGround() const {return previouslyOnGround;}
     inline void setPreviouslyOnGround(bool value) {previouslyOnGround = value;}
 
-    inline QPointF getPreviousPosition() const {return previousPosition;}
-    inline void setPreviousPosition(QPointF previousPosition) {this->previousPosition = previousPosition;}
-    inline void setPreviousPositionX(float value) {previousPosition.setX(value);}
-    inline void setPreviousPositionY(float value) {previousPosition.setY(value);}
 
     inline QVector2D getSpeed() const {return speed;}
     inline void setSpeed(QVector2D speed) {this->speed = speed;}

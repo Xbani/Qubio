@@ -90,6 +90,22 @@ void QuPlayableCharacter::advance(int step)
         getAnimationState() == MOVE_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
     };
 
+    QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
+    if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_HORIZONTALE)
+    {
+        (newSpeed.x() < 0) ? setSpeedX(-QuPhysicsConst::MAX_VITESSE_HORIZONTALE) : setSpeedX(QuPhysicsConst::MAX_VITESSE_HORIZONTALE);
+    } else {
+        setSpeedX(newSpeed.x());
+    }
+    if (qAbs(newSpeed.y()) > QuPhysicsConst::MAX_VITESSE_VERTICALE)
+    {
+        (newSpeed.y() < 0) ? setSpeedY(-QuPhysicsConst::MAX_VITESSE_VERTICALE) : setSpeedY(QuPhysicsConst::MAX_VITESSE_VERTICALE);
+    } else {
+        setSpeedY(newSpeed.y());
+    }
+
+
+    setPos(x()+getSpeed().x()/60l*64, y()+getSpeed().y()/60l*64);
     /* ###################################################################################
      * ----------------------------------COLLISION----------------------------------------
      * ###################################################################################
@@ -106,24 +122,6 @@ void QuPlayableCharacter::advance(int step)
     //if there are no collision
     if (listCollision.isEmpty())
     {
-        //we check if new latteral speed is higher than MAX_VITESSE_LATERAL
-        QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
-        if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_HORIZONTALE)
-        {
-            (newSpeed.x() < 0) ? setSpeedX(-QuPhysicsConst::MAX_VITESSE_HORIZONTALE) : setSpeedX(QuPhysicsConst::MAX_VITESSE_HORIZONTALE);
-        } else {
-            setSpeedX(newSpeed.x());
-        }
-        if (qAbs(newSpeed.y()) > QuPhysicsConst::MAX_VITESSE_VERTICALE)
-        {
-            (newSpeed.y() < 0) ? setSpeedY(-QuPhysicsConst::MAX_VITESSE_VERTICALE) : setSpeedY(QuPhysicsConst::MAX_VITESSE_VERTICALE);
-        } else {
-            setSpeedY(newSpeed.y());
-        }
-
-        //update speed, position, previousPosition and previouslyOnGround
-        setPreviousPosition(pos());
-        setPos(x()+getSpeed().x()/60l*64, y()+getSpeed().y()/60l*64);
         setPreviouslyOnGround(false);
     }
 
@@ -181,35 +179,14 @@ void QuPlayableCharacter::advance(int step)
 
         if ((collisionTop or collisionBottom ))
         {
-            qDebug() << "colTopBot" << key_up;
-            //we check if new latteral speedx is higher than MAX_VITESSE_LATERAL
-            QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
-            if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_HORIZONTALE)
-            {
-                (newSpeed.x() < 0) ? setSpeedX(-QuPhysicsConst::MAX_VITESSE_HORIZONTALE) : setSpeedX(QuPhysicsConst::MAX_VITESSE_HORIZONTALE);
-            } else {
-                setSpeedX(newSpeed.x());
-            }
-
-            //update speed, position, previousPosition
-            setSpeedX(getSpeed().x()+getAcceleration().x()/60l);
             setSpeedY(0);
-
-            //repositionning of the character : bottom of the object if collisionTop, top of the object if collisionBottom
-            setX(x()+getSpeed().x()/60l*64);
             collisionTop ? setY(topCollidingObject->y() + topCollidingObject->boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject->y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
         }
 
-        else if (collisionLeft or collisionRight)
+        if (collisionLeft or collisionRight)
         {
-            qDebug() << "colLeftRight";
             setSpeedX(0);
-            setSpeedY(getSpeed().y()+getAcceleration().y()/60l);
-
-            //repositionning of the character : left of the object if collisionRight, right of the object if collisionLeft
-            setY(y()+getSpeed().y()/60l*64);
             collisionLeft ? setX(leftCollidingObject->x() + leftCollidingObject->boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject->x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
-            qDebug() << "collisionLeftRight";
         }
     }
 }

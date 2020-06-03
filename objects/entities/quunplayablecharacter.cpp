@@ -65,8 +65,6 @@ void QuCharacter::advance(int step)
             setSpeedY(newSpeed.y());
         }
 
-        //update speed, position, previousPosition and previouslyOnGround
-        setPreviousPosition(pos());
         setPos(x()+getSpeed().x()/60l*64, y()+getSpeed().y()/60l*64);
         setPreviouslyOnGround(false);
     }
@@ -124,21 +122,18 @@ void QuCharacter::advance(int step)
             //update speed, position, previousPosition and previouslyOnGround
             setSpeedX(getSpeed().x()+getAcceleration().x()/60l);
             setSpeedY(0);
-            setPos(x()+getSpeed().x()/60l*64, getPreviousPosition().y());
         }
 
         else if (collisionLeftOrRight)
         {
             setSpeedX(0);
             setSpeedY(getSpeed().y()+getAcceleration().y()/60l);
-            setPos(getPreviousPosition().x(), y()+getSpeed().y()/60l*64);
         }
 
         else //(collisionLeftOrRight and collisionTopOrBottom)
         {
             setSpeedX(0);
             setSpeedY(0);
-            setPos(getPreviousPosition());
         }
     }
 }
