@@ -73,22 +73,21 @@ void QuGame::init()
 
 void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
 {
-    int nbUnplayble = 0;
+    int nb = 0;
     foreach(QuPlayerInfo* quPlayerInfo, mapQuPlayerInfo){
         if (quGameEngine->getPlayerId() == quPlayerInfo->getPlayerId()){
             QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
             setFocusItem(mainCharacter);
-            mainCharacter->setPos(300, 200);
+            mainCharacter->setPos(nb*2*QuObject::CELL_SIZE, 3*QuObject::CELL_SIZE);
             addItem(mainCharacter);
             entities.insert(quPlayerInfo->getPlayerId(),mainCharacter);
         }else{
-            ++nbUnplayble;
             QuUnplayableCharacter *character = new QuUnplayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
-            character->setPos(300, 200);
+            character->setPos(nb*2*QuObject::CELL_SIZE, 3*QuObject::CELL_SIZE);
             addItem(character);
             entities.insert(quPlayerInfo->getPlayerId(),character);
         }
-
+        ++nb;
     }
 }
 
