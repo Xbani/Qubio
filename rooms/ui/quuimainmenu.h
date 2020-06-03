@@ -36,6 +36,8 @@ public:
     void toUISolo();
     void toBuilderMainFrame();
     void back() override;
+    int getColorHUE();
+    QString getNickName();
 
     void init();
 
