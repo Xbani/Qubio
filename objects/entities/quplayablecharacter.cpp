@@ -89,6 +89,9 @@ void QuPlayableCharacter::advance(int step)
         getPreviouslyOnGround() and getAnimationState() == JUMP_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
         getAnimationState() == MOVE_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
     };
+    if(!getPreviouslyOnGround()){
+        getAnimationState()==JUMP_LEFT || getAnimationState()==MOVE_LEFT || getAnimationState() == STATIC_LEFT ? setAnimationState(JUMP_LEFT):setAnimationState(JUMP_RIGHT);
+    }
 
     QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
     if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_HORIZONTALE)

@@ -13,14 +13,24 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-QuCharacter::QuCharacter()
+#include <tools/qutoolsprite.h>
+
+
+QuCharacter::QuCharacter(int instance_id):QuCharacter(instance_id,50)
 {
-    setAcceleration({0,QuPhysicsConst::G_FORCE});
+
 }
 
-QuCharacter::QuCharacter(int instance_id):QuEntity(instance_id)
+QuCharacter::QuCharacter(int instance_id, int hue):QuEntity(instance_id)
 {
-
+    setAcceleration({0,QuPhysicsConst::G_FORCE});
+    animation_state = STATIC_LEFT;
+    strite_static_left  = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_STATIC.png"),hue);
+    strite_static_right = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_STATIC.png").mirrored(true, false),hue);
+    strite_move_left    = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_MOVE.png"),hue);
+    strite_move_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_MOVE.png").mirrored(true, false),hue);
+    strite_jump_left    = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png"),hue);
+    strite_jump_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png").mirrored(true, false),hue);
 }
 
 QRectF QuCharacter::boundingRect() const
@@ -30,7 +40,37 @@ QRectF QuCharacter::boundingRect() const
 
 void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/perso.png"),QRectF(1,2,6,6));
+    QImage * sprite;
+
+    switch( animation_state )
+    {
+    case STATIC_RIGHT:
+        sprite = &strite_static_right;
+        break ;
+    case STATIC_LEFT :
+        sprite = &strite_static_left;
+        break ;
+    case MOVE_RIGHT :
+        sprite = &strite_move_right;
+        break ;
+    case MOVE_LEFT:
+        sprite = &strite_move_left;
+        break ;
+    case JUMP_RIGHT :
+        sprite = &strite_jump_right;
+        break ;
+    case JUMP_LEFT:
+        sprite = &strite_jump_left;
+        break ;
+    default:
+        qDebug() << "animation_stats invalid at the animation moment";
+        sprite = &strite_static_right;
+    }
+    QRectF paint_rect = boundingRect();
+//    paint_rect.setWidth(paint_rect.width()+2*QuObject::PIXEL_SIZE);
+//    paint_rect.setX(paint_rect.x()-1*QuObject::PIXEL_SIZE);
+    painter->drawImage(paint_rect, *sprite,QRectF(1,2,6,6));
+
 }
 
 QPainterPath QuCharacter::shape() const

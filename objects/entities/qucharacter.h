@@ -14,9 +14,17 @@ private:
     QString name;
     QColor color;
     int animation_state;
+
+    QImage strite_static_left;
+    QImage strite_static_right;
+    QImage strite_move_left;
+    QImage strite_move_right;
+    QImage strite_jump_left;
+    QImage strite_jump_right;
+
 public:
-    QuCharacter();
     QuCharacter(int instance_id);
+    QuCharacter(int instance_id,int hue);
     void step();
 
     // QGraphicsItem interface
