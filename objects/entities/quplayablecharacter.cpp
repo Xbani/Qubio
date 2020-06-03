@@ -13,9 +13,10 @@
 #include <iostream>
 #include <QtMath>
 #include <QKeyEvent>
+#include <rooms/qugame.h>
 
 
-QuPlayableCharacter::QuPlayableCharacter(int instance_id):QuCharacter(instance_id)
+QuPlayableCharacter::QuPlayableCharacter(int instance_id, int hue):QuCharacter(instance_id,hue)
 {
     setFlags(ItemIsFocusable);
     setFocus();
@@ -192,6 +193,9 @@ void QuPlayableCharacter::advance(int step)
             collisionLeft ? setX(leftCollidingObject->x() + leftCollidingObject->boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject->x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
         }
     }
+
+    QuGame *quGame = dynamic_cast<QuGame *>(scene());
+    quGame->sentToServer(toJSON());
 }
 
 void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)

@@ -52,7 +52,6 @@ void QuClient::connectToServer(QHostAddress ipServer, int portServer)
 void QuClient::receiveEntities(QJsonObject *jsonEntities)
 {
     if((*jsonEntities)["messageId"].toInt() > lastIdMessageReceive){
-        QList<QJsonObject> cantCatchMutex;
         lastIdMessageReceive = (*jsonEntities)["messageId"].toInt();
         QJsonArray jsonPlayerArray = (*jsonEntities)["entities"].toArray();
 
@@ -62,27 +61,10 @@ void QuClient::receiveEntities(QJsonObject *jsonEntities)
 
             QuEntity *entity = quGameEngine->getQuGame()->getEntities().take(entityJson["instanceId"].toInt());
             if(entity->getInstanceId() != quGameEngine->getPlayerId()){
-                if (entity->getMutex()){
                     entity->fromJSON(entityJson);
-                    entity->releaseMutex();
-                }else{
-                    cantCatchMutex.append(entityJson);
-                }
             }
         }
 
-        //for the entities that the mutex couldn't catch.
-        while (!cantCatchMutex.isEmpty()) {
-            QJsonObject entityJson = cantCatchMutex.front();
-            cantCatchMutex.pop_front();
-            QuEntity *entity = quGameEngine->getQuGame()->getEntities().take(entityJson["instanceId"].toInt());
-            if (entity->getMutex()){
-                entity->fromJSON(entityJson);
-                entity->releaseMutex();
-            }else{
-                cantCatchMutex.append(entityJson);
-            }
-        }
     }
 }
 

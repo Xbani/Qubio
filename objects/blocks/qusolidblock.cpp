@@ -25,9 +25,9 @@ void QuSolidBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawImage(boundingRect(),getSprite(),QRectF(0,0,sprite_size.width(),sprite_size.height()));
 }
 
-QJsonObject QuSolidBlock::toJSON()
+QJsonObject* QuSolidBlock::toJSON()
 {
-    return QJsonObject(); //TODO
+    return new QJsonObject(); //TODO
 }
 
 void QuSolidBlock::fromJSON(QJsonObject &qJsonObject)

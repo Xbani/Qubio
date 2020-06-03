@@ -11,6 +11,8 @@
 
 #include <objects/ui/quplayerinfo.h>
 
+#include <network/client/quclient.h>
+
 
 
 QuGame::QuGame(qreal x, qreal y, qreal width, qreal height, QObject *parent):QGraphicsScene(x,y,width,height,parent)
@@ -74,18 +76,25 @@ void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
     int nbUnplayble = 0;
     foreach(QuPlayerInfo* quPlayerInfo, mapQuPlayerInfo){
         if (quGameEngine->getPlayerId() == quPlayerInfo->getPlayerId()){
-            QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(quPlayerInfo->getPlayerId());
+            QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
             setFocusItem(mainCharacter);
             mainCharacter->setPos(300, 200);
             addItem(mainCharacter);
+            entities.insert(quPlayerInfo->getPlayerId(),mainCharacter);
         }else{
             ++nbUnplayble;
-            QuUnplayableCharacter *character = new QuUnplayableCharacter(quPlayerInfo->getPlayerId());
+            QuUnplayableCharacter *character = new QuUnplayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
             character->setPos(300, 200);
             addItem(character);
+            entities.insert(quPlayerInfo->getPlayerId(),character);
         }
 
     }
+}
+
+void QuGame::sentToServer(QJsonObject *jsonToSent)
+{
+    quGameEngine->getQuClient()->sendEntity(jsonToSent);
 }
 
 void QuGame::drawBackground(QPainter *painter, const QRectF &rect)

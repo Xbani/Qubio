@@ -15,7 +15,7 @@
 #include <QJsonObject>
 
 
-QuUnplayableCharacter::QuUnplayableCharacter(int instance_id):QuCharacter(instance_id)
+QuUnplayableCharacter::QuUnplayableCharacter(int instance_id, int hue):QuCharacter(instance_id,hue)
 {
 
 }

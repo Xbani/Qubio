@@ -62,9 +62,9 @@ void QuButton::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     update(boundingRect());
 }
 
-QJsonObject QuButton::toJSON()
+QJsonObject* QuButton::toJSON()
 {
-    return QJsonObject();
+    return new QJsonObject();
 }
 
 void QuButton::fromJSON(QJsonObject &qJsonObject)

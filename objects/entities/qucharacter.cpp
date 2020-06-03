@@ -80,27 +80,27 @@ QPainterPath QuCharacter::shape() const
     return path;
 }
 
-QJsonObject QuCharacter::toJSON()
+QJsonObject* QuCharacter::toJSON()
 {
-    QJsonObject jsonCharacter;
+    QJsonObject *jsonCharacter = new QJsonObject();
     QJsonArray jsonArrayPosition;
     QJsonArray jsonArrayspeed;
     QJsonArray jsonArrayAcceleration;
 
-    jsonCharacter["instanceId"] = getInstanceId();
-    jsonCharacter["classId"] = getClassId();
+    (*jsonCharacter)["instanceId"] = getInstanceId();
+    (*jsonCharacter)["classId"] = getClassId();
 
     jsonArrayPosition.append(pos().x());
     jsonArrayPosition.append(pos().y());
-    jsonCharacter["position"] = jsonArrayPosition;
+    (*jsonCharacter)["position"] = jsonArrayPosition;
 
     jsonArrayspeed.append(getSpeed().x());
     jsonArrayspeed.append(getSpeed().y());
-    jsonCharacter["speed"] = jsonArrayspeed;
+    (*jsonCharacter)["speed"] = jsonArrayspeed;
 
     jsonArrayAcceleration.append(getAcceleration().x());
     jsonArrayAcceleration.append(getAcceleration().y());
-    jsonCharacter["acceleration"] = jsonArrayAcceleration;
+    (*jsonCharacter)["acceleration"] = jsonArrayAcceleration;
 
     return jsonCharacter;
 }

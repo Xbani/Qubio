@@ -44,9 +44,9 @@ void QuTextBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawText(boundingRect().bottomLeft(),text);
 }
 
-QJsonObject QuTextBox::toJSON()
+QJsonObject* QuTextBox::toJSON()
 {
-    return QJsonObject(); //nothing to do
+    return new QJsonObject(); //nothing to do
 }
 
 void QuTextBox::fromJSON(QJsonObject &qJsonObject)

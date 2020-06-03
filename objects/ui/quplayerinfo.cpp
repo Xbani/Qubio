@@ -43,9 +43,9 @@ void QuPlayerInfo::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawText(boundingRect().bottomLeft(),player_name);
 }
 
-QJsonObject QuPlayerInfo::toJSON()
+QJsonObject* QuPlayerInfo::toJSON()
 {
-    return QJsonObject(); //do nothing
+    return new QJsonObject(); //do nothing
 }
 
 void QuPlayerInfo::fromJSON(QJsonObject &qJsonObject)

@@ -18,6 +18,7 @@ public:
     void newMapFromJson(QJsonObject* JsonMap);
     void init();
     void createPlayers(QMap<int,QuPlayerInfo *>);
+    void sentToServer(QJsonObject *jsonToSent);
 
 
 

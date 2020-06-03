@@ -80,6 +80,7 @@ public:
 
     inline QString getNickname()const {return "todo getNickname in quGameEngine";};
     inline float getSkinColor() const {return 76.3;};
+    inline QuClient * getQuClient() const {return quClient;};
 };
 
 #endif // QUGAMEENGINE_H
