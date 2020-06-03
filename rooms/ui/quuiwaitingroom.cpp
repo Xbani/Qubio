@@ -15,6 +15,7 @@ QuUIWaitingRoom::QuUIWaitingRoom()
 QuUIWaitingRoom::QuUIWaitingRoom(qreal x, qreal y, qreal width, qreal height, bool is_host, QObject *parent):QuUI(x,y,width,height,parent)
 {
     this->is_host=is_host;
+
     init();
 }
 
@@ -38,6 +39,11 @@ void QuUIWaitingRoom::init()
     addItem(button_go_game);
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));
+
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
+        game_engine->setIsHost(is_host);
+    }
 
     connect(this,&QuUIWaitingRoom::newPlayerList,this,&QuUIWaitingRoom::updatePlayerInfo);
 }
