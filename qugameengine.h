@@ -19,6 +19,7 @@ class QuUIJoin;
 class QuUIWaitingRoom;
 class QuGame;
 class QuClient;
+class QuServer;
 class QHostAddress;
 
 class QuGameEngine: public QObject
@@ -37,6 +38,7 @@ private:
     QuGame *quGame;
 
     QuClient *quClient;
+    QuServer *quServer;
 
     QGraphicsView * view;
 
@@ -59,8 +61,8 @@ public:
     QHostAddress getIpJoin();
     int getPortJoin();
 
-    QString getIpHost();
-    QString getPortHost();
+    QHostAddress getIpHost();
+    int getPortHost();
 
     void create();
 

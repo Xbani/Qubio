@@ -14,6 +14,8 @@
 
 #include <rooms/qugame.h>
 
+#include <network/server/quserver.h>
+
 QuGameEngine::QuGameEngine()
 {
     create();
@@ -54,16 +56,20 @@ void QuGameEngine::toQuGame()
 
 void QuGameEngine::fromUIJoinToWaitingRoom()
 {
-    quClient= new QuClient(getIpJoin(),getPortJoin(),this);
-    quClient->start();
+    quClient = new QuClient(QHostAddress::LocalHost,25667,this);
+    quClient->connectToServer(getIpJoin(),getPortJoin());
     view->setScene(uiWaitingRoomJoin);
 
 }
 
 void QuGameEngine::fromUIHostToWaitingRoom()
 {
-    quClient= new QuClient(getIpJoin(),getPortJoin(),this);
-    quClient->start();
+    quServer = new QuServer(QHostAddress::LocalHost,25666,this);
+    if (25666 == 25667)
+        quClient = new QuClient(QHostAddress::LocalHost,25668,this);
+    else
+        quClient = new QuClient(QHostAddress::LocalHost,25667,this);
+    quClient->connectToServer(QHostAddress::LocalHost, 25666);
     view->setScene(uiWaitingRoomJoin);
 }
 
@@ -80,6 +86,16 @@ QHostAddress QuGameEngine::getIpJoin()
 int QuGameEngine::getPortJoin()
 {
     return uiJoin->getPort().toInt();
+}
+
+QHostAddress QuGameEngine::getIpHost()
+{
+    return QHostAddress(uiHost->getIp());
+}
+
+int QuGameEngine::getPortHost()
+{
+    return uiHost->getPort().toInt();
 }
 
 void QuGameEngine::create()

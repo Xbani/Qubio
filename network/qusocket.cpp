@@ -10,7 +10,7 @@ QuSocket::QuSocket(QObject *parent) : QObject(parent)
  * @brief QuSocket::send sends a datagram
  * @param datagram
  */
-void QuSocket::send(QNetworkDatagram *datagram) {
+void QuSocket::send(QNetworkDatagram* datagram) {
     udpSocket->writeDatagram(*datagram);
 }
 
@@ -20,7 +20,7 @@ void QuSocket::send(QNetworkDatagram *datagram) {
  * @param port
  */
 void QuSocket::init(QHostAddress ip, int port) {
-    qDebug()<<"client";
+    qDebug()<<"Création Socket";
     //créer un lien vers la carte rés
     udpSocket = new QUdpSocket(this);
     //écouter un port
