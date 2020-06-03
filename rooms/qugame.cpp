@@ -1,11 +1,15 @@
 #include "qugame.h"
 
 #include <QPainter>
-#include <QuGameEngine.h>
+#include <qugameengine.h>
 
 #include <objects/blocks/qusolidblock.h>
 
 #include <objects/entities/quplayablecharacter.h>
+
+#include <objects/entities/quunplayablecharacter.h>
+
+#include <objects/ui/quplayerinfo.h>
 
 
 
@@ -28,10 +32,7 @@ void QuGame::init()
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 
     // create scene objects (pointers), object-> setPos(x,y), addItem(object);
-    QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(0);
-    setFocusItem(mainCharacter);
-    mainCharacter->setPos(300, 200);
-    addItem(mainCharacter);
+
 
     QuSolidBlock* block;
     for(int i = 0 ; i < 16 ; ++i){
@@ -70,8 +71,19 @@ void QuGame::init()
 
 void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
 {
+    int nbUnplayble = 0;
     foreach(QuPlayerInfo* quPlayerInfo, mapQuPlayerInfo){
-        //if (quGameEngine->getPlayerId() == )
+        if (quGameEngine->getPlayerId() == quPlayerInfo->getPlayerId()){
+            QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(quPlayerInfo->getPlayerId());
+            setFocusItem(mainCharacter);
+            mainCharacter->setPos(300, 200);
+            addItem(mainCharacter);
+        }else{
+            ++nbUnplayble;
+            QuUnplayableCharacter *character = new QuUnplayableCharacter(quPlayerInfo->getPlayerId());
+            character->setPos(300, 200);
+            addItem(character);
+        }
 
     }
 }
