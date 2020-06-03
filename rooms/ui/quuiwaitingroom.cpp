@@ -27,6 +27,7 @@ void QuUIWaitingRoom::toGame()
 void QuUIWaitingRoom::init()
 {
     button_close= new QuButtonClose();
+    qDebug() << "is host : " << is_host;
     button_go_game = new QuButtonGoGame(is_host);
 
     button_close->setX(7*width()/8);
@@ -40,10 +41,6 @@ void QuUIWaitingRoom::init()
 
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 
-    if(parent()!=nullptr){
-        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
-        game_engine->setIsHost(is_host);
-    }
 
     connect(this,&QuUIWaitingRoom::newPlayerList,this,&QuUIWaitingRoom::updatePlayerInfo);
 }
@@ -60,8 +57,9 @@ void QuUIWaitingRoom::updatePlayerInfo()
     player_info_map.clear();
     int i;
     for(i=0 ; i < players_json->size() ; ++i){
-        QJsonObject playerJson = QJsonValue(players_json[i]).toObject();
-        QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["nickname"].toString(),playerJson["skin"].toDouble());
+        QJsonObject playerJson = QJsonValue((*players_json)[i]).toObject();
+        QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["playerId"].toInt(),playerJson["nickname"].toString(),playerJson["skin"].toInt());
+        qDebug() << "quuiwintingroom playerjson : " << playerJson;
         player_info_map.insert(playerJson["playerId"].toInt(),player_info);
         addItem(player_info);
     }
