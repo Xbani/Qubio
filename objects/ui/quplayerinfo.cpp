@@ -7,11 +7,12 @@
 #include <tools/qutoolsprite.h>
 
 
-QuPlayerInfo::QuPlayerInfo(int player_id, QString player_name, int player_hue)
+QuPlayerInfo::QuPlayerInfo(int player_id, QString player_name, int player_hue, int pos)
 {
     this->player_id=player_id;
     this->player_name=player_name;
     this->player_hue=player_hue;
+    this->pos=pos;
     sprite=QImage(":/resources/sprites/ui/playerinfo.png");
     sprite_player=QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/ui/buttons/button14.png"),player_hue);
 }
@@ -31,7 +32,7 @@ void QuPlayerInfo::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     QSize sprite_perso_size= sprite_player.size();
 
     QRect perso_rect = QRect(boundingRect().width()-sprite_perso_size.width()*QuObject::PIXEL_SIZE*2,
-                             -QuObject::PIXEL_SIZE*2,
+                             -QuObject::PIXEL_SIZE*2+sprite_perso_size.height()*QuObject::PIXEL_SIZE*2*pos,
                              sprite_perso_size.width()*QuObject::PIXEL_SIZE*2,
                              sprite_perso_size.height()*QuObject::PIXEL_SIZE*2);
 

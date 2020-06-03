@@ -61,7 +61,7 @@ void QuUIWaitingRoom::updatePlayerInfo()
         QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["playerId"].toInt(),playerJson["nickname"].toString(),playerJson["skin"].toInt());
         qDebug() << "quuiwintingroom playerjson : " << playerJson;
         player_info_map.insert(playerJson["playerId"].toInt(),player_info);
-        addItem(player_info);
+        addItem(player_info,i);
     }
 
 }

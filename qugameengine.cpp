@@ -68,7 +68,7 @@ void QuGameEngine::toQuGameMultiPlayers()
 
 void QuGameEngine::fromUIJoinToWaitingRoom()
 {
-    quClient = new QuClient(QHostAddress::LocalHost,25667,this);
+    quClient = new QuClient(QHostAddress("25.50.178.58"),25667,this);
     quClient->connectToServer(getIpJoin(),getPortJoin());
     view->setScene(uiWaitingRoomJoin);
 

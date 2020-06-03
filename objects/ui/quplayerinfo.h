@@ -13,10 +13,11 @@ private:
     int player_hue;
     QString player_name;
     int player_id;
+    int pos;
 
 
 public:
-    QuPlayerInfo(int player_id, QString player_name, int hue);
+    QuPlayerInfo(int player_id, QString player_name, int hue, int pos);
 
     // QGraphicsItem interface
 public:
