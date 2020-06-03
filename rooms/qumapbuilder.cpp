@@ -16,17 +16,33 @@
 
 QuMapBuilder::QuMapBuilder(qreal x, qreal y, qreal width, qreal height, QObject *parent) : QGraphicsScene(x,y,width,height,parent)
 {
-    //initMapBuilder();
     blockSelected = 0;
     mousePressed = false;
     mouseMoved = false;
-    setSceneRect(0,0,QuObject::CELL_SIZE*25,QuObject::CELL_SIZE*20);
+    initMapBuilder();
 }
 
 void QuMapBuilder::selectBlock(int block)
 {
     qDebug()<<block;
     blockSelected = block;
+}
+
+void QuMapBuilder::mapFromJson(QJsonObject *mapJson)
+{
+
+}
+
+QJsonObject *QuMapBuilder::mapToJson()
+{
+
+}
+
+void QuMapBuilder::createNewMap(QString mapName, QSize mapSize)
+{
+    this->mapName = mapName;
+    clearScene();
+    resizeScene(mapSize);
 }
 
 void QuMapBuilder::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -91,32 +107,32 @@ void QuMapBuilder::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void QuMapBuilder::initMapBuilder()
 {
-
-/* voir addLine */
-    QRectF rect = sceneRect();
-
-    for (int i = 1; i < rect.height()/QuObject::CELL_SIZE; ++i){
-        addLine(0,i*QuObject::CELL_SIZE,rect.width(),i*QuObject::CELL_SIZE,QPen(QColor(0,255,255)));
-    }
-
-
-    for (int i = 1; i <  rect.width()/QuObject::CELL_SIZE; ++i){
-        addLine(i*QuObject::CELL_SIZE,0,i*QuObject::CELL_SIZE,rect.height(),QPen(QColor(0,255,255)));
-    }
-
-    //QFrame *qFrame = new QFrame();
-    //addWidget(qFrame);
-   /* qFrame->set
-            (0,qMenuBar->size().rheight());*/
-
-   /* addWidget(qMenuBar);
-
-    connect(signalMapper, SIGNAL(mapped(int)),
-                this, SLOT(selectBlock(int)));*/
+    resizeScene(QSize(20,10));
 }
-/*QuSolidBlock *quSolideBlock = new QuSolidBlock(1);
-quSolideBlock->setPos(50,50);
-addItem(quSolideBlock);*/
+
+void QuMapBuilder::clearScene()
+{
+    QList<QGraphicsItem*> listItem = items();
+    for(int itemI = 0; itemI < listItem.size(); ++itemI){
+        QGraphicsItem *myItem = listItem.at(itemI);
+        removeItem(myItem);
+        delete(myItem);
+    }
+}
+
+void QuMapBuilder::resizeScene(QSize mapSize)
+{
+    this->mapSize = mapSize;
+    setSceneRect(0,0,QuObject::CELL_SIZE*mapSize.width(),QuObject::CELL_SIZE*mapSize.height());
+
+    for (int i = 0; i <= mapSize.height(); ++i){
+        addLine(0,i*QuObject::CELL_SIZE,mapSize.width()*QuObject::CELL_SIZE,i*QuObject::CELL_SIZE,QPen(QColor(0,255,255)));
+    }
+
+    for (int i = 0; i <= mapSize.width(); ++i){
+        addLine(i*QuObject::CELL_SIZE,0,i*QuObject::CELL_SIZE,mapSize.height()*QuObject::CELL_SIZE,QPen(QColor(0,255,255)));
+    }
+}
 
 /* QPushButton *buttonTest = new QPushButton("clickMe");
  QGraphicsProxyWidget *proxy =this->addWidget(buttonTest);

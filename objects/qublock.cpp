@@ -10,9 +10,6 @@ QuBlock::QuBlock():QuBlock(0)
 QuBlock::QuBlock(int texture_id)
 {
     this->texture_id=texture_id;
-    /*QString path=QString(":/resources/sprites/blocks/block");
-    path.append(QString::number(texture_id));
-    path.append(".png");*/
     QuListBlock quListBlock;
     sprite=QImage(quListBlock.getBlockFile(QuListBlock::SolidBlock(texture_id)));
 }

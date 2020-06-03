@@ -26,6 +26,13 @@ private:
     Ui::QuBuilderMapFrame *ui;
     QSignalMapper *signalMapper;
     QuMapBuilder *mapBuilder;
+
+private slots:
+    void openMap();
+    void newMap();
+    void save();
+    void saveUnder();
+    void rename();
 };
 
 #endif // QUBUILDERMAPFRAME_H
