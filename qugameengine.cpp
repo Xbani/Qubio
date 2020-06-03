@@ -76,12 +76,12 @@ void QuGameEngine::fromUIJoinToWaitingRoom()
 
 void QuGameEngine::fromUIHostToWaitingRoom()
 {
-    quServer = new QuServer(QHostAddress::LocalHost,25666,this);
-    if (25666 == 25667)
-        quClient = new QuClient(QHostAddress::LocalHost,25668,this);
+    quServer = new QuServer(getIpHost(),getPortHost(),this);
+    if (getPortHost() == 25667)
+        quClient = new QuClient(getIpHost(),25668,this);
     else
-        quClient = new QuClient(QHostAddress::LocalHost,25667,this);
-    quClient->connectToServer(QHostAddress::LocalHost, 25666);
+        quClient = new QuClient(getIpHost(),25667,this);
+    quClient->connectToServer(getIpHost(), getPortHost());
     view->setScene(uiWaitingRoomHost);
 }
 
