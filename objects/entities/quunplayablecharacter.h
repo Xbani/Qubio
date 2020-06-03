@@ -13,6 +13,7 @@ class QuUnplayableCharacter : public QuCharacter
 public:
     QuUnplayableCharacter();
     QuUnplayableCharacter(int instance_id);
+    void advance(int step) override;
 
     // QuObject interface
 public:
