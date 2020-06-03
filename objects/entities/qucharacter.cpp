@@ -12,6 +12,7 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <qdatetime.h>
 
 #include <tools/qutoolsprite.h>
 
@@ -51,10 +52,20 @@ void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         sprite = &strite_static_left;
         break ;
     case MOVE_RIGHT :
-        sprite = &strite_move_right;
+        if ((QTime::currentTime().msec()) / 100 % 5 <=  2) {
+            sprite = &strite_static_right;
+        }
+        else {
+            sprite = &strite_move_right;
+        }
         break ;
     case MOVE_LEFT:
-        sprite = &strite_move_left;
+        if (QTime::currentTime().msec() / 100 % 5 <=  2) {
+            sprite = &strite_static_left;
+        }
+        else {
+            sprite = &strite_move_left;
+        }
         break ;
     case JUMP_RIGHT :
         sprite = &strite_jump_right;
