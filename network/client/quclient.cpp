@@ -161,6 +161,7 @@ void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
             qDebug() << "isJoin";
             quUIWaitingRoom = quGameEngine->getWaitingRoomJoin();
         }
+        quUIWaitingRoom->setPlayersJSON(jsonPlayerArray);
 
         ++lastIdMessageSend;
         QJsonObject answer;
