@@ -22,6 +22,10 @@ SOURCES += \
     network/client/qusocketclient.cpp \
     network/qusocket.cpp \
     objects/enumblock/qulistblock.cpp \
+    network/server/quexpectedanswer.cpp \
+    network/server/quinfoclient.cpp \
+    network/server/quserver.cpp \
+    network/server/qusocketserver.cpp \
     objects/blocks/qusolidblock.cpp \
     objects/blocks/quspawnblock.cpp \
     objects/entities/qucharacter.cpp \
@@ -64,6 +68,10 @@ HEADERS += \
     mainwindow.h \
     network/qusocket.h \
     objects/enumblock/qulistblock.h \
+    network/server/quexpectedanswer.h \
+    network/server/quinfoclient.h \
+    network/server/quserver.h \
+    network/server/qusocketserver.h \
     objects/blocks/qusolidblock.h \
     objects/blocks/quspawnblock.h \
     objects/entities/qucharacter.h \
