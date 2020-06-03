@@ -84,19 +84,18 @@ int QuGameEngine::getPortJoin()
 
 void QuGameEngine::create()
 {
-    uiMainMenu = new QuUIMainMenu(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiMultiplayer = new QuUIMultiplayer(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiHost = new QuUIHost(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiJoin = new QuUIJoin(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiWaitingRoomHost = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,true,this);
-    uiWaitingRoomJoin = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,false,this);
+    uiMainMenu = new QuUIMainMenu(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiMultiplayer = new QuUIMultiplayer(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiHost = new QuUIHost(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiJoin = new QuUIJoin(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiWaitingRoomHost = new QuUIWaitingRoom(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,true,this);
+    uiWaitingRoomJoin = new QuUIWaitingRoom(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,false,this);
     quBuilderMapFrame = new QuBuilderMapFrame(new QGraphicsView());
 
     view = new QGraphicsView();
     view->setScene(uiMainMenu);
     view->show();
     timer = new QTimer;
-    timer->setInterval(1000/60l);
     timer->stop();
 
 

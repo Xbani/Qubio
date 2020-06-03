@@ -39,7 +39,9 @@ void QuPlayableCharacter::advance(int step)
      * ----------------MOVEMENTS BUTTON EVENTS----------------------
      * #############################################################
      */
-    setFocus();
+    if(!hasFocus()){
+        setFocus();
+    }
     if(key_left && !key_right)
     {
         if (getAnimationState() == MOVE_RIGHT or getAnimationState() == JUMP_RIGHT)
@@ -47,7 +49,7 @@ void QuPlayableCharacter::advance(int step)
             setAcceleration({0,QuPhysicsConst::G_FORCE});
             setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         }
-        setAccelerationX(getAcceleration().x() - QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
+        setAccelerationX(-QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
         setAccelerationY(QuPhysicsConst::G_FORCE);
         if (getPreviouslyOnGround()) setAnimationState(MOVE_LEFT);
     }
@@ -59,14 +61,14 @@ void QuPlayableCharacter::advance(int step)
             setAcceleration({0,QuPhysicsConst::G_FORCE});
             setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         }
-        setAccelerationX(getAcceleration().x() + QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
+        setAccelerationX(QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
         setAccelerationY(QuPhysicsConst::G_FORCE);
         if (getPreviouslyOnGround()) setAnimationState(MOVE_RIGHT);
     }
 
     if(key_up && getPreviouslyOnGround())
     {
-        setAccelerationY(getAcceleration().y() - QuPhysicsConst::ACC_JUMP);
+        setAccelerationY(- QuPhysicsConst::ACC_JUMP);
         getAnimationState() == MOVE_RIGHT or getAnimationState() == STATIC_RIGHT ? setAnimationState(JUMP_RIGHT) : setAnimationState(JUMP_LEFT);
     }
 
@@ -94,10 +96,10 @@ void QuPlayableCharacter::advance(int step)
      */
 
 
-    QuSolidBlock topCollidingObject;
-    QuSolidBlock bottomCollidingObject;
-    QuSolidBlock leftCollidingObject;
-    QuSolidBlock rightCollidingObject;
+    QuSolidBlock * topCollidingObject;
+    QuSolidBlock * bottomCollidingObject;
+    QuSolidBlock * leftCollidingObject;
+    QuSolidBlock * rightCollidingObject;
 
     QList <QGraphicsItem*> listCollision = scene()->collidingItems(this);
 
@@ -149,7 +151,7 @@ void QuPlayableCharacter::advance(int step)
             if (sinAngle <= -QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionTop = true;
-                topCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
+                topCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
             }
 
             // collision from the bottom
@@ -157,28 +159,29 @@ void QuPlayableCharacter::advance(int step)
             {
                 collisionBottom = true;
                 setPreviouslyOnGround(true);
-                bottomCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
+                bottomCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
             }
 
             // collision from the left
             if (cosAngle >= QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionLeft = true;
-                leftCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
+                leftCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
             }
 
             // collision from the right
             if (cosAngle <= -QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionRight = true;
-                rightCollidingObject.setPos(listCollision[i]->x(), listCollision[i]->y());
+                rightCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
             }
         }
 
         //update speed and position
 
-        if (collisionTop or collisionBottom)
+        if ((collisionTop or collisionBottom ))
         {
+            qDebug() << "colTopBot" << key_up;
             //we check if new latteral speedx is higher than MAX_VITESSE_LATERAL
             QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
             if (qAbs(newSpeed.x()) > QuPhysicsConst::MAX_VITESSE_HORIZONTALE)
@@ -194,49 +197,19 @@ void QuPlayableCharacter::advance(int step)
 
             //repositionning of the character : bottom of the object if collisionTop, top of the object if collisionBottom
             setX(x()+getSpeed().x()/60l*64);
-            collisionTop ? setY(topCollidingObject.y() + topCollidingObject.boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject.y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
+            collisionTop ? setY(topCollidingObject->y() + topCollidingObject->boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject->y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
         }
 
         else if (collisionLeft or collisionRight)
         {
+            qDebug() << "colLeftRight";
             setSpeedX(0);
             setSpeedY(getSpeed().y()+getAcceleration().y()/60l);
 
             //repositionning of the character : left of the object if collisionRight, right of the object if collisionLeft
             setY(y()+getSpeed().y()/60l*64);
-            collisionLeft ? setX(leftCollidingObject.x() + leftCollidingObject.boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject.x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
+            collisionLeft ? setX(leftCollidingObject->x() + leftCollidingObject->boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject->x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
             qDebug() << "collisionLeftRight";
-        }
-        else if (collisionTop and collisionLeft)
-        {
-            setSpeedX(0);
-            setSpeedY(0);
-            setPos(leftCollidingObject.x() + leftCollidingObject.boundingRect().width() + QuPhysicsConst::QUANTUM, topCollidingObject.y() + topCollidingObject.boundingRect().height() + QuPhysicsConst::QUANTUM);
-            qDebug() << "collisionTopLeft";
-        }
-
-        else if (collisionTop and collisionRight)
-        {
-            setSpeedX(0);
-            setSpeedY(0);
-            setPos(rightCollidingObject.x() - boundingRect().width() - QuPhysicsConst::QUANTUM, topCollidingObject.y() + topCollidingObject.boundingRect().height() + QuPhysicsConst::QUANTUM);
-            qDebug() << "collisionTopRight";
-        }
-
-        else if (collisionBottom and collisionLeft)
-        {
-            setSpeedX(0);
-            setSpeedY(0);
-            setPos(leftCollidingObject.x() + leftCollidingObject.boundingRect().width() + QuPhysicsConst::QUANTUM, bottomCollidingObject.y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
-            qDebug() << "collisionBottomLeft";
-        }
-
-        else if (collisionBottom and collisionRight)
-        {
-            setSpeedX(0);
-            setSpeedY(0);
-            setPos(rightCollidingObject.x() - boundingRect().width() - QuPhysicsConst::QUANTUM, bottomCollidingObject.y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
-            qDebug() << "collisionBottomRight";
         }
     }
 }
