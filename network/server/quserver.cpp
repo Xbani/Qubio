@@ -6,7 +6,7 @@
 #include "quserver.h"
 #include "quinfoclient.h"
 #include "qusocketserver.h"
-#include "network/MessageType.h"
+#include "network/messagetype.h"
 #include "quexpectedanswer.h"
 
 QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObject(parent)

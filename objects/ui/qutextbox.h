@@ -19,7 +19,8 @@ public:
     QString getText();
 
 public:
-    static const int MAX_TEXT_SIZE=22;
+    static const int MAX_TEXT_SIZE=60;
+    static const int TEXT_FONT_SIZE=25;
 
 
     // QGraphicsItem interface

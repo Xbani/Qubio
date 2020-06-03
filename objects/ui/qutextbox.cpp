@@ -40,8 +40,19 @@ void QuTextBox::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
     painter->drawImage(boundingRect(),sprite,sprite.rect());
 
-    painter->setFont(QFont("Sans Serif", 42));
-    painter->drawText(boundingRect().bottomLeft(),text);
+    painter->setFont(QFont("Sans Serif", TEXT_FONT_SIZE));
+
+
+    // to center the text
+    int xGap = QuObject::PIXEL_SIZE * 3;
+    int yGap = sprite.size().height()*QuObject::PIXEL_SIZE /2 - TEXT_FONT_SIZE / 2;
+
+    qreal xCoord = boundingRect().bottomLeft().x() + xGap;
+    qreal yCoord = boundingRect().bottomLeft().y() - yGap;
+    QPointF pointWhereDraw = boundingRect().bottomLeft();
+    pointWhereDraw.setX(xCoord);
+    pointWhereDraw.setY(yCoord);
+    painter->drawText(pointWhereDraw,text);
 }
 
 QJsonObject QuTextBox::toJSON()
