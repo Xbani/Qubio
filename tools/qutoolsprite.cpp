@@ -38,8 +38,8 @@ const QImage QuToolSprite::setCharacterHUE(QImage sprite_ref, int hue)
 
     QSize sprite_size=sprite_ref.size();
 
-    QColor light_ref=sprite_ref.pixelColor(1,7);
-    QColor dark_ref=sprite_ref.pixelColor(5,4);
+    QColor light_ref=QColor(172,50,50);
+    QColor dark_ref=QColor(121,15,15);
 
     QColor light_new=light_ref;
     light_new.setHsl(hue+light_ref.hue()%360,light_ref.saturation(),light_ref.value());

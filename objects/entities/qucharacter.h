@@ -24,6 +24,7 @@ private:
 
 public:
     QuCharacter(int instance_id);
+    QuCharacter(int instance_id,int hue);
     void step();
 
     // QGraphicsItem interface

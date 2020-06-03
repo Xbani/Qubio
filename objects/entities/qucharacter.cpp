@@ -13,17 +13,24 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
+#include <tools/qutoolsprite.h>
 
-QuCharacter::QuCharacter(int instance_id):QuEntity(instance_id)
+
+QuCharacter::QuCharacter(int instance_id):QuCharacter(instance_id,50)
+{
+
+}
+
+QuCharacter::QuCharacter(int instance_id, int hue):QuEntity(instance_id)
 {
     setAcceleration({0,QuPhysicsConst::G_FORCE});
     animation_state = STATIC_LEFT;
-    strite_static_left  = QImage(":/resources/sprites/character/character_STATIC.png");
-    strite_static_right = QImage(":/resources/sprites/character/character_STATIC.png").mirrored(true, false);
-    strite_move_left    = QImage(":/resources/sprites/character/character_MOVE.png");
-    strite_move_right   = QImage(":/resources/sprites/character/character_MOVE.png").mirrored(true, false);
-    strite_jump_left    = QImage(":/resources/sprites/character/character_JUMP.png");
-    strite_jump_right   = QImage(":/resources/sprites/character/character_JUMP.png").mirrored(true, false);
+    strite_static_left  = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_STATIC.png"),hue);
+    strite_static_right = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_STATIC.png").mirrored(true, false),hue);
+    strite_move_left    = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_MOVE.png"),hue);
+    strite_move_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_MOVE.png").mirrored(true, false),hue);
+    strite_jump_left    = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png"),hue);
+    strite_jump_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png").mirrored(true, false),hue);
 }
 
 QRectF QuCharacter::boundingRect() const
@@ -59,8 +66,10 @@ void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         qDebug() << "animation_stats invalid at the animation moment";
         sprite = &strite_static_right;
     }
-    //QRectF paint_rect = boundingRect().adjust(boundingRect().x, boundingRect().y, boundingRect().width(), boundingRect().height());
-    painter->drawImage(boundingRect(), *sprite,QRectF(0,2,8,6));
+    QRectF paint_rect = boundingRect();
+//    paint_rect.setWidth(paint_rect.width()+2*QuObject::PIXEL_SIZE);
+//    paint_rect.setX(paint_rect.x()-1*QuObject::PIXEL_SIZE);
+    painter->drawImage(paint_rect, *sprite,QRectF(1,2,6,6));
 
 }
 
