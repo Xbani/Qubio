@@ -32,6 +32,7 @@ public:
     void init();
     void setPlayersJSON(QJsonArray * players_json);
     void updatePlayerInfo();
+    inline QMap<int,QuPlayerInfo *> getQuPlayerInfos() const {return player_info_map;}
 
     // QuUI interface
 public:
