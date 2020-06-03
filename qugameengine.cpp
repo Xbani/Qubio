@@ -88,7 +88,6 @@ QHostAddress QuGameEngine::getIpJoin()
 
 int QuGameEngine::getPortJoin()
 {
-    qDebug() << "getPortJoin() " << uiJoin->getPort().toInt();
     return uiJoin->getPort().toInt();
 }
 
@@ -102,7 +101,6 @@ QHostAddress QuGameEngine::getIpHost()
 
 int QuGameEngine::getPortHost()
 {
-    qDebug() << "getPortHost() " << uiHost->getPort().toInt();
     return uiHost->getPort().toInt();
 }
 
