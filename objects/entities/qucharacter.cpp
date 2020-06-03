@@ -30,7 +30,21 @@ QRectF QuCharacter::boundingRect() const
 
 void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/perso.png"),QRectF(1,2,6,6));
+    // painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_JUMP.png"),QRectF(1,2,6,6));
+    qDebug() << animation_state;
+    if (animation_state == STATIC_RIGHT  || animation_state == STATIC_LEFT) {
+        painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_STATIC.png"),QRectF(1,2,6,6));
+        qDebug() << "STATIC";
+    }
+    else if (animation_state == MOVE_RIGHT  || animation_state == MOVE_LEFT) {
+        painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_MOVE.png"),QRectF(1,2,6,6));
+        qDebug() << "MOVE";
+    }
+    else {
+        painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/character_JUMP.png"),QRectF(1,2,6,6));
+        qDebug() << "JUMP";
+    }
+
 }
 
 QPainterPath QuCharacter::shape() const
