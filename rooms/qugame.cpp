@@ -1,6 +1,7 @@
 #include "qugame.h"
 
 #include <QPainter>
+#include <QuGameEngine.h>
 
 #include <objects/blocks/qusolidblock.h>
 
@@ -10,6 +11,10 @@
 
 QuGame::QuGame(qreal x, qreal y, qreal width, qreal height, QObject *parent):QGraphicsScene(x,y,width,height,parent)
 {
+    if(parent!=nullptr){
+        quGameEngine = dynamic_cast<QuGameEngine *>(parent);
+    }
+
     init();
 }
 
@@ -61,6 +66,14 @@ void QuGame::init()
         addItem(block);
     }
 
+}
+
+void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
+{
+    foreach(QuPlayerInfo* quPlayerInfo, mapQuPlayerInfo){
+        //if (quGameEngine->getPlayerId() == )
+
+    }
 }
 
 void QuGame::drawBackground(QPainter *painter, const QRectF &rect)
