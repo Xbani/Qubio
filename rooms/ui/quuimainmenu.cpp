@@ -45,6 +45,16 @@ void QuUIMainMenu::back()
     }
 }
 
+QString QuUIMainMenu::getNickName()
+{
+    return text_box->getText();
+}
+
+int QuUIMainMenu::getColorHUE()
+{
+    return button_perso_color->getHUE();
+}
+
 void QuUIMainMenu::init()
 {
     button_solo= new QuButtonSolo();

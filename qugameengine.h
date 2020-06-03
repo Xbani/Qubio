@@ -12,6 +12,7 @@
 
 #include <rooms/qubuildermapframe.h>
 #include <rooms/quui.h>
+#include "rooms/ui/quuimainmenu.h"
 
 class QuUIMainMenu;
 class QuUIMultiplayer;
@@ -76,8 +77,8 @@ public:
     inline bool getIsHost() const {return isHost;};
     inline void setIsHost(int isHost) {this->isHost = isHost;};
 
-    inline QString getNickname()const {return "todo getNickname in quGameEngine";};
-    inline float getSkinColor() const {return 76.3;};
+    inline QString getNickname()const {return uiMainMenu->getNickName();};
+    inline int getSkinColor() const {return uiMainMenu->getColorHUE();};
 };
 
 #endif // QUGAMEENGINE_H

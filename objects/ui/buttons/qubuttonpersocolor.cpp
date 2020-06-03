@@ -8,6 +8,11 @@ QuButtonPersoColor::QuButtonPersoColor():QuButton(14,14)
     sprite_ref=sprite;
 }
 
+int QuButtonPersoColor::getHUE()
+{
+    return hue;
+}
+
 void QuButtonPersoColor::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     hue+=30;
