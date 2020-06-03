@@ -41,8 +41,9 @@ QString QuUIHost::getIp()
     return full_text;
 }
 QString QuUIHost::getPort(){
+    qDebug() << "Host : getPort";
     QString full_text=text_box_ip->getText();
-    if(!full_text.contains(":")){
+    if(full_text.contains(":")){
         QString ip= full_text;
         while (!ip.startsWith(":")) {
             ip.remove(0,1);
