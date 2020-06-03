@@ -10,19 +10,21 @@ class QuPlayerInfo : public QuObject
 private:
     QImage sprite;
     QImage sprite_player;
-    QColor player_color;
+    int player_hue;
     QString player_name;
+    int player_id;
 
 
 public:
-    QuPlayerInfo();
-    QuPlayerInfo(QString player_name, QColor player_color);
+    QuPlayerInfo(int player_id, QString player_name, int hue);
 
     // QGraphicsItem interface
 public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+public:
+    inline int getPlayerId() const {return player_id;};
     // QuObject interface
 public:
     QJsonObject toJSON() override;
