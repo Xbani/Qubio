@@ -33,6 +33,8 @@ int QuPlayableCharacter::getClassId()
 
 void QuPlayableCharacter::advance(int step)
 {
+    qDebug() << getAnimationState();
+
     if (!step)
         return;
 
@@ -107,14 +109,13 @@ void QuPlayableCharacter::advance(int step)
     } else {
         setSpeedY(newSpeed.y());
     }
-
-
     setPos(x()+getSpeed().x()/60l*64, y()+getSpeed().y()/60l*64);
+
+
     /* ###################################################################################
      * ----------------------------------COLLISION----------------------------------------
      * ###################################################################################
      */
-
 
     QuSolidBlock * topCollidingObject;
     QuSolidBlock * bottomCollidingObject;

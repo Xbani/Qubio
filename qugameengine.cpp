@@ -136,6 +136,4 @@ void QuGameEngine::create()
     view->show();
     timer = new QTimer;
     timer->stop();
-
-
 }
