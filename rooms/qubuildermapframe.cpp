@@ -89,11 +89,14 @@ void QuBuilderMapFrame::openMap()
     }
 
     QTextStream in(&file);
-    QJsonDocument jsonDoc;
-    jsonDoc.fromJson(in.readAll().toUtf8());
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(in.readAll().toUtf8());
+    //qDebug()<<in.readAll().toUtf8();
+    //jsonDoc.fromJson();
     file.close();
+    qDebug()<<jsonDoc.toJson(QJsonDocument::Compact);
     QJsonObject *jsonObj = new QJsonObject(jsonDoc.object());
     mapBuilder->mapFromJson(jsonObj);
+    delete(jsonObj);
 }
 
 void QuBuilderMapFrame::newMap()
