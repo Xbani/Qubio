@@ -1,5 +1,6 @@
 #include "quplayablecharacter.h"
 #include "quphysicsconst.h"
+#include "quunplayablecharacter.h"
 #include "objects/blocks/qusolidblock.h"
 
 #include "qucharacter.h"
@@ -117,10 +118,11 @@ void QuPlayableCharacter::advance(int step)
      * ###################################################################################
      */
 
-    QuSolidBlock * topCollidingObject;
-    QuSolidBlock * bottomCollidingObject;
-    QuSolidBlock * leftCollidingObject;
-    QuSolidBlock * rightCollidingObject;
+
+    QuObject * topCollidingObject;
+    QuObject * bottomCollidingObject;
+    QuObject * leftCollidingObject;
+    QuObject * rightCollidingObject;
 
     QList <QGraphicsItem*> listCollision = scene()->collidingItems(this);
 
@@ -154,7 +156,10 @@ void QuPlayableCharacter::advance(int step)
             if (sinAngle <= -QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionTop = true;
-                topCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                topCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]);
+                if(topCollidingObject==nullptr){
+                    topCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
 
             // collision from the bottom
@@ -163,6 +168,9 @@ void QuPlayableCharacter::advance(int step)
                 collisionBottom = true;
                 setPreviouslyOnGround(true);
                 bottomCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                if(bottomCollidingObject==nullptr){
+                    bottomCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
 
             // collision from the left
@@ -170,6 +178,9 @@ void QuPlayableCharacter::advance(int step)
             {
                 collisionLeft = true;
                 leftCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                if(leftCollidingObject==nullptr){
+                    leftCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
 
             // collision from the right
@@ -177,6 +188,9 @@ void QuPlayableCharacter::advance(int step)
             {
                 collisionRight = true;
                 rightCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                if(rightCollidingObject==nullptr){
+                    rightCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
         }
 

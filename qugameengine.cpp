@@ -68,7 +68,7 @@ void QuGameEngine::toQuGameMultiPlayers()
 
 void QuGameEngine::fromUIJoinToWaitingRoom()
 {
-    quClient = new QuClient(QHostAddress("25.50.178.58"),25667,this);
+    quClient = new QuClient(QHostAddress("127.0.0.0"),25667,this);
     quClient->connectToServer(getIpJoin(),getPortJoin());
     view->setScene(uiWaitingRoomJoin);
 
@@ -98,7 +98,7 @@ void QuGameEngine::askStartGame()
 QHostAddress QuGameEngine::getIpJoin()
 {
     if(uiJoin->getIp()=="localhost"){
-        return QHostAddress::LocalHost;
+        return QHostAddress("127.0.0.1");
     }
     return QHostAddress(uiJoin->getIp());
 }
@@ -111,7 +111,7 @@ int QuGameEngine::getPortJoin()
 QHostAddress QuGameEngine::getIpHost()
 {
     if(uiHost->getIp()=="localhost"){
-        return QHostAddress::LocalHost;
+        return QHostAddress("127.0.0.1");
     }
     return QHostAddress(uiHost->getIp());
 }

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QHostAddress>
 #include <QVector3D>
-#include "network/MessageType.h"
+#include "network/messagetype.h"
 class QuExpectedAnswer;
 
 /**
