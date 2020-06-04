@@ -14,6 +14,8 @@
 
 #include <objects/ui/buttons/qubuttonsound.h>
 
+#include <medias/sounds/qusoundplayer.h>
+
 
 /**
  * @brief The QuUIMainMenu class
@@ -41,6 +43,7 @@ public:
     void back() override;
     int getColorHUE();
     QString getNickName();
+    QuSoundPlayer *getSoundPlayer();
 
     void init();
 

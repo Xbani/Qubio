@@ -1,5 +1,7 @@
 #include "qubuttonsound.h"
 
+#include <rooms/ui/quuimainmenu.h>
+
 QuButtonSound::QuButtonSound():QuButton(17,18)
 {
 
@@ -16,11 +18,15 @@ QuButtonSound::QuButtonSound():QuButton(17,18)
 
 void QuButtonSound::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    QuUIMainMenu * uiMainMenu=dynamic_cast<QuUIMainMenu *>(scene());
+
     if(is_on){
         is_on= false;
 
         setSprite(tex_id_off);
         setSpriteHover(tex_id_off_hover);
+
+        uiMainMenu->getSoundPlayer()->setVolume(0);
     }
 
     else{
@@ -28,5 +34,6 @@ void QuButtonSound::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
         setSprite(tex_id_on);
         setSpriteHover(tex_id_on_hover);
+        uiMainMenu->getSoundPlayer()->setVolume(100);
     }
 }

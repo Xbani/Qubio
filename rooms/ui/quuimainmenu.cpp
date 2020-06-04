@@ -50,6 +50,14 @@ QString QuUIMainMenu::getNickName()
     return text_box->getText();
 }
 
+QuSoundPlayer *QuUIMainMenu::getSoundPlayer()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        return game_engine->getSoundPlayer();
+    }
+}
+
 int QuUIMainMenu::getColorHUE()
 {
     return button_perso_color->getHUE();
