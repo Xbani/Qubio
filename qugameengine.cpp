@@ -68,6 +68,9 @@ void QuGameEngine::toQuGameMultiPlayers()
     view->setScene(quGame);
     timer->start(1000 / 60);
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_GAME);
+    soundPlayer->play();
 }
 
 void QuGameEngine::fromUIJoinToWaitingRoom()
