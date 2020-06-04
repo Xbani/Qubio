@@ -1,6 +1,6 @@
 #include "qublock.h"
 
-#include <objects/EnumBlock/qulistblock.h>
+#include <objects/enumblock/qulistblock.h>
 
 QuBlock::QuBlock():QuBlock(0)
 {

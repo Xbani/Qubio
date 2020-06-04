@@ -2,11 +2,15 @@
 #include "qumapbuilder.h"
 #include "ui_qubuildermapframe.h"
 
-#include <objects/EnumBlock/qulistblock.h>
+#include <objects/enumblock/qulistblock.h>
 
 #include <objects/quobject.h>
 
 #include <rooms/ui/qunewmapform.h>
+
+#include <QDir>
+#include <QFileDialog>
+#include <QMessageBox>
 
 QuBuilderMapFrame::QuBuilderMapFrame(QGraphicsView *view, QWidget *parent) :
     QMainWindow(parent),
@@ -50,7 +54,10 @@ void QuBuilderMapFrame::init()
     connect(action,SIGNAL(triggered()),this,SLOT(saveUnder()));
 
     qMenu->addSeparator();
-    qMenu->addAction("Renomer");
+    action = new QAction("Renomer",qMenu);
+    qMenu->addAction(action);
+    connect(action,SIGNAL(triggered()),this,SLOT(rename()));
+
     ui->menubar->addMenu(qMenu);
 
 
@@ -64,6 +71,7 @@ void QuBuilderMapFrame::init()
         qMenu->addAction(action);
     }
     ui->menubar->addMenu(qMenu);
+
     //use a signalMapper for call a slot whith a param
     connect(signalMapper, SIGNAL(mapped(int)), mapBuilder, SLOT(selectBlock(int)));
 
@@ -71,7 +79,21 @@ void QuBuilderMapFrame::init()
 
 void QuBuilderMapFrame::openMap()
 {
+    QString fileName = QFileDialog::getOpenFileName(this);
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) {
+        QMessageBox::warning(this, tr("Application"),
+                             tr("Cannot read file %1:\n%2.")
+                             .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+        return;
+    }
 
+    QTextStream in(&file);
+    QJsonDocument jsonDoc;
+    jsonDoc.fromJson(in.readAll().toUtf8());
+    file.close();
+    QJsonObject *jsonObj = new QJsonObject(jsonDoc.object());
+    mapBuilder->mapFromJson(jsonObj);
 }
 
 void QuBuilderMapFrame::newMap()
@@ -85,16 +107,35 @@ void QuBuilderMapFrame::newMap()
 
 void QuBuilderMapFrame::save()
 {
-
+    QString fileName = mapBuilder->getMapName();
+    fileName += ".qumap";
+    QDir dirSaves(QCoreApplication::applicationDirPath() + "/saves");
+    if(!dirSaves.exists()){
+        dirSaves.mkdir(QCoreApplication::applicationDirPath() + "/saves");
+    }
+    QFile file(QCoreApplication::applicationDirPath() + "/saves/" + fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
+        QMessageBox::warning(this, tr("Application"),
+                             tr("Cannot read file %1:\n%2.")
+                             .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+        return;
+    }
+    QTextStream out(&file);
+    QJsonObject *jsonMap = mapBuilder->mapToJson();
+    QJsonDocument jsonDoc(*jsonMap);
+    out << jsonDoc.toJson(QJsonDocument::Compact);
+    delete(jsonMap);
 }
 
 void QuBuilderMapFrame::saveUnder()
 {
-
+    QMessageBox::information(this, tr("info"),
+                         tr("not implement"));
 }
 
 void QuBuilderMapFrame::rename()
 {
-
+    QMessageBox::information(this, tr("info"),
+                         tr("not implement"));
 }
 

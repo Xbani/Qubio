@@ -16,7 +16,9 @@ private:
     void clearScene();
     void resizeScene(QSize size);
 
-
+public :
+    QString getMapName() const;
+    QSize getMapSize() const;
 
 public slots:
     void selectBlock(int block);
@@ -30,6 +32,7 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
+    //attribut
 private:
     QSignalMapper *signalMapper;
     int blockSelected;

@@ -35,7 +35,7 @@ void QuMapBuilder::mapFromJson(QJsonObject *mapJson)
 
 QJsonObject *QuMapBuilder::mapToJson()
 {
-
+    return new QJsonObject();
 }
 
 void QuMapBuilder::createNewMap(QString mapName, QSize mapSize)
@@ -61,27 +61,30 @@ void QuMapBuilder::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton){
         QPointF pos = event->scenePos();
-        QList<QGraphicsItem*> listItem = items();
-        int posBlockX = pos.rx()-((int)pos.rx()%QuObject::CELL_SIZE);
-        int posBlockY = pos.ry()-((int)pos.ry()%QuObject::CELL_SIZE);
-        /*if(posBlockX == 0 && posBlockY == 0){
-            posBlockX = 1;
-            posBlockY = 1;
-        }*/
-        for(int itemI = 0; itemI < listItem.size(); ++itemI){
-            QGraphicsItem *myItem = listItem.at(itemI);
-            QPointF posItem = myItem->pos();
-            if (posItem.rx() == posBlockX && posItem.ry() == posBlockY){
-                if(dynamic_cast<QuBlock*>(myItem)){
-                    removeItem(myItem);
-                    delete(myItem);
+        //if in the map
+        if (pos.rx() >= 0 && pos.rx() <= mapSize.width()*QuBlock::CELL_SIZE &&
+                pos.ry() >= 0 && pos.ry() <= mapSize.height()*QuBlock::CELL_SIZE){
+            QList<QGraphicsItem*> listItem = items();
+            int posBlockX = pos.rx()-((int)pos.rx()%QuObject::CELL_SIZE);
+            int posBlockY = pos.ry()-((int)pos.ry()%QuObject::CELL_SIZE);
+            /*if(posBlockX == 0 && posBlockY == 0){
+                posBlockX = 1;
+                posBlockY = 1;
+            }*/
+            for(int itemI = 0; itemI < listItem.size(); ++itemI){
+                QGraphicsItem *myItem = listItem.at(itemI);
+                QPointF posItem = myItem->pos();
+                if (posItem.rx() == posBlockX && posItem.ry() == posBlockY){
+                    if(dynamic_cast<QuBlock*>(myItem)){
+                        removeItem(myItem);
+                        delete(myItem);
+                    }
                 }
             }
+            QuSolidBlock *quSolideBlock = new QuSolidBlock(blockSelected);
+            quSolideBlock->setPos(posBlockX,posBlockY);
+            addItem(quSolideBlock);
         }
-        QuSolidBlock *quSolideBlock = new QuSolidBlock(blockSelected);
-        quSolideBlock->setPos(posBlockX,posBlockY);
-        addItem(quSolideBlock);
-
     }else if (event->button() == Qt::RightButton){
         QPointF pos = event->scenePos();
         QList<QGraphicsItem*> listItem = items();
@@ -103,6 +106,16 @@ void QuMapBuilder::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 
+}
+
+QSize QuMapBuilder::getMapSize() const
+{
+    return mapSize;
+}
+
+QString QuMapBuilder::getMapName() const
+{
+    return mapName;
 }
 
 void QuMapBuilder::initMapBuilder()
