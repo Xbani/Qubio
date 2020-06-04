@@ -2,7 +2,7 @@
 #define QUEXPECTEDANSWER_H
 
 #include <QObject>
-#include "network/MessageType.h"
+#include "network/messagetype.h"
 
 /**
  * @brief The QuExpectedAnswer class represents an answer expected from a client
