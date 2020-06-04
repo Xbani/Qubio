@@ -35,9 +35,9 @@ void QuGameEngine::toUIMultiplayer()
 void QuGameEngine::toUIMainMenu()
 {
     view->setScene(uiMainMenu);
-//    soundPlayer->clearPlaylist();
-//    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
-//    soundPlayer->play();
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
+    soundPlayer->play();
 }
 
 void QuGameEngine::toUIHost()
@@ -75,9 +75,9 @@ void QuGameEngine::fromUIJoinToWaitingRoom()
     quClient = new QuClient(QHostAddress("127.0.0.0"),25667,this);
     quClient->connectToServer(getIpJoin(),getPortJoin());
     view->setScene(uiWaitingRoomJoin);
-//    soundPlayer->clearPlaylist();
-//    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
-//    soundPlayer->play();
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
+    soundPlayer->play();
 }
 
 void QuGameEngine::fromUIHostToWaitingRoom()
@@ -89,9 +89,9 @@ void QuGameEngine::fromUIHostToWaitingRoom()
         quClient = new QuClient(getIpHost(),25667,this);
     quClient->connectToServer(getIpHost(), getPortHost());
     view->setScene(uiWaitingRoomHost);
-//    soundPlayer->clearPlaylist();
-//    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
-//    soundPlayer->play();
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
+    soundPlayer->play();
 }
 
 void QuGameEngine::toBuilderMapFrame()
@@ -146,7 +146,7 @@ void QuGameEngine::create()
     timer = new QTimer;
     timer->stop();
 
-//    soundPlayer = new QuSoundPlayer();
-//    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
-//    soundPlayer->play();
+    soundPlayer = new QuSoundPlayer();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
+    soundPlayer->play();
 }
