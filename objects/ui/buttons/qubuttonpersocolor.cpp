@@ -2,6 +2,10 @@
 
 #include <tools/qutoolsprite.h>
 
+#include <QGraphicsSceneMouseEvent>
+
+#include <QDebug>
+
 QuButtonPersoColor::QuButtonPersoColor():QuButton(14,14)
 {
     hue=0;
@@ -15,9 +19,18 @@ int QuButtonPersoColor::getHUE()
 
 void QuButtonPersoColor::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    hue+=30;
+    if (event->button() == Qt::LeftButton)    // Left button...
+    {
+        hue+=30;
+    }
+    else if (event->button() == Qt::RightButton)   // Right button...
+    {
+        qDebug() << "ahuehuee";
+        hue-=30;
+    }
     sprite=QuToolSprite::SetSpriteCharacterHUE(hue);
     sprite_hover=sprite;
     update();
+
 
 }

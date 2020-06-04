@@ -12,6 +12,8 @@
 
 #include <objects/ui/qutextbox.h>
 
+#include <objects/ui/buttons/qubuttonsound.h>
+
 
 /**
  * @brief The QuUIMainMenu class
@@ -26,6 +28,7 @@ private:
     QuButtonClose * button_close;
     QuButtonPersoColor * button_perso_color;
     QuButtonMapBuilder * button_map_builder;
+    QuButtonSound * button_sound;
 
     QuTextBox * text_box;
 public:

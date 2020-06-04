@@ -18,17 +18,8 @@ QuButton::QuButton(int texture_id, int texture_hover_id)
     this->texture_id=texture_id;
     this->texture_hover_id=texture_hover_id;
 
-    QString path        = QString(":/resources/sprites/ui/buttons/button");
-    QString path_hover  = QString(":/resources/sprites/ui/buttons/button");
-
-    path.append(QString::number(texture_id));
-    path_hover.append(QString::number(texture_hover_id));
-
-    path.append(".png");
-    path_hover.append(".png");
-
-    sprite          = QImage(path);
-    sprite_hover    = QImage(path_hover);
+    setSprite(texture_id);
+    setSpriteHover(texture_hover_id);
 }
 
 QRectF QuButton::boundingRect() const
@@ -72,7 +63,23 @@ void QuButton::fromJSON(QJsonObject &qJsonObject)
     //do nothing
 }
 
+void QuButton::setSprite(int texture_id)
+{
+    QString path        = QString(":/resources/sprites/ui/buttons/button");
+    path.append(QString::number(texture_id));
+    path.append(".png");
+    sprite          = QImage(path);
+}
+
+void QuButton::setSpriteHover(int texture_id_hover)
+{
+    QString path_hover  = QString(":/resources/sprites/ui/buttons/button");
+    path_hover.append(QString::number(texture_hover_id));
+    path_hover.append(".png");
+    sprite_hover    = QImage(path_hover);
+}
 void QuButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    qDebug() << "JUJU";
     event->accept();
 }

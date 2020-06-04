@@ -48,6 +48,7 @@ SOURCES += \
     objects/ui/buttons/qubuttonmulti.cpp \
     objects/ui/quplayerinfo.cpp \
     objects/ui/qutextbox.cpp \
+    objects/ui/buttons/qubuttonsound.cpp \
     qugameengine.cpp \
     rooms/qubuildermapframe.cpp \
     quphysicsconst.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     objects/ui/buttons/qubuttonmulti.h \
     objects/ui/quplayerinfo.h \
     objects/ui/qutextbox.h \
+    objects/ui/buttons/qubuttonsound.h \
     qugameengine.h \
     rooms/qubuildermapframe.h \
     quphysicsconst.h \
@@ -118,3 +120,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES +=

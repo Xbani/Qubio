@@ -31,5 +31,11 @@
         <file>resources/sprites/character/character_JUMP.png</file>
         <file>resources/sprites/character/character_MOVE.png</file>
         <file>resources/sprites/character/character_STATIC.png</file>
+        <file>resources/sounds/mainTheme.wav</file>
+        <file>resources/sounds/waiting.wav</file>
+        <file>resources/sprites/ui/buttons/button17.png</file>
+        <file>resources/sprites/ui/buttons/button18.png</file>
+        <file>resources/sprites/ui/buttons/button19.png</file>
+        <file>resources/sprites/ui/buttons/button20.png</file>
     </qresource>
 </RCC>
