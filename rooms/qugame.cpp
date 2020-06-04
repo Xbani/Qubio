@@ -33,42 +33,28 @@ void QuGame::init()
 {
     setBackgroundBrush(QBrush(QColor(39,39,68)));
 
-    // create scene objects (pointers), object-> setPos(x,y), addItem(object);
-
-
     QuSolidBlock* block;
-    for(int i = 0 ; i < 16 ; ++i){
+    for(int i = 0 ; i < 32 ; ++i){
         block = new QuSolidBlock(1);
         block->setPos(i*QuObject::CELL_SIZE,7*QuObject::CELL_SIZE);
         addItem(block);
-    }
-    for(int i = 0 ; i < 16 ; i+=2){
-        block = new QuSolidBlock(1);
-        block->setPos(i*QuObject::CELL_SIZE,6*QuObject::CELL_SIZE);
-        addItem(block);
-    }
-    for(int i = 0 ; i < 16 ; i+=4){
-        block = new QuSolidBlock(1);
-        block->setPos(i*QuObject::CELL_SIZE,5*QuObject::CELL_SIZE);
-        addItem(block);
-    }
-    //top
-    for(int i = 0 ; i < 16 ; ++i){
-        block = new QuSolidBlock(1);
-        block->setPos(i*QuObject::CELL_SIZE,0*QuObject::CELL_SIZE);
-        addItem(block);
-    }
-    for(int i = 0 ; i < 16 ; i+=2){
-        block = new QuSolidBlock(1);
-        block->setPos(i*QuObject::CELL_SIZE,1*QuObject::CELL_SIZE);
-        addItem(block);
-    }
-    for(int i = 0 ; i < 16 ; i+=4){
-        block = new QuSolidBlock(1);
-        block->setPos(i*QuObject::CELL_SIZE,2*QuObject::CELL_SIZE);
-        addItem(block);
-    }
 
+    block = new QuSolidBlock(1);
+    block->setPos(5*QuObject::CELL_SIZE,6*QuObject::CELL_SIZE);
+    addItem(block);
+
+    block = new QuSolidBlock(1);
+    block->setPos(5*QuObject::CELL_SIZE,4*QuObject::CELL_SIZE);
+    addItem(block);
+
+    block = new QuSolidBlock(1);
+    block->setPos(7*QuObject::CELL_SIZE,4*QuObject::CELL_SIZE);
+    addItem(block);
+
+    block = new QuSolidBlock(1);
+    block->setPos(9*QuObject::CELL_SIZE,4*QuObject::CELL_SIZE);
+    addItem(block);
+    }
 }
 
 void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)

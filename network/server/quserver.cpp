@@ -24,7 +24,7 @@ QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObje
     //this->timer->callOnTimeout(this, SLOT(handlePlayersConnection()));
     connect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     timer->start();
-    qDebug()<<"server créer";
+    //qDebug()<<"server créer";
 }
 
 void QuServer::startGame()
@@ -59,7 +59,7 @@ void QuServer::sendEntitiesToAll()
     QJsonArray jsonArrayEntities;
     lastMessageIdSent ++;
     foreach(QJsonObject *jsonEntity, jsonEntitiesMap) {
-        qDebug()<<"foreach";
+        //qDebug()<<"foreach";
         QJsonValue jsonValueEntity(*jsonEntity);
         jsonArrayEntities.append(jsonValueEntity);
      }
