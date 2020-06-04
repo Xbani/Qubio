@@ -30,12 +30,68 @@ void QuMapBuilder::selectBlock(int block)
 
 void QuMapBuilder::mapFromJson(QJsonObject *mapJson)
 {
-
+    this->mapName = (*mapJson)["name"].toString();
+    QJsonArray sizeArray = (*mapJson)["size"].toArray();
+    QSize size;
+    size.setWidth(sizeArray[0].toInt());
+    size.setHeight(sizeArray[1].toInt());
+    clearScene();
+    resizeScene(size);
+    QJsonArray blocksArray = (*mapJson)["blocks"].toArray();
+    int arrayPos = 0;
+    for(arrayPos = 0; arrayPos < sizeArray.size(); arrayPos++) {
+        QJsonObject jsonBlock = blocksArray[arrayPos].toObject();
+        QJsonArray coordsArray = jsonBlock["coords"].toArray();
+        int blockNumber = 0;
+        for(blockNumber = 0; blockNumber < blocksArray.size(); blockNumber++) {
+            QuSolidBlock* solidBlock = new QuSolidBlock(jsonBlock["blockType"].toInt());
+            QJsonArray blockCoordsArray = coordsArray[blockNumber].toArray();
+            int blockX = blockCoordsArray[0].toInt();
+            int blockY = blockCoordsArray[1].toInt();
+            solidBlock->setPos(blockX * QuObject::CELL_SIZE, blockY * QuObject::CELL_SIZE);
+            addItem(solidBlock);
+        }
+    }
 }
 
 QJsonObject *QuMapBuilder::mapToJson()
 {
+    QJsonObject *mapJson = new QJsonObject();
+    (*mapJson)["name"] = this->mapName;
+    QJsonArray sizeArray;
+    sizeArray.append(mapSize.width());
+    sizeArray.append(mapSize.height());
+    (*mapJson)["size"] = (*mapJson)["size"];
+    QJsonArray blocksArray;
+    QuListBlock quListBlock;
+    int numTypeBlock = 0;
+    for(numTypeBlock = 0; numTypeBlock < quListBlock.getNumberOfSolidBlock(); numTypeBlock++) {
+        QJsonObject *jsonBlock = new QJsonObject();
+        (*jsonBlock)["blockType"] = numTypeBlock;
+        QJsonArray *coordsArray = new QJsonArray();
+        int blockNumber = 0;
+        for(blockNumber = 0; blockNumber < blocksArray.size(); blockNumber++) {
+            for(int itemI = 0; itemI < items().size(); ++itemI){
+                QGraphicsItem *myItem = items().at(itemI);
+                QuBlock *block = dynamic_cast<QuBlock*>(myItem);
+                if(block){
+                    if(block->getTextureId() == numTypeBlock){
+                        QJsonArray *coords = new QJsonArray();
+                        coords->append(block->pos().rx());
+                        coords->append(block->pos().ry());
+                    }
+                }
 
+            }
+
+        }
+        (*jsonBlock)["coords"] = *coordsArray;
+        blocksArray.append(*jsonBlock);
+        delete(coordsArray);
+        delete(jsonBlock);
+    }
+    (*mapJson)["blocks"] = blocksArray;
+    return mapJson;
 }
 
 void QuMapBuilder::createNewMap(QString mapName, QSize mapSize)
@@ -102,7 +158,6 @@ void QuMapBuilder::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             }
         }
     }
-
 }
 
 void QuMapBuilder::initMapBuilder()
