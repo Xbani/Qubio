@@ -14,6 +14,8 @@
 
 #include <rooms/qugame.h>
 
+#include <network/server/quserver.h>
+
 QuGameEngine::QuGameEngine()
 {
     create();
@@ -22,6 +24,7 @@ QuGameEngine::QuGameEngine()
 QuGameEngine::~QuGameEngine()
 {
     view->close();
+    //delete soundPlayer;
 }
 
 void QuGameEngine::toUIMultiplayer()
@@ -32,6 +35,9 @@ void QuGameEngine::toUIMultiplayer()
 void QuGameEngine::toUIMainMenu()
 {
     view->setScene(uiMainMenu);
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
+    soundPlayer->play();
 }
 
 void QuGameEngine::toUIHost()
@@ -52,19 +58,40 @@ void QuGameEngine::toQuGame()
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
 }
 
+void QuGameEngine::toQuGameMultiPlayers()
+{
+    quGame = new QuGame(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
+    if (isHost)
+        quGame->createPlayers(uiWaitingRoomHost->getQuPlayerInfos());
+    else
+        quGame->createPlayers(uiWaitingRoomJoin->getQuPlayerInfos());
+    view->setScene(quGame);
+    timer->start(1000 / 60);
+    connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
+}
+
 void QuGameEngine::fromUIJoinToWaitingRoom()
 {
-    quClient= new QuClient(getIpJoin(),getPortJoin(),this);
-    quClient->start();
+    quClient = new QuClient(QHostAddress("127.0.0.0"),25667,this);
+    quClient->connectToServer(getIpJoin(),getPortJoin());
     view->setScene(uiWaitingRoomJoin);
-
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
+    soundPlayer->play();
 }
 
 void QuGameEngine::fromUIHostToWaitingRoom()
 {
-    quClient= new QuClient(getIpJoin(),getPortJoin(),this);
-    quClient->start();
-    view->setScene(uiWaitingRoomJoin);
+    quServer = new QuServer(getIpHost(),getPortHost(),this);
+    if (getPortHost() == 25667)
+        quClient = new QuClient(getIpHost(),25668,this);
+    else
+        quClient = new QuClient(getIpHost(),25667,this);
+    quClient->connectToServer(getIpHost(), getPortHost());
+    view->setScene(uiWaitingRoomHost);
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
+    soundPlayer->play();
 }
 
 void QuGameEngine::toBuilderMapFrame()
@@ -72,8 +99,16 @@ void QuGameEngine::toBuilderMapFrame()
     quBuilderMapFrame->show();
 }
 
+void QuGameEngine::askStartGame()
+{
+    quClient->askStartGame();
+}
+
 QHostAddress QuGameEngine::getIpJoin()
 {
+    if(uiJoin->getIp()=="localhost"){
+        return QHostAddress("127.0.0.1");
+    }
     return QHostAddress(uiJoin->getIp());
 }
 
@@ -82,22 +117,36 @@ int QuGameEngine::getPortJoin()
     return uiJoin->getPort().toInt();
 }
 
+QHostAddress QuGameEngine::getIpHost()
+{
+    if(uiHost->getIp()=="localhost"){
+        return QHostAddress("127.0.0.1");
+    }
+    return QHostAddress(uiHost->getIp());
+}
+
+int QuGameEngine::getPortHost()
+{
+    return uiHost->getPort().toInt();
+}
+
 void QuGameEngine::create()
 {
-    uiMainMenu = new QuUIMainMenu(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiMultiplayer = new QuUIMultiplayer(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiHost = new QuUIHost(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiJoin = new QuUIJoin(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
-    uiWaitingRoomHost = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,true,this);
-    uiWaitingRoomJoin = new QuUIWaitingRoom(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,false,this);
+    uiMainMenu = new QuUIMainMenu(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiMultiplayer = new QuUIMultiplayer(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiHost = new QuUIHost(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiJoin = new QuUIJoin(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,this);
+    uiWaitingRoomHost = new QuUIWaitingRoom(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,true,this);
+    uiWaitingRoomJoin = new QuUIWaitingRoom(0,0,16*QuObject::CELL_SIZE,8*QuObject::CELL_SIZE,false,this);
     quBuilderMapFrame = new QuBuilderMapFrame(new QGraphicsView());
 
     view = new QGraphicsView();
     view->setScene(uiMainMenu);
     view->show();
     timer = new QTimer;
-    timer->setInterval(1000/60l);
     timer->stop();
 
-
+    soundPlayer = new QuSoundPlayer();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
+    soundPlayer->play();
 }

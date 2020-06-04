@@ -4,7 +4,7 @@
 //#include <QObject>
 //#include "qusocketclient.h"
 
-#include <QThread>
+#include <QObject>
 #include <QHostAddress>
 #include <QNetworkDatagram>
 #include <QJsonObject>
@@ -12,7 +12,7 @@
 //#include "network/client/qusocketclient.h"
 class QuSocketClient;
 class QuGameEngine;
-class QuClient : public QThread
+class QuClient : public QObject
 {
     Q_OBJECT
 private:
@@ -59,6 +59,7 @@ public:
      */
     void startGame();
 
+    void askStartGame();
     void endGame();
     /**
      * @brief sendEntity send one entity tothe server
@@ -82,7 +83,6 @@ public:
      */
     void receivePlayersList(QJsonObject *jsonPlayersList);
 private:
-    void run() override;
 
 signals:
 

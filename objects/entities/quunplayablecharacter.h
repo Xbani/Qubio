@@ -11,8 +11,8 @@
 class QuUnplayableCharacter : public QuCharacter
 {
 public:
-    QuUnplayableCharacter();
-    QuUnplayableCharacter(int instance_id);
+    QuUnplayableCharacter(int instance_id, int hue);
+    void advance(int step) override;
 
     // QuObject interface
 public:

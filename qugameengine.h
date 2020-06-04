@@ -10,7 +10,11 @@
 
 #include <network/client/qusocketclient.h>
 
+#include <medias/sounds/qusoundplayer.h>
+
 #include <rooms/qubuildermapframe.h>
+#include <rooms/quui.h>
+#include "rooms/ui/quuimainmenu.h"
 
 class QuUIMainMenu;
 class QuUIMultiplayer;
@@ -19,6 +23,7 @@ class QuUIJoin;
 class QuUIWaitingRoom;
 class QuGame;
 class QuClient;
+class QuServer;
 class QHostAddress;
 
 class QuGameEngine: public QObject
@@ -37,11 +42,14 @@ private:
     QuGame *quGame;
 
     QuClient *quClient;
+    QuServer *quServer;
 
     QGraphicsView * view;
 
     int playerId;
     bool isHost;
+
+    QuSoundPlayer * soundPlayer;
 
 public:
     QuGameEngine();
@@ -52,28 +60,32 @@ public:
     void toUIHost();
     void toUIJoin();
     void toQuGame();
+    void toQuGameMultiPlayers();
     void fromUIJoinToWaitingRoom();
     void fromUIHostToWaitingRoom();
     void toBuilderMapFrame();
+    void askStartGame();
 
     QHostAddress getIpJoin();
     int getPortJoin();
 
-    QString getIpHost();
-    QString getPortHost();
+    QHostAddress getIpHost();
+    int getPortHost();
 
     void create();
 
     inline QuGame* getQuGame() const {return quGame;};
+    inline QuUIWaitingRoom* getWaitingRoomHost() const {return uiWaitingRoomHost;};
+    inline QuUIWaitingRoom* getWaitingRoomJoin() const {return uiWaitingRoomJoin;};
+    inline QuUI * getCurrentRoom() const {return dynamic_cast<QuUI *>(view->scene());}
     inline int getPlayerId() const {return playerId;};
     inline void setPlayerId(int playerId) {this->playerId = playerId;};
     inline bool getIsHost() const {return isHost;};
     inline void setIsHost(int isHost) {this->isHost = isHost;};
 
-    inline QString getNickname()const {return "todo getNickname in quGameEngine";};
-    inline float getSkinColor() const {return 76.3;};
+    inline QString getNickname()const {return uiMainMenu->getNickName();};
+    inline int getSkinColor() const {return uiMainMenu->getColorHUE();};
+    inline QuClient * getQuClient() const {return quClient;};
 };
 
 #endif // QUGAMEENGINE_H
-
-

@@ -14,9 +14,17 @@ private:
     QString name;
     QColor color;
     int animation_state;
+
+    QImage sprite_static_left;
+    QImage sprite_static_right;
+    QImage sprite_move_left;
+    QImage strite_move_right;
+    QImage sprite_jump_left;
+    QImage sprite_jump_right;
+
 public:
-    QuCharacter();
     QuCharacter(int instance_id);
+    QuCharacter(int instance_id,int hue);
     void step();
 
     // QGraphicsItem interface
@@ -28,9 +36,8 @@ public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     QPainterPath shape() const override;
-    void advance(int step) override;
 
-    QJsonObject toJSON() override;
+    QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
 
 public:

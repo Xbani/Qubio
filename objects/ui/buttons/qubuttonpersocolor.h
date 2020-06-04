@@ -12,6 +12,7 @@ private:
     QImage sprite_ref;
 public:
     QuButtonPersoColor();
+    int getHUE();
 protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 };

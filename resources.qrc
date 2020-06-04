@@ -20,7 +20,6 @@
         <file>resources/sprites/ui/textbox.png</file>
         <file>resources/fonts/Fipps-Regular.ttf</file>
         <file>resources/sprites/ui/playerinfo.png</file>
-        
         <file>resources/sprites/blocks/Bridge.png</file>
         <file>resources/sprites/blocks/Cloud.png</file>
         <file>resources/sprites/blocks/Error.png</file>
@@ -28,7 +27,11 @@
         <file>resources/sprites/blocks/Stone.png</file>
         <file>resources/sprites/blocks/Grass.png</file>
         <file>resources/sprites/blocks/WoodPlank.png</file>
-
         <file>resources/sprites/character/perso.png</file>
+        <file>resources/sprites/character/character_JUMP.png</file>
+        <file>resources/sprites/character/character_MOVE.png</file>
+        <file>resources/sprites/character/character_STATIC.png</file>
+        <file>resources/sounds/mainTheme.mp3</file>
+        <file>resources/sounds/waiting.mp3</file>
     </qresource>
 </RCC>

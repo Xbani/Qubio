@@ -11,6 +11,7 @@ public:
     QuToolSprite();
 public:
     static const QImage SetSpriteCharacterHUE(int hue);
+    static const QImage setCharacterHUE(QImage image,int hue);
 };
 
 #endif // QUTOOLSPRITE_H

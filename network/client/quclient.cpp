@@ -9,10 +9,11 @@
 #include "qugameengine.h"
 #include "rooms/qugame.h"
 #include "objects/quentity.h"
+#include <rooms/ui/quuiwaitingroom.h>
 
 
 QuClient::QuClient(QHostAddress ipClient, int portClient,
-                   QuGameEngine *quGameEngine, QObject *parent): QThread(parent)
+                   QuGameEngine *quGameEngine, QObject *parent): QObject(parent)
 {
     serverDatagram = new QNetworkDatagram();
     this->ipClient = ipClient;
@@ -21,10 +22,8 @@ QuClient::QuClient(QHostAddress ipClient, int portClient,
     lastIdMessageSend = 0;
     lastIdMessageReceive = 0;
     quSocketClient = new QuSocketClient(this, this);
-}
-
-void QuClient::run(){
     quSocketClient->init(ipClient,portClient);
+    //qDebug()<<"client créer";
 }
 
 QuClient::~QuClient()
@@ -43,13 +42,16 @@ void QuClient::connectToServer(QHostAddress ipServer, int portServer)
     jsonConnection["messageType"] = MessageType::connection;
     jsonConnection["nickname"] = quGameEngine->getNickname();
     jsonConnection["skin"] = quGameEngine->getSkinColor();
+    jsonConnection["isHost"] = quGameEngine->getIsHost();
+    QJsonDocument docConnection(jsonConnection);
+    //qDebug()<<"connection";
+    serverDatagram->setData(docConnection.toJson(QJsonDocument::Compact));
     quSocketClient->send(serverDatagram);
 }
 
 void QuClient::receiveEntities(QJsonObject *jsonEntities)
 {
     if((*jsonEntities)["messageId"].toInt() > lastIdMessageReceive){
-        QList<QJsonObject> cantCatchMutex;
         lastIdMessageReceive = (*jsonEntities)["messageId"].toInt();
         QJsonArray jsonPlayerArray = (*jsonEntities)["entities"].toArray();
 
@@ -59,33 +61,28 @@ void QuClient::receiveEntities(QJsonObject *jsonEntities)
 
             QuEntity *entity = quGameEngine->getQuGame()->getEntities().take(entityJson["instanceId"].toInt());
             if(entity->getInstanceId() != quGameEngine->getPlayerId()){
-                if (entity->getMutex()){
                     entity->fromJSON(entityJson);
-                    entity->releaseMutex();
-                }else{
-                    cantCatchMutex.append(entityJson);
-                }
             }
         }
 
-        //for the entities that the mutex couldn't catch.
-        while (!cantCatchMutex.isEmpty()) {
-            QJsonObject entityJson = cantCatchMutex.front();
-            cantCatchMutex.pop_front();
-            QuEntity *entity = quGameEngine->getQuGame()->getEntities().take(entityJson["instanceId"].toInt());
-            if (entity->getMutex()){
-                entity->fromJSON(entityJson);
-                entity->releaseMutex();
-            }else{
-                cantCatchMutex.append(entityJson);
-            }
-        }
     }
 }
 
 void QuClient::startGame()
 {
+    quGameEngine->toQuGameMultiPlayers();
+}
 
+void QuClient::askStartGame()
+{
+    ++lastIdMessageSend;
+    QJsonObject askStart;
+    askStart["messageId"] = lastIdMessageSend;
+    askStart["messageType"] = MessageType::startGameRequest;
+    askStart["playerId"] = quGameEngine->getPlayerId();
+    QJsonDocument jsonDoc(askStart);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
 }
 
 void QuClient::endGame()
@@ -105,22 +102,41 @@ void QuClient::sendEntity(QJsonObject *jsonEntity)
     jsonToSend["entities"] = jsonArrayEntities;
 
     QJsonDocument jsonDoc(jsonToSend);
-    serverDatagram->setData(jsonDoc.toBinaryData());
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
     quSocketClient->send(serverDatagram);
 }
 
 void QuClient::receiveMap(QJsonObject *jsonMap)
 {
-    if((*jsonMap)["messageId"].toInt() > lastIdMessageReceive){
-        lastIdMessageReceive = (*jsonMap)["messageId"].toInt();
-        quGameEngine->getQuGame()->newMapFromJson(jsonMap);
-    }
+    lastIdMessageReceive = (*jsonMap)["messageId"].toInt();
+    quGameEngine->getQuGame()->newMapFromJson(jsonMap);
+    ++lastIdMessageSend;
+    QJsonObject answer;
+    answer["messageId"] = lastIdMessageSend;
+    answer["messageType"] = MessageType::answer;
+    answer["playerId"] = quGameEngine->getPlayerId();
+    answer["answerMessageId"] = (*jsonMap)["messageId"].toInt();
+    answer["answerMessageType"] = (*jsonMap)["messageType"].toInt();
+    QJsonDocument jsonDoc(answer);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
 }
 
 void QuClient::receivePlayerId(QJsonObject *jsonPlayerId)
 {
     quGameEngine->setPlayerId((*jsonPlayerId)["playerId"].toInt());
     lastIdMessageReceive = (*jsonPlayerId)["messageId"].toInt();
+
+    ++lastIdMessageSend;
+    QJsonObject answer;
+    answer["messageId"] = lastIdMessageSend;
+    answer["messageType"] = MessageType::answer;
+    answer["playerId"] = quGameEngine->getPlayerId();
+    answer["answerMessageId"] = (*jsonPlayerId)["messageId"].toInt();
+    answer["answerMessageType"] = (*jsonPlayerId)["messageType"].toInt();
+    QJsonDocument jsonDoc(answer);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
 }
 
 void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
@@ -129,9 +145,26 @@ void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
         lastIdMessageReceive = (*jsonPlayerList)["messageId"].toInt();
         QJsonArray *jsonPlayerArray = new QJsonArray();
         *jsonPlayerArray = (*jsonPlayerList)["playerList"].toArray();
-        //fonction a oscar
-        //TODO
 
+        QuUIWaitingRoom *quUIWaitingRoom;
+        if(quGameEngine->getIsHost()){
+            quUIWaitingRoom = quGameEngine->getWaitingRoomHost();
+        }
+        else{
+            quUIWaitingRoom = quGameEngine->getWaitingRoomJoin();
+        }
+        quUIWaitingRoom->setPlayersJSON(jsonPlayerArray);
+
+        ++lastIdMessageSend;
+        QJsonObject answer;
+        answer["messageId"] = lastIdMessageSend;
+        answer["messageType"] = MessageType::answer;
+        answer["playerId"] = quGameEngine->getPlayerId();
+        answer["answerMessageId"] = (*jsonPlayerList)["messageId"].toInt();
+        answer["answerMessageType"] = (*jsonPlayerList)["messageType"].toInt();
+        QJsonDocument jsonDoc(answer);
+        serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+        quSocketClient->send(serverDatagram);
     }
 }
 

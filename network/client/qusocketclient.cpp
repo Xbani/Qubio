@@ -13,10 +13,10 @@ QuSocketClient::QuSocketClient(QuClient *quClient, QObject *parent):QuSocket(par
 void QuSocketClient::receive(){
     while (getUdpSocket()->hasPendingDatagrams()) {
         QNetworkDatagram datagram = getUdpSocket()->receiveDatagram();
-        QJsonDocument *jsonDoc = new QJsonDocument();
-        jsonDoc->fromBinaryData(datagram.data());
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(datagram.data());
         QJsonObject *jsonObj = new QJsonObject();
-        *jsonObj = jsonDoc->object();
+        *jsonObj = jsonDoc.object();
+        //qDebug()<<"client"<<jsonDoc.toJson(QJsonDocument::Compact);
         switch (jsonObj->value("messageType").toInt()) {
             case MessageType::sendEntity:
                 quClient->receiveEntities(jsonObj);
@@ -27,10 +27,10 @@ void QuSocketClient::receive(){
             case MessageType::sendMap:
                 quClient->receiveMap(jsonObj);
             break;
-            case MessageType::listPlayer:
+            case MessageType::listPlayers:
                 quClient->receivePlayersList(jsonObj);
             break;
-            case MessageType::startGame:
+            case MessageType::startGameByServer:
                 quClient->startGame();
             break;
             case MessageType::endGame:

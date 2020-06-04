@@ -10,22 +10,28 @@ class QuPlayerInfo : public QuObject
 private:
     QImage sprite;
     QImage sprite_player;
-    QColor player_color;
+    int player_hue;
     QString player_name;
+    int player_id;
+    int pos;
 
+    static const int TEXT_FONT_SIZE = 25;
 
 public:
-    QuPlayerInfo();
-    QuPlayerInfo(QString player_name, QColor player_color);
+    QuPlayerInfo(int player_id, QString player_name, int hue, int pos);
 
     // QGraphicsItem interface
 public:
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+public:
+    inline int getPlayerId() const {return player_id;};
+    inline int getPlayerHue() const {return player_hue;};
+    inline QString getPlayerName() const {return player_name;};
     // QuObject interface
 public:
-    QJsonObject toJSON() override;
+    QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
 };
 

@@ -12,15 +12,26 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <qdatetime.h>
 
-QuCharacter::QuCharacter()
+#include <tools/qutoolsprite.h>
+
+
+QuCharacter::QuCharacter(int instance_id):QuCharacter(instance_id,50)
 {
-    setAcceleration({0,QuPhysicsConst::G_FORCE});
+
 }
 
-QuCharacter::QuCharacter(int instance_id):QuEntity(instance_id)
+QuCharacter::QuCharacter(int instance_id, int hue):QuEntity(instance_id)
 {
-
+    setAcceleration({0,QuPhysicsConst::G_FORCE});
+    animation_state = STATIC_LEFT;
+    sprite_static_left  = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_STATIC.png"),hue);
+    sprite_static_right = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_STATIC.png").mirrored(true, false),hue);
+    sprite_move_left    = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_MOVE.png"),hue);
+    strite_move_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_MOVE.png").mirrored(true, false),hue);
+    sprite_jump_left    = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png"),hue);
+    sprite_jump_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png").mirrored(true, false),hue);
 }
 
 QRectF QuCharacter::boundingRect() const
@@ -30,7 +41,47 @@ QRectF QuCharacter::boundingRect() const
 
 void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawImage(boundingRect(),QImage(":/resources/sprites/character/perso.png"),QRectF(1,2,6,6));
+    QImage * sprite;
+
+    switch( animation_state )
+    {
+    case STATIC_RIGHT:
+        sprite = &sprite_static_right;
+        break ;
+    case STATIC_LEFT :
+        sprite = &sprite_static_left;
+        break ;
+    case MOVE_RIGHT :
+        if ((QTime::currentTime().msec()) / 100 % 5 <=  2) {
+            sprite = &sprite_static_right;
+        }
+        else {
+            sprite = &strite_move_right;
+        }
+        break ;
+    case MOVE_LEFT:
+        if (QTime::currentTime().msec() / 100 % 5 <=  2) {
+            sprite = &sprite_static_left;
+        }
+        else {
+            sprite = &sprite_move_left;
+        }
+        break ;
+    case JUMP_RIGHT :
+        sprite = &sprite_jump_right;
+        break ;
+    case JUMP_LEFT:
+        sprite = &sprite_jump_left;
+        break ;
+    default:
+        //qDebug() << "animation_stats invalid at the animation moment";
+        sprite = &sprite_static_right;
+    }
+    QRectF paint_rect = boundingRect();
+//    paint_rect.setWidth(paint_rect.width()+2*QuObject::PIXEL_SIZE);
+//    paint_rect.setX(paint_rect.x()-1*QuObject::PIXEL_SIZE);
+    painter->drawImage(paint_rect, *sprite,QRectF(1,2,6,6));
+
 }
 
 QPainterPath QuCharacter::shape() const
@@ -40,48 +91,49 @@ QPainterPath QuCharacter::shape() const
     return path;
 }
 
-QJsonObject QuCharacter::toJSON()
+QJsonObject* QuCharacter::toJSON()
 {
-//    QJsonObject jsonCharacter;
-//    QJsonArray jsonArrayPosition;
-//    QJsonArray jsonArrayspeed;
-//    QJsonArray jsonArrayAcceleration;
+    QJsonObject *jsonCharacter = new QJsonObject();
+    QJsonArray jsonArrayPosition;
+    QJsonArray jsonArrayspeed;
+    QJsonArray jsonArrayAcceleration;
 
-//    jsonCharacter["instanceId"] = getInstanceId();
-//    jsonCharacter["classId"] = getClassId();
+    (*jsonCharacter)["instanceId"] = getInstanceId();
+    (*jsonCharacter)["classId"] = getClassId();
 
-//    jsonArrayPosition.append(getPosition().x());
-//    jsonArrayPosition.append(getPosition().y());
-//    jsonCharacter["position"] = jsonArrayPosition;
+    jsonArrayPosition.append(pos().x());
+    jsonArrayPosition.append(pos().y());
+    (*jsonCharacter)["position"] = jsonArrayPosition;
 
-//    jsonArrayspeed.append(getSpeed().x());
-//    jsonArrayspeed.append(getSpeed().y());
-//    jsonCharacter["speed"] = jsonArrayspeed;
+    jsonArrayspeed.append(getSpeed().x());
+    jsonArrayspeed.append(getSpeed().y());
+    (*jsonCharacter)["speed"] = jsonArrayspeed;
 
-//    jsonArrayAcceleration.append(getAcceleration().x());
-//    jsonArrayAcceleration.append(getAcceleration().y());
-//    jsonCharacter["acceleration"] = jsonArrayAcceleration;
+    jsonArrayAcceleration.append(getAcceleration().x());
+    jsonArrayAcceleration.append(getAcceleration().y());
+    (*jsonCharacter)["acceleration"] = jsonArrayAcceleration;
 
-//    return jsonCharacter;
+    return jsonCharacter;
 }
 
 void QuCharacter::fromJSON(QJsonObject &qJsonObject)
 {
-//    if(getInstanceId() == qJsonObject["instanceId"].toInt()){
-//        QJsonArray jsonArray = qJsonObject["position"].toArray();
-//        QVector2D vector2d;
-//        vector2d.setX(jsonArray.at(0).toDouble());
-//        vector2d.setX(jsonArray.at(1).toDouble());
-//        setPosition(vector2d);
+    if(getInstanceId() == qJsonObject["instanceId"].toInt()){
+        QJsonArray jsonArray = qJsonObject["position"].toArray();
+        QPointF QpoitF;
+        QpoitF.setX(jsonArray.at(0).toDouble());
+        QpoitF.setY(jsonArray.at(1).toDouble());
+        setPos(QpoitF);
 
-//        jsonArray = qJsonObject["speed"].toArray();
-//        vector2d.setX(jsonArray.at(0).toDouble());
-//        vector2d.setX(jsonArray.at(1).toDouble());
-//        setSpeed(vector2d);
+        QVector2D vector2d;
+        jsonArray = qJsonObject["speed"].toArray();
+        vector2d.setX(jsonArray.at(0).toDouble());
+        vector2d.setY(jsonArray.at(1).toDouble());
+        setSpeed(vector2d);
 
-//        jsonArray = qJsonObject["acceleration"].toArray();
-//        vector2d.setX(jsonArray.at(0).toDouble());
-//        vector2d.setX(jsonArray.at(1).toDouble());
-//        setAcceleration(vector2d);
-//    }
+        jsonArray = qJsonObject["acceleration"].toArray();
+        vector2d.setX(jsonArray.at(0).toDouble());
+        vector2d.setY(jsonArray.at(1).toDouble());
+        setAcceleration(vector2d);
+    }
 }

@@ -26,6 +26,7 @@ void QuUIMultiplayer::toUIHost()
     if(parent()!=nullptr){
         QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
         game_engine->toUIHost();
+        game_engine->setIsHost(true);
     }
 }
 
@@ -34,6 +35,7 @@ void QuUIMultiplayer::toUIJoin()
     if(parent()!=nullptr){
         QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
         game_engine->toUIJoin();
+        game_engine->setIsHost(false);
     }
 }
 

@@ -17,9 +17,9 @@ void QuSpawnBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     //Nothing to do here
 }
 
-QJsonObject QuSpawnBlock::toJSON()
+QJsonObject* QuSpawnBlock::toJSON()
 {
-    return QJsonObject(); //TODO
+    return new QJsonObject(); //TODO
 }
 
 void QuSpawnBlock::fromJSON(QJsonObject &qJsonObject)
