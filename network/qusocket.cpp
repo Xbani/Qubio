@@ -20,7 +20,7 @@ void QuSocket::send(QNetworkDatagram* datagram) {
  * @param port
  */
 void QuSocket::init(QHostAddress ip, int port) {
-    qDebug()<<"Création Socket";
+    //qDebug()<<"Création Socket";
     //créer un lien vers la carte rés
     udpSocket = new QUdpSocket(this);
     //écouter un port

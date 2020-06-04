@@ -34,8 +34,6 @@ int QuPlayableCharacter::getClassId()
 
 void QuPlayableCharacter::advance(int step)
 {
-    qDebug() << getAnimationState();
-
     if (!step)
         return;
 
@@ -78,6 +76,7 @@ void QuPlayableCharacter::advance(int step)
 
     if(key_left && key_right)
     {
+        qDebug() << "DEBUG DEBUG";
         setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         setAcceleration({0,QuPhysicsConst::G_FORCE});
         getAnimationState() == MOVE_RIGHT and getPreviouslyOnGround() ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
@@ -90,9 +89,27 @@ void QuPlayableCharacter::advance(int step)
     {
         setAcceleration({0,QuPhysicsConst::G_FORCE});
         setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
-        getPreviouslyOnGround() and getAnimationState() == JUMP_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
-        getAnimationState() == MOVE_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
-    };
+        qDebug() << getAnimationState();
+        if (getPreviouslyOnGround() and getAnimationState() == JUMP_RIGHT)
+        {
+            setAnimationState(STATIC_RIGHT);
+        }
+        else if (getPreviouslyOnGround() and getAnimationState() == JUMP_LEFT)
+        {
+            setAnimationState(STATIC_LEFT);
+        }
+
+        if (getAnimationState() == MOVE_RIGHT)
+        {
+            setAnimationState(STATIC_RIGHT);
+        }
+
+        else if (getAnimationState() == MOVE_LEFT)
+        {
+            setAnimationState(STATIC_LEFT);
+        }
+    }
+
     if(!getPreviouslyOnGround()){
         getAnimationState()==JUMP_LEFT || getAnimationState()==MOVE_LEFT || getAnimationState() == STATIC_LEFT ? setAnimationState(JUMP_LEFT):setAnimationState(JUMP_RIGHT);
     }
