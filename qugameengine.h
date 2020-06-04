@@ -49,7 +49,7 @@ private:
     int playerId;
     bool isHost;
 
-    QuSoundPlayer * soundPlayer;
+    //QuSoundPlayer * soundPlayer;
 
 public:
     QuGameEngine();

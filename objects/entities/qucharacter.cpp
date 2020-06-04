@@ -74,7 +74,7 @@ void QuCharacter::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         sprite = &sprite_jump_left;
         break ;
     default:
-        qDebug() << "animation_stats invalid at the animation moment";
+        //qDebug() << "animation_stats invalid at the animation moment";
         sprite = &sprite_static_right;
     }
     QRectF paint_rect = boundingRect();

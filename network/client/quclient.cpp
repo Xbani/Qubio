@@ -23,7 +23,7 @@ QuClient::QuClient(QHostAddress ipClient, int portClient,
     lastIdMessageReceive = 0;
     quSocketClient = new QuSocketClient(this, this);
     quSocketClient->init(ipClient,portClient);
-    qDebug()<<"client créer";
+    //qDebug()<<"client créer";
 }
 
 QuClient::~QuClient()
@@ -44,7 +44,7 @@ void QuClient::connectToServer(QHostAddress ipServer, int portServer)
     jsonConnection["skin"] = quGameEngine->getSkinColor();
     jsonConnection["isHost"] = quGameEngine->getIsHost();
     QJsonDocument docConnection(jsonConnection);
-    qDebug()<<"connection";
+    //qDebug()<<"connection";
     serverDatagram->setData(docConnection.toJson(QJsonDocument::Compact));
     quSocketClient->send(serverDatagram);
 }
