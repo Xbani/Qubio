@@ -24,6 +24,7 @@ QuGameEngine::QuGameEngine()
 QuGameEngine::~QuGameEngine()
 {
     view->close();
+    delete soundPlayer;
 }
 
 void QuGameEngine::toUIMultiplayer()
@@ -34,6 +35,9 @@ void QuGameEngine::toUIMultiplayer()
 void QuGameEngine::toUIMainMenu()
 {
     view->setScene(uiMainMenu);
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
+    soundPlayer->play();
 }
 
 void QuGameEngine::toUIHost()
@@ -54,23 +58,40 @@ void QuGameEngine::toQuGame()
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
 }
 
+void QuGameEngine::toQuGameMultiPlayers()
+{
+    quGame = new QuGame(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
+    if (isHost)
+        quGame->createPlayers(uiWaitingRoomHost->getQuPlayerInfos());
+    else
+        quGame->createPlayers(uiWaitingRoomJoin->getQuPlayerInfos());
+    view->setScene(quGame);
+    timer->start(1000 / 60);
+    connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
+}
+
 void QuGameEngine::fromUIJoinToWaitingRoom()
 {
-    quClient = new QuClient(QHostAddress::LocalHost,25667,this);
+    quClient = new QuClient(QHostAddress("127.0.0.0"),25667,this);
     quClient->connectToServer(getIpJoin(),getPortJoin());
     view->setScene(uiWaitingRoomJoin);
-
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
+    soundPlayer->play();
 }
 
 void QuGameEngine::fromUIHostToWaitingRoom()
 {
-    quServer = new QuServer(QHostAddress::LocalHost,25666,this);
-    if (25666 == 25667)
-        quClient = new QuClient(QHostAddress::LocalHost,25668,this);
+    quServer = new QuServer(getIpHost(),getPortHost(),this);
+    if (getPortHost() == 25667)
+        quClient = new QuClient(getIpHost(),25668,this);
     else
-        quClient = new QuClient(QHostAddress::LocalHost,25667,this);
-    quClient->connectToServer(QHostAddress::LocalHost, 25666);
+        quClient = new QuClient(getIpHost(),25667,this);
+    quClient->connectToServer(getIpHost(), getPortHost());
     view->setScene(uiWaitingRoomHost);
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
+    soundPlayer->play();
 }
 
 void QuGameEngine::toBuilderMapFrame()
@@ -78,10 +99,15 @@ void QuGameEngine::toBuilderMapFrame()
     quBuilderMapFrame->show();
 }
 
+void QuGameEngine::askStartGame()
+{
+    quClient->askStartGame();
+}
+
 QHostAddress QuGameEngine::getIpJoin()
 {
     if(uiJoin->getIp()=="localhost"){
-        return QHostAddress::LocalHost;
+        return QHostAddress("127.0.0.1");
     }
     return QHostAddress(uiJoin->getIp());
 }
@@ -94,7 +120,7 @@ int QuGameEngine::getPortJoin()
 QHostAddress QuGameEngine::getIpHost()
 {
     if(uiHost->getIp()=="localhost"){
-        return QHostAddress::LocalHost;
+        return QHostAddress("127.0.0.1");
     }
     return QHostAddress(uiHost->getIp());
 }
@@ -120,5 +146,7 @@ void QuGameEngine::create()
     timer = new QTimer;
     timer->stop();
 
-
+    soundPlayer = new QuSoundPlayer();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
+    soundPlayer->play();
 }

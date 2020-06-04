@@ -15,12 +15,12 @@ private:
     QColor color;
     int animation_state;
 
-    QImage strite_static_left;
-    QImage strite_static_right;
-    QImage strite_move_left;
+    QImage sprite_static_left;
+    QImage sprite_static_right;
+    QImage sprite_move_left;
     QImage strite_move_right;
-    QImage strite_jump_left;
-    QImage strite_jump_right;
+    QImage sprite_jump_left;
+    QImage sprite_jump_right;
 
 public:
     QuCharacter(int instance_id);
@@ -37,7 +37,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     QPainterPath shape() const override;
 
-    QJsonObject toJSON() override;
+    QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
 
 public:

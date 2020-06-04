@@ -10,6 +10,8 @@
 
 #include <network/client/qusocketclient.h>
 
+#include <medias/sounds/qusoundplayer.h>
+
 #include <rooms/qubuildermapframe.h>
 #include <rooms/quui.h>
 #include "rooms/ui/quuimainmenu.h"
@@ -47,6 +49,8 @@ private:
     int playerId;
     bool isHost;
 
+    QuSoundPlayer * soundPlayer;
+
 public:
     QuGameEngine();
     ~QuGameEngine();
@@ -56,9 +60,11 @@ public:
     void toUIHost();
     void toUIJoin();
     void toQuGame();
+    void toQuGameMultiPlayers();
     void fromUIJoinToWaitingRoom();
     void fromUIHostToWaitingRoom();
     void toBuilderMapFrame();
+    void askStartGame();
 
     QHostAddress getIpJoin();
     int getPortJoin();
@@ -79,8 +85,7 @@ public:
 
     inline QString getNickname()const {return uiMainMenu->getNickName();};
     inline int getSkinColor() const {return uiMainMenu->getColorHUE();};
+    inline QuClient * getQuClient() const {return quClient;};
 };
 
 #endif // QUGAMEENGINE_H
-
-

@@ -60,7 +60,8 @@ SOURCES += \
     rooms/ui/quuimainmenu.cpp \
     rooms/ui/quuimultiplayer.cpp \
     rooms/ui/quuiwaitingroom.cpp \
-    tools/qutoolsprite.cpp
+    tools/qutoolsprite.cpp \
+    medias/sounds/qusoundplayer.cpp
 
 HEADERS += \
     network/client/quclient.h \
@@ -107,7 +108,8 @@ HEADERS += \
     rooms/ui/quuimainmenu.h \
     rooms/ui/quuimultiplayer.h \
     rooms/ui/quuiwaitingroom.h \
-    tools/qutoolsprite.h
+    tools/qutoolsprite.h \
+    medias/sounds/qusoundplayer.h
 
 FORMS += \
     mainwindow.ui \

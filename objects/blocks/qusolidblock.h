@@ -22,7 +22,7 @@ public:
 
     // QuObject interface
 public:
-    QJsonObject toJSON() override;
+    QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
 };
 

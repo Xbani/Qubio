@@ -2,7 +2,7 @@
 #include "qumapbuilder.h"
 #include "ui_qubuildermapframe.h"
 
-#include <objects/EnumBlock/qulistblock.h>
+#include <objects/enumblock/qulistblock.h>
 
 #include <objects/quobject.h>
 

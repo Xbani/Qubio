@@ -33,7 +33,7 @@ protected:
 
     // QuObject interface
 public:
-    QJsonObject toJSON() override;
+    QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
     void setSprite(int texture_id);
     void setSpriteHover(int texture_id_hover);

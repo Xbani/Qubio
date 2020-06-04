@@ -1,5 +1,6 @@
 #include "quplayablecharacter.h"
 #include "quphysicsconst.h"
+#include "quunplayablecharacter.h"
 #include "objects/blocks/qusolidblock.h"
 
 #include "qucharacter.h"
@@ -13,9 +14,10 @@
 #include <iostream>
 #include <QtMath>
 #include <QKeyEvent>
+#include <rooms/qugame.h>
 
 
-QuPlayableCharacter::QuPlayableCharacter(int instance_id):QuCharacter(instance_id)
+QuPlayableCharacter::QuPlayableCharacter(int instance_id, int hue):QuCharacter(instance_id,hue)
 {
     setFlags(ItemIsFocusable);
     setFocus();
@@ -74,6 +76,7 @@ void QuPlayableCharacter::advance(int step)
 
     if(key_left && key_right)
     {
+        qDebug() << "DEBUG DEBUG";
         setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         setAcceleration({0,QuPhysicsConst::G_FORCE});
         getAnimationState() == MOVE_RIGHT and getPreviouslyOnGround() ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
@@ -86,9 +89,27 @@ void QuPlayableCharacter::advance(int step)
     {
         setAcceleration({0,QuPhysicsConst::G_FORCE});
         setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
-        getPreviouslyOnGround() and getAnimationState() == JUMP_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
-        getAnimationState() == MOVE_RIGHT ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
-    };
+        qDebug() << getAnimationState();
+        if (getPreviouslyOnGround() and getAnimationState() == JUMP_RIGHT)
+        {
+            setAnimationState(STATIC_RIGHT);
+        }
+        else if (getPreviouslyOnGround() and getAnimationState() == JUMP_LEFT)
+        {
+            setAnimationState(STATIC_LEFT);
+        }
+
+        if (getAnimationState() == MOVE_RIGHT)
+        {
+            setAnimationState(STATIC_RIGHT);
+        }
+
+        else if (getAnimationState() == MOVE_LEFT)
+        {
+            setAnimationState(STATIC_LEFT);
+        }
+    }
+
     if(!getPreviouslyOnGround()){
         getAnimationState()==JUMP_LEFT || getAnimationState()==MOVE_LEFT || getAnimationState() == STATIC_LEFT ? setAnimationState(JUMP_LEFT):setAnimationState(JUMP_RIGHT);
     }
@@ -106,19 +127,19 @@ void QuPlayableCharacter::advance(int step)
     } else {
         setSpeedY(newSpeed.y());
     }
-
-
     setPos(x()+getSpeed().x()/60l*64, y()+getSpeed().y()/60l*64);
+
+
     /* ###################################################################################
      * ----------------------------------COLLISION----------------------------------------
      * ###################################################################################
      */
 
 
-    QuSolidBlock * topCollidingObject;
-    QuSolidBlock * bottomCollidingObject;
-    QuSolidBlock * leftCollidingObject;
-    QuSolidBlock * rightCollidingObject;
+    QuObject * topCollidingObject;
+    QuObject * bottomCollidingObject;
+    QuObject * leftCollidingObject;
+    QuObject * rightCollidingObject;
 
     QList <QGraphicsItem*> listCollision = scene()->collidingItems(this);
 
@@ -152,7 +173,10 @@ void QuPlayableCharacter::advance(int step)
             if (sinAngle <= -QuPhysicsConst::APPROX_COS_PI_4)
             {
                 collisionTop = true;
-                topCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                topCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]);
+                if(topCollidingObject==nullptr){
+                    topCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
 
             // collision from the bottom
@@ -161,6 +185,9 @@ void QuPlayableCharacter::advance(int step)
                 collisionBottom = true;
                 setPreviouslyOnGround(true);
                 bottomCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                if(bottomCollidingObject==nullptr){
+                    bottomCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
 
             // collision from the left
@@ -168,6 +195,9 @@ void QuPlayableCharacter::advance(int step)
             {
                 collisionLeft = true;
                 leftCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                if(leftCollidingObject==nullptr){
+                    leftCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
 
             // collision from the right
@@ -175,6 +205,9 @@ void QuPlayableCharacter::advance(int step)
             {
                 collisionRight = true;
                 rightCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
+                if(rightCollidingObject==nullptr){
+                    rightCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
             }
         }
 
@@ -192,6 +225,9 @@ void QuPlayableCharacter::advance(int step)
             collisionLeft ? setX(leftCollidingObject->x() + leftCollidingObject->boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject->x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
         }
     }
+
+    QuGame *quGame = dynamic_cast<QuGame *>(scene());
+    quGame->sentToServer(toJSON());
 }
 
 void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)

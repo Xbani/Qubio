@@ -18,7 +18,7 @@ private:
     bool key_left;
 
 public:
-    QuPlayableCharacter(int instance_id);
+    QuPlayableCharacter(int instance_id, int hue);
 
     // QuObject interface
 public:

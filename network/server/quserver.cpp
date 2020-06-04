@@ -6,7 +6,7 @@
 #include "quserver.h"
 #include "quinfoclient.h"
 #include "qusocketserver.h"
-#include "network/MessageType.h"
+#include "network/messagetype.h"
 #include "quexpectedanswer.h"
 
 QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObject(parent)
@@ -46,8 +46,7 @@ void QuServer::startGame()
     disconnect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     //We send the info too the players every x ms
     timer->setInterval(INTERVAL_TIME_ENTITIES);
-    //this->timer->callOnTimeout(this, SLOT(sendEntitiesToAll()));
-    timer->start();
+    connect(timer, SIGNAL(timeout()), this, SLOT(sendEntitiesToAll()));
 }
 
 void QuServer::endGame()
@@ -60,6 +59,7 @@ void QuServer::sendEntitiesToAll()
     QJsonArray jsonArrayEntities;
     lastMessageIdSent ++;
     foreach(QJsonObject *jsonEntity, jsonEntitiesMap) {
+        qDebug()<<"foreach";
         QJsonValue jsonValueEntity(*jsonEntity);
         jsonArrayEntities.append(jsonValueEntity);
      }
@@ -164,6 +164,12 @@ void QuServer::handleClientAnswer(QJsonObject * jsonClientAnswer)
                     case MessageType::idPlayer:
                         sendMap(quInfoClient);
                         break;
+                    case MessageType::sendMap:
+                        quInfoClient->setMapReception(true);
+                        break;
+                    case MessageType::listPlayers:
+                        quInfoClient->setPlayersListReception(true);
+                        break;
                 }
             } else {
                 return;
@@ -194,7 +200,8 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
         if ((*object)["messageId"].toInt() > lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt())) {
             lastMsgIdsOfEntitiesMap.insert((*object)["messageId"].toInt(), lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt()));
             jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
-        }
+        }else if(!lastMsgIdsOfEntitiesMap.contains((*jsonEntities)["entities"].toInt()))
+            jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
     }
 }
 

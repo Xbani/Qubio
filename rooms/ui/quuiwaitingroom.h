@@ -32,7 +32,7 @@ public:
     void init();
     void setPlayersJSON(QJsonArray * players_json);
     void updatePlayerInfo();
-
+    void startGame();
     inline QMap<int,QuPlayerInfo *> getQuPlayerInfos() const {return player_info_map;}
 
     // QuUI interface

@@ -58,12 +58,20 @@ void QuUIWaitingRoom::updatePlayerInfo()
     int i;
     for(i=0 ; i < players_json->size() ; ++i){
         QJsonObject playerJson = QJsonValue((*players_json)[i]).toObject();
-        QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["playerId"].toInt(),playerJson["nickname"].toString(),playerJson["skin"].toInt());
+        QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["playerId"].toInt(),playerJson["nickname"].toString(),playerJson["skin"].toInt(),i);
         qDebug() << "quuiwintingroom playerjson : " << playerJson;
         player_info_map.insert(playerJson["playerId"].toInt(),player_info);
         addItem(player_info);
     }
 
+}
+
+void QuUIWaitingRoom::startGame()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
+        game_engine->askStartGame();
+    }
 }
 
 void QuUIWaitingRoom::back()

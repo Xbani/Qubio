@@ -13,10 +13,12 @@ private:
     int player_hue;
     QString player_name;
     int player_id;
+    int pos;
 
+    static const int TEXT_FONT_SIZE = 25;
 
 public:
-    QuPlayerInfo(int player_id, QString player_name, int hue);
+    QuPlayerInfo(int player_id, QString player_name, int hue, int pos);
 
     // QGraphicsItem interface
 public:
@@ -25,9 +27,11 @@ public:
 
 public:
     inline int getPlayerId() const {return player_id;};
+    inline int getPlayerHue() const {return player_hue;};
+    inline QString getPlayerName() const {return player_name;};
     // QuObject interface
 public:
-    QJsonObject toJSON() override;
+    QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
 };
 
