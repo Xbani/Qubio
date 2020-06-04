@@ -9,6 +9,7 @@ QuSoundPlayer::QuSoundPlayer()
     player = new QMediaPlayer();
     player->setPlaylist(playlist);
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
+    setVolume(50);
 }
 
 QuSoundPlayer::~QuSoundPlayer()
