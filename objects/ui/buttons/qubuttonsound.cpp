@@ -34,6 +34,6 @@ void QuButtonSound::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
         setSprite(tex_id_on);
         setSpriteHover(tex_id_on_hover);
-        uiMainMenu->getSoundPlayer()->setVolume(100);
+        uiMainMenu->getSoundPlayer()->setVolume(25);
     }
 }
