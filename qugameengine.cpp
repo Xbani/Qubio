@@ -66,8 +66,12 @@ void QuGameEngine::toQuGameMultiPlayers()
     else
         quGame->createPlayers(uiWaitingRoomJoin->getQuPlayerInfos());
     view->setScene(quGame);
+    view->ensureVisible((QGraphicsItem * )quGame->getPlayableCharacter(),300,300);
     timer->start(1000 / 60);
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
+    soundPlayer->clearPlaylist();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_GAME);
+    soundPlayer->play();
 }
 
 void QuGameEngine::fromUIJoinToWaitingRoom()

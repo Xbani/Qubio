@@ -10,17 +10,21 @@ class QuMapBuilder : public QGraphicsScene
     Q_OBJECT
 public:
     QuMapBuilder(qreal x, qreal y, qreal width, qreal height, QObject * parent = nullptr);
-    void initMapBuilder();
 
 private:
-    QSignalMapper *signalMapper;
-    int blockSelected;
-    QMenuBar *qMenuBar;
+    void initMapBuilder();
+    void clearScene();
+    void resizeScene(QSize size);
 
-
+public :
+    QString getMapName() const;
+    QSize getMapSize() const;
 
 public slots:
     void selectBlock(int block);
+    void mapFromJson(QJsonObject* mapJson);
+    QJsonObject* mapToJson();
+    void createNewMap(QString mapName, QSize mapSize);
 
     // QGraphicsScene interface
 protected:
@@ -28,7 +32,13 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
+    //attribut
 private:
+    QSignalMapper *signalMapper;
+    int blockSelected;
+    QMenuBar *qMenuBar;
+    QString mapName;
+    QSize mapSize;
     bool mousePressed;
     bool mouseMoved;
 };

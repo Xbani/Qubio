@@ -3,14 +3,17 @@
 #include <QGraphicsScene>
 #include <QMap>
 
+
 class QuEntity;
 class QuPlayerInfo;
 class QuGameEngine;
+class QuPlayableCharacter;
 class QuGame : public QGraphicsScene
 {
 private:
     QMap<int,QuEntity*> entities;
     QuGameEngine * quGameEngine;
+    QuPlayableCharacter * playable_character;
 
 public:
     QuGame(qreal x, qreal y, qreal width, qreal height, QObject *parent);
@@ -19,6 +22,7 @@ public:
     void init();
     void createPlayers(QMap<int,QuPlayerInfo *>);
     void sentToServer(QJsonObject *jsonToSent);
+    QuPlayableCharacter *getPlayableCharacter();
 
 
 

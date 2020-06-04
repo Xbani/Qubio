@@ -12,6 +12,10 @@
 
 #include <objects/ui/qutextbox.h>
 
+#include <objects/ui/buttons/qubuttonsound.h>
+
+#include <medias/sounds/qusoundplayer.h>
+
 
 /**
  * @brief The QuUIMainMenu class
@@ -26,6 +30,7 @@ private:
     QuButtonClose * button_close;
     QuButtonPersoColor * button_perso_color;
     QuButtonMapBuilder * button_map_builder;
+    QuButtonSound * button_sound;
 
     QuTextBox * text_box;
 public:
@@ -38,6 +43,7 @@ public:
     void back() override;
     int getColorHUE();
     QString getNickName();
+    QuSoundPlayer *getSoundPlayer();
 
     void init();
 

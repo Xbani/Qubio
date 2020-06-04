@@ -48,11 +48,13 @@ SOURCES += \
     objects/ui/buttons/qubuttonmulti.cpp \
     objects/ui/quplayerinfo.cpp \
     objects/ui/qutextbox.cpp \
+    objects/ui/buttons/qubuttonsound.cpp \
     qugameengine.cpp \
     rooms/qubuildermapframe.cpp \
     quphysicsconst.cpp \
     rooms/qugame.cpp \
     rooms/qumapbuilder.cpp \
+    rooms/ui/qunewmapform.cpp \
     rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
     rooms/ui/quuijoin.cpp \
@@ -95,11 +97,13 @@ HEADERS += \
     objects/ui/buttons/qubuttonmulti.h \
     objects/ui/quplayerinfo.h \
     objects/ui/qutextbox.h \
+    objects/ui/buttons/qubuttonsound.h \
     qugameengine.h \
     rooms/qubuildermapframe.h \
     quphysicsconst.h \
     rooms/qugame.h \
     rooms/qumapbuilder.h \
+    rooms/ui/qunewmapform.h \
     rooms/ui/quuihost.h \
     rooms/quui.h \
     rooms/ui/quuijoin.h \
@@ -111,7 +115,8 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
-    rooms/qubuildermapframe.ui
+    rooms/qubuildermapframe.ui \
+    rooms/ui/qunewmapform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -120,3 +125,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES +=

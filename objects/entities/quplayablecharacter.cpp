@@ -209,13 +209,13 @@ void QuPlayableCharacter::advance(int step)
         if ((collisionTop or collisionBottom ))
         {
             setSpeedY(0);
-            collisionTop ? setY(topCollidingObject->y() + topCollidingObject->boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject->y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
+            collisionTop ? setY(topCollidingObject->y() + topCollidingObject->boundingRect().y() + topCollidingObject->boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject->y()+ bottomCollidingObject->boundingRect().y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
         }
 
         if (collisionLeft or collisionRight)
         {
             setSpeedX(0);
-            collisionLeft ? setX(leftCollidingObject->x() + leftCollidingObject->boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject->x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
+            collisionLeft ? setX(leftCollidingObject->x() + leftCollidingObject->boundingRect().x()+ leftCollidingObject->boundingRect().width() + QuPhysicsConst::QUANTUM) : setX(rightCollidingObject->x()+ rightCollidingObject->boundingRect().x() - boundingRect().width() - QuPhysicsConst::QUANTUM);
         }
     }
 

@@ -82,6 +82,7 @@ public:
     inline void setPlayerId(int playerId) {this->playerId = playerId;};
     inline bool getIsHost() const {return isHost;};
     inline void setIsHost(int isHost) {this->isHost = isHost;};
+    inline QuSoundPlayer * getSoundPlayer(){return soundPlayer;};
 
     inline QString getNickname()const {return uiMainMenu->getNickName();};
     inline int getSkinColor() const {return uiMainMenu->getColorHUE();};

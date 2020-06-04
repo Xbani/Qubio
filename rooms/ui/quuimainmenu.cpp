@@ -50,6 +50,14 @@ QString QuUIMainMenu::getNickName()
     return text_box->getText();
 }
 
+QuSoundPlayer *QuUIMainMenu::getSoundPlayer()
+{
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
+        return game_engine->getSoundPlayer();
+    }
+}
+
 int QuUIMainMenu::getColorHUE()
 {
     return button_perso_color->getHUE();
@@ -63,6 +71,7 @@ void QuUIMainMenu::init()
     button_close= new QuButtonClose();
     button_perso_color= new QuButtonPersoColor();
     button_map_builder= new QuButtonMapBuilder();
+    button_sound= new QuButtonSound();
 
     text_box= new QuTextBox();
 
@@ -87,12 +96,16 @@ void QuUIMainMenu::init()
     button_perso_color->setX(width()/2);
     button_perso_color->setY(height()/2);
 
+    button_sound->setX(1*width()/8);
+    button_sound->setY(7*height()/8);
+
     addItem(button_solo);
     addItem(button_multi);
     addItem(button_title);
     addItem(button_close);
     addItem(button_perso_color);
     addItem(button_map_builder);
+    addItem(button_sound);
 
     addItem(text_box);
 
