@@ -54,6 +54,7 @@ SOURCES += \
     quphysicsconst.cpp \
     rooms/qugame.cpp \
     rooms/qumapbuilder.cpp \
+    rooms/ui/qunewmapform.cpp \
     rooms/ui/quuihost.cpp \
     rooms/quui.cpp \
     rooms/ui/quuijoin.cpp \
@@ -102,6 +103,7 @@ HEADERS += \
     quphysicsconst.h \
     rooms/qugame.h \
     rooms/qumapbuilder.h \
+    rooms/ui/qunewmapform.h \
     rooms/ui/quuihost.h \
     rooms/quui.h \
     rooms/ui/quuijoin.h \
@@ -113,7 +115,8 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
-    rooms/qubuildermapframe.ui
+    rooms/qubuildermapframe.ui \
+    rooms/ui/qunewmapform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
