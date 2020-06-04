@@ -1,15 +1,14 @@
-/*
-#ifndef QUSOUND_H
-#define QUSOUND_H
+#ifndef QUSOUNDPLAYER_H
+#define QUSOUNDPLAYER_H
 
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 
-class QuSound
+class QuSoundPlayer
 {
 public:
-    QuSound();
-    ~QuSound();
+    QuSoundPlayer();
+    ~QuSoundPlayer();
     void play();
     void pause();
     void stop();
@@ -26,5 +25,5 @@ public:
     const QString SOUND_WAINTING      = "qrc:/resources/sounds/waiting.mp3";
 };
 
-#endif // QUSOUND_H
-*/
+#endif // QUSOUNDPLAYER_H
+
