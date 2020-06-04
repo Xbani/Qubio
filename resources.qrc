@@ -35,7 +35,5 @@
         <file>resources/sprites/ui/buttons/button18.png</file>
         <file>resources/sprites/ui/buttons/button19.png</file>
         <file>resources/sprites/ui/buttons/button20.png</file>
-        <file>resources/sounds/mainTheme.mp3</file>
-        <file>resources/sounds/waiting.mp3</file>
     </qresource>
 </RCC>
