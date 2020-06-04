@@ -59,7 +59,7 @@ void QuServer::sendEntitiesToAll()
     QJsonArray jsonArrayEntities;
     lastMessageIdSent ++;
     foreach(QJsonObject *jsonEntity, jsonEntitiesMap) {
-        //qDebug()<<"foreach";
+        qDebug()<<"foreach";
         QJsonValue jsonValueEntity(*jsonEntity);
         jsonArrayEntities.append(jsonValueEntity);
      }
