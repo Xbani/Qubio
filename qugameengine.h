@@ -10,6 +10,8 @@
 
 #include <network/client/qusocketclient.h>
 
+#include <medias/sounds/qusoundplayer.h>
+
 #include <rooms/qubuildermapframe.h>
 #include <rooms/quui.h>
 #include "rooms/ui/quuimainmenu.h"
@@ -46,6 +48,8 @@ private:
 
     int playerId;
     bool isHost;
+
+    QuSoundPlayer * soundPlayer;
 
 public:
     QuGameEngine();

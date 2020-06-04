@@ -1,8 +1,7 @@
-/*
- * #include "qusound.h"
+#include "qusoundplayer.h"
 
 
-QuSound::QuSound()
+QuSoundPlayer::QuSoundPlayer()
 {
     playlist = new QMediaPlaylist();
     player = new QMediaPlayer();
@@ -10,33 +9,33 @@ QuSound::QuSound()
     playlist->setPlaybackMode(QMediaPlaylist::Loop);
 }
 
-QuSound::~QuSound()
+QuSoundPlayer::~QuSoundPlayer()
 {
     delete playlist;
     delete player;
 }
 
-void QuSound::play()
+void QuSoundPlayer::play()
 {
     player->play();
 }
 
-void QuSound::pause()
+void QuSoundPlayer::pause()
 {
     player->pause();
 }
 
-void QuSound::stop()
+void QuSoundPlayer::stop()
 {
     player->stop();
 }
 
-void QuSound::addMusicToPlaylist(QString path)
+void QuSoundPlayer::addMusicToPlaylist(QString path)
 {
     playlist->addMedia(QUrl(path));
 }
 
-void QuSound::clearPlaylist()
+void QuSoundPlayer::clearPlaylist()
 {
     stop();
     playlist->clear();
@@ -46,8 +45,8 @@ void QuSound::clearPlaylist()
  * @brief QuSound::setVolume
  * @param volume Value between 0 and 100
  */
-/*void QuSound::setVolume(int volume)
+void QuSoundPlayer::setVolume(int volume)
 {
     player->setVolume(volume);
 }
-*/
+
