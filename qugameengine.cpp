@@ -98,7 +98,7 @@ void QuGameEngine::askStartGame()
 QHostAddress QuGameEngine::getIpJoin()
 {
     if(uiJoin->getIp()=="localhost"){
-        return QHostAddress::LocalHost;
+        return QHostAddress("127.0.0.0");
     }
     return QHostAddress(uiJoin->getIp());
 }
@@ -111,7 +111,7 @@ int QuGameEngine::getPortJoin()
 QHostAddress QuGameEngine::getIpHost()
 {
     if(uiHost->getIp()=="localhost"){
-        return QHostAddress::LocalHost;
+        return QHostAddress("127.0.0.0");
     }
     return QHostAddress(uiHost->getIp());
 }
