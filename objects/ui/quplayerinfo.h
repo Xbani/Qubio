@@ -15,6 +15,7 @@ private:
     int player_id;
     int pos;
 
+    static const int TEXT_FONT_SIZE = 25;
 
 public:
     QuPlayerInfo(int player_id, QString player_name, int hue, int pos);
