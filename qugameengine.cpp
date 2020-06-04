@@ -66,6 +66,7 @@ void QuGameEngine::toQuGameMultiPlayers()
     else
         quGame->createPlayers(uiWaitingRoomJoin->getQuPlayerInfos());
     view->setScene(quGame);
+    view->ensureVisible((QGraphicsItem * )quGame->getPlayableCharacter(),300,300);
     timer->start(1000 / 60);
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
 }
@@ -89,6 +90,7 @@ void QuGameEngine::fromUIHostToWaitingRoom()
         quClient = new QuClient(getIpHost(),25667,this);
     quClient->connectToServer(getIpHost(), getPortHost());
     view->setScene(uiWaitingRoomHost);
+    view->rotate(90);
     soundPlayer->clearPlaylist();
     soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_WAINTING);
     soundPlayer->play();

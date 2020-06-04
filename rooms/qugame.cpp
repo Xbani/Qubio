@@ -77,6 +77,7 @@ void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
     foreach(QuPlayerInfo* quPlayerInfo, mapQuPlayerInfo){
         if (quGameEngine->getPlayerId() == quPlayerInfo->getPlayerId()){
             QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
+            playable_character = mainCharacter;
             setFocusItem(mainCharacter);
             mainCharacter->setPos(nb*2*QuObject::CELL_SIZE, 3*QuObject::CELL_SIZE);
             addItem(mainCharacter);
@@ -94,6 +95,11 @@ void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
 void QuGame::sentToServer(QJsonObject *jsonToSent)
 {
     quGameEngine->getQuClient()->sendEntity(jsonToSent);
+}
+
+QuPlayableCharacter *QuGame::getPlayableCharacter()
+{
+    return playable_character;
 }
 
 void QuGame::drawBackground(QPainter *painter, const QRectF &rect)
