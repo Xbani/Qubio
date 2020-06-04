@@ -56,7 +56,7 @@ void QuPlayableCharacter::advance(int step)
         }
         setAccelerationX(-QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
         setAccelerationY(QuPhysicsConst::G_FORCE);
-        if (getPreviouslyOnGround()) setAnimationState(MOVE_LEFT);
+        !(getPreviouslyOnGround()) ? setAnimationState(JUMP_LEFT) : setAnimationState(MOVE_LEFT);
     }
 
     if(key_right && !key_left)
@@ -68,7 +68,7 @@ void QuPlayableCharacter::advance(int step)
         }
         setAccelerationX(QuPhysicsConst::ACC_LATERAL_MOUVEMENT);
         setAccelerationY(QuPhysicsConst::G_FORCE);
-        if (getPreviouslyOnGround()) setAnimationState(MOVE_RIGHT);
+        !(getPreviouslyOnGround()) ? setAnimationState(JUMP_RIGHT) : setAnimationState(MOVE_RIGHT);
     }
 
     if(key_up && getPreviouslyOnGround())
@@ -79,8 +79,8 @@ void QuPlayableCharacter::advance(int step)
 
     if(key_left && key_right)
     {
-        setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         setAcceleration({0,QuPhysicsConst::G_FORCE});
+        setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
         getAnimationState() == MOVE_RIGHT and getPreviouslyOnGround() ? setAnimationState(STATIC_RIGHT) : setAnimationState(STATIC_LEFT);
     }
 
@@ -91,6 +91,7 @@ void QuPlayableCharacter::advance(int step)
     {
         setAcceleration({0,QuPhysicsConst::G_FORCE});
         setSpeedX(getSpeed().x()/QuPhysicsConst::INERTIA);
+
         if (getPreviouslyOnGround() and getAnimationState() == JUMP_RIGHT) setAnimationState(STATIC_RIGHT);
         else if (getPreviouslyOnGround() and getAnimationState() == JUMP_LEFT) setAnimationState(STATIC_LEFT);
 
@@ -98,11 +99,10 @@ void QuPlayableCharacter::advance(int step)
         else if (getAnimationState() == MOVE_LEFT) setAnimationState(STATIC_LEFT);
     }
 
-    if(!getPreviouslyOnGround())
-    {
-        getAnimationState()==JUMP_LEFT || getAnimationState()==MOVE_LEFT || getAnimationState() == STATIC_LEFT ? setAnimationState(JUMP_LEFT):setAnimationState(JUMP_RIGHT);
-    }
-
+//    if(!getPreviouslyOnGround())
+//    {
+//        getAnimationState() == JUMP_LEFT || getAnimationState() == MOVE_LEFT || getAnimationState() == STATIC_LEFT ? setAnimationState(JUMP_LEFT):setAnimationState(JUMP_RIGHT);
+//    }
 
     //update speed and pos
     QVector2D newSpeed = {getSpeed().x()+getAcceleration().x()/60l, getSpeed().y()+getAcceleration().y()/60l};
