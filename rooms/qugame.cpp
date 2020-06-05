@@ -69,9 +69,6 @@ void QuGame::newMapFromJson(QJsonObject *mapJson)
 void QuGame::init()
 {
     setBackgroundBrush(QBrush(QColor(39,39,68)));
-    QuCrown * crown= new QuCrown();
-    crown->setPos(120,120);
-    addItem(crown);
 }
 
 void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
@@ -111,7 +108,7 @@ QuPlayableCharacter *QuGame::getPlayableCharacter()
 void QuGame::start(int rand)
 {
     QuCrown *quCrown = new QuCrown(entities.size());
-    quCrown->setPos(spawBlocks.at(rand % spawBlocks.size())->getPos().x(),spawBlocks.at(rand % spawBlocks.size())->getPos().x());
+    quCrown->setPos(spawBlocks.at(rand % spawBlocks.size())->getPos());
     addItem(quCrown);
 }
 
