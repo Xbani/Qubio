@@ -1,6 +1,8 @@
 #ifndef QUCHARACTER_H
 #define QUCHARACTER_H
 
+#include "qucrown.h"
+
 #include <objects/quentity.h>
 
 
@@ -24,6 +26,8 @@ private:
     QImage sprite_jump_left;
     QImage sprite_jump_right;
 
+    QuCrown * qu_crown;
+
 public:
     QuCharacter(int instance_id);
     QuCharacter(int instance_id,int hue);
@@ -36,6 +40,9 @@ public:
     inline void setAnimationState(int animation_state) {this->animation_state = animation_state;}
     inline QuSpawnBlock* getSpawnBlock() const {return spawnBlock;}
     inline void setSpawnBlock(QuSpawnBlock* spawnBlock) {this->spawnBlock = spawnBlock;}
+
+    inline void setCrown(QuCrown * qu_crown){this->qu_crown=qu_crown;};
+    inline QuCrown * getCrown(){return qu_crown;};
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;

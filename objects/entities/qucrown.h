@@ -22,8 +22,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void setPos(qreal x, qreal y);
 
-    void setOwner(QuCharacter * character);
-    QuCharacter * getOwner();
+    void setOwner(QuCharacter * character){this->character=character;};
+    QuCharacter * getOwner(){return character;};
 
     // QuObject interface
 public:

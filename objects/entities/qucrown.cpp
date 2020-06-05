@@ -23,16 +23,6 @@ void QuCrown::setPos(qreal x, qreal y)
     setY(y);
 }
 
-void QuCrown::setOwner(QuCharacter *character)
-{
-    this->character=character;
-}
-
-QuCharacter *QuCrown::getOwner()
-{
-    return character;
-}
-
 int QuCrown::getClassId()
 {
     return QuEntity::CROWN_ID;
