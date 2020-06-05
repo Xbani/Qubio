@@ -1,5 +1,6 @@
 #include "qucrown.h"
 
+#include <QJsonObject>
 #include <QPainter>
 
 QuCrown::QuCrown()
@@ -21,6 +22,16 @@ void QuCrown::setPos(qreal x, qreal y)
 {
     setX(x);
     setY(y);
+}
+
+QJsonObject *QuCrown::toJSON()
+{
+    return new QJsonObject();
+}
+
+void QuCrown::fromJSON(QJsonObject &qJsonObject)
+{
+
 }
 
 int QuCrown::getClassId()

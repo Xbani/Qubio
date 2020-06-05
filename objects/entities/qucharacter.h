@@ -11,6 +11,7 @@
  * @details Class which correspond to in game character.
  */
 class QuSpawnBlock;
+class QuCrown;
 class QuCharacter : public QuEntity
 {
 private:

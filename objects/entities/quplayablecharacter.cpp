@@ -16,6 +16,7 @@
 #include <QKeyEvent>
 #include <rooms/qugame.h>
 #include <objects/blocks/quspawnblock.h>
+#include <objects/entities/qucrown.h>
 
 
 QuPlayableCharacter::QuPlayableCharacter(int instance_id, int hue):QuCharacter(instance_id,hue)
@@ -179,6 +180,9 @@ void QuPlayableCharacter::advance(int step)
                 if(topCollidingObject==nullptr){
                     topCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
                 }
+                if(topCollidingObject==nullptr){
+                    topCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
+                }
             }
 
             // collision from the bottom
@@ -190,6 +194,9 @@ void QuPlayableCharacter::advance(int step)
                 if(bottomCollidingObject==nullptr){
                     bottomCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
                 }
+                if(bottomCollidingObject==nullptr){
+                    bottomCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
+                }
             }
 
             // collision from the left
@@ -200,6 +207,9 @@ void QuPlayableCharacter::advance(int step)
                 if(leftCollidingObject==nullptr){
                     leftCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
                 }
+                if(leftCollidingObject==nullptr){
+                    leftCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
+                }
             }
 
             // collision from the right
@@ -209,6 +219,9 @@ void QuPlayableCharacter::advance(int step)
                 rightCollidingObject=dynamic_cast<QuSolidBlock *>(listCollision[i]) ;
                 if(rightCollidingObject==nullptr){
                     rightCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
+                }
+                if(rightCollidingObject==nullptr){
+                    rightCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
                 }
             }
         }
