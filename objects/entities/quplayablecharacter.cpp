@@ -20,6 +20,7 @@
 #include <objects/blocks/quspawnblock.h>
 #include <objects/entities/qucrown.h>
 #include <network/client/quclient.h>
+#include <objects/enumblock/qulistblock.h>
 
 
 QuPlayableCharacter::QuPlayableCharacter(int instance_id, int hue):QuCharacter(instance_id,hue)
@@ -257,6 +258,22 @@ void QuPlayableCharacter::advance(int step)
             collisionTop ? setY(topCollidingObject->y() + topCollidingObject->boundingRect().y() + topCollidingObject->boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject->y()+ bottomCollidingObject->boundingRect().y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
             if(collisionTop && dynamic_cast<QuUnplayableCharacter *>(topCollidingObject)!=nullptr ){
                 kill(false);
+            }
+            if (!collisionTop){
+                QuSolidBlock *block = dynamic_cast<QuSolidBlock *>(bottomCollidingObject);
+                if( block != nullptr){
+                    switch (block->getTextureId()) {
+                    case QuListBlock::Cloud:
+                        if (getSpeed().x()>QuPhysicsConst::MAX_VITESSE_HORIZONTALE/5)
+                            setSpeedX(QuPhysicsConst::MAX_VITESSE_HORIZONTALE/5);
+                        else if (getSpeed().x()<-QuPhysicsConst::MAX_VITESSE_HORIZONTALE/5)
+                            setSpeedX(-QuPhysicsConst::MAX_VITESSE_HORIZONTALE/5);
+                        break;
+                    case QuListBlock::Bridge:
+                        setSpeedY(-QuPhysicsConst::MAX_VITESSE_VERTICALE);
+                        break;
+                    }
+                }
             }
         }
 
