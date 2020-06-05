@@ -1,5 +1,6 @@
 #include "qugame.h"
 
+#include <QJsonArray>
 #include <QPainter>
 #include <qugameengine.h>
 
@@ -24,42 +25,38 @@ QuGame::QuGame(qreal x, qreal y, qreal width, qreal height, QObject *parent):QGr
     init();
 }
 
-void QuGame::newMapFromJson(QJsonObject *jsonMap)
+void QuGame::newMapFromJson(QJsonObject *mapJson)
 {
-
+    QJsonArray sizeArray = (*mapJson)["size"].toArray();
+    QRectF qRectF;
+    qRectF.setWidth(sizeArray[0].toInt()* QuObject::CELL_SIZE);
+    qRectF.setHeight(sizeArray[1].toInt()* QuObject::CELL_SIZE);
+    setSceneRect(qRectF);
+    QJsonArray blocksArray = (*mapJson)["blocks"].toArray();
+    int arrayPos = 0;
+    for(arrayPos = 0; arrayPos < blocksArray.size(); arrayPos++) {
+        QJsonObject jsonBlock = blocksArray[arrayPos].toObject();
+        QJsonArray coordsArray = jsonBlock["coords"].toArray();
+        int blockNumber = 0;
+        for(blockNumber = 0; blockNumber < coordsArray.size(); blockNumber++) {
+            QuSolidBlock* solidBlock = new QuSolidBlock(jsonBlock["blockType"].toInt());
+            QJsonArray blockCoordsArray = coordsArray[blockNumber].toArray();
+            int blockX = blockCoordsArray[0].toInt();
+            int blockY = blockCoordsArray[1].toInt();
+            solidBlock->setPos(blockX * QuObject::CELL_SIZE, blockY * QuObject::CELL_SIZE);
+            addItem(solidBlock);
+        }
+    }
 }
 
 void QuGame::init()
 {
     setBackgroundBrush(QBrush(QColor(39,39,68)));
-
-    QuSolidBlock* block;
-    for(int i = 0 ; i < 32 ; ++i){
-        block = new QuSolidBlock(1);
-        block->setPos(i*QuObject::CELL_SIZE,7*QuObject::CELL_SIZE);
-        addItem(block);
-
-    block = new QuSolidBlock(1);
-    block->setPos(5*QuObject::CELL_SIZE,6*QuObject::CELL_SIZE);
-    addItem(block);
-
-    block = new QuSolidBlock(1);
-    block->setPos(5*QuObject::CELL_SIZE,4*QuObject::CELL_SIZE);
-    addItem(block);
-
-    block = new QuSolidBlock(1);
-    block->setPos(7*QuObject::CELL_SIZE,4*QuObject::CELL_SIZE);
-    addItem(block);
-
-    block = new QuSolidBlock(1);
-    block->setPos(9*QuObject::CELL_SIZE,4*QuObject::CELL_SIZE);
-    addItem(block);
-    }
 }
 
 void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
 {
-    int nb = 0;
+    int nb = 1;
     foreach(QuPlayerInfo* quPlayerInfo, mapQuPlayerInfo){
         if (quGameEngine->getPlayerId() == quPlayerInfo->getPlayerId()){
             QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
