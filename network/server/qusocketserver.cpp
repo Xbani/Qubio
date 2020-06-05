@@ -33,25 +33,28 @@ void QuSocketServer::receive()
             switch (jsonObj->value("messageType").toInt()) {
                 case MessageType::sendEntity:
                     quServer->receiveEntities(jsonObj);
-                break;
+                    break;
                 case MessageType::death:
                     quServer->receiveDeathMessage(jsonObj);
-                break;
+                    break;
+                case MessageType::getCrown:
+                    quServer->receiveGetCrown(jsonObj);
+                    break;
                 case MessageType::connection:
                     quServer->newPlayerConnect(jsonObj, datagram.senderAddress(), datagram.senderPort());
-                break;
+                    break;
                 case MessageType::answer:
                     quServer->handleClientAnswer(jsonObj);
-                break;
+                    break;
                 case MessageType::newMap:
                     quServer->receiveNewMap(jsonObj);
-                break;
+                    break;
                 case MessageType::gameWon:
                     quServer->aPlayerWon(jsonObj);
-                break;
+                    break;
                 case MessageType::startGameRequest:
                     quServer->startGame();
-                break;
+                    break;
             }
         }
 }

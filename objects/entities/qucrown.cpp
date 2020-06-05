@@ -20,6 +20,13 @@ QRectF QuCrown::boundingRect() const
 
 void QuCrown::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+
+    if(getOwner()!=nullptr){
+        QRectF rect=boundingRect();
+        rect.moveTo(getOwner()->boundingRect().topRight());
+        painter->drawImage(boundingRect(), sprite_crown,QRectF(0,0,6,4));
+    }
+    else
     painter->drawImage(boundingRect(), sprite_crown,QRectF(0,0,6,4));
 }
 

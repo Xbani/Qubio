@@ -189,4 +189,16 @@ void QuClient::sentDeath(QJsonObject *jsonDeath)
     delete (jsonDeath);
 }
 
+void QuClient::sentGetCrown()
+{
+    QJsonObject getCrown;
+    ++lastIdMessageSend;
+    getCrown["messageId"] = lastIdMessageSend;
+    getCrown["messageType"] = MessageType::getCrown;
+    getCrown["playerId"] = quGameEngine->getPlayerId();
+    QJsonDocument jsonDoc(getCrown);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
+}
+
 

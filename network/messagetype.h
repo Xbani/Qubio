@@ -16,6 +16,7 @@ enum MessageType{
     idPlayer,       //when the server accepts a connection he sends an id to the player
     gameWon,        //when the player reaches the end of the game and wins
     death,          //when a player death
+    getCrown,
 };
 
 

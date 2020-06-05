@@ -100,7 +100,7 @@ QJsonObject* QuCharacter::toJSON()
     QJsonArray jsonArrayAcceleration;
 
     (*jsonCharacter)["instanceId"] = getInstanceId();
-    (*jsonCharacter)["classId"] = getClassId();
+    (*jsonCharacter)["classId"] = QuEntity::UNPLAYABLE_CHARACTER_ID;
     (*jsonCharacter)["animationState"] = animation_state;
 
     jsonArrayPosition.append(pos().x());
