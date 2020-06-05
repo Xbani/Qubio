@@ -21,6 +21,7 @@ SOURCES += \
     network/client/quclient.cpp \
     network/client/qusocketclient.cpp \
     network/qusocket.cpp \
+    objects/entities/qucrown.cpp \
     objects/enumblock/qulistblock.cpp \
     network/server/quexpectedanswer.cpp \
     network/server/quinfoclient.cpp \
@@ -70,6 +71,7 @@ HEADERS += \
     network/messagetype.h \
     mainwindow.h \
     network/qusocket.h \
+    objects/entities/qucrown.h \
     objects/enumblock/qulistblock.h \
     network/server/quexpectedanswer.h \
     network/server/quinfoclient.h \

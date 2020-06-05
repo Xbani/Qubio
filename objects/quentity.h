@@ -43,6 +43,7 @@ public:
 public:
     static const int PLAYABLE_CHARACTER_ID=1;
     static const int UNPLAYABLE_CHARACTER_ID=2;
+    static const int CROWN_ID=3;
 public:
     bool getMutex()
     {
