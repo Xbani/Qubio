@@ -160,6 +160,9 @@ void QuPlayableCharacter::advance(int step)
         bool collisionRight = false;
 
         //loop for all object colliding with the character, stop at the end of the list or if the two kind of collision appeared
+        bool isCollidingWithCrown=false;
+        QuCrown * collidingCrown=nullptr;
+
         for (int i = 0; i<listCollision.size() and !(collisionTop and collisionBottom and collisionLeft and collisionRight); i++) {
 
             // vector between gravity centers of the two colliding object
@@ -171,7 +174,6 @@ void QuPlayableCharacter::advance(int step)
             qreal cosAngle = qCos(angleWithAbscisse);
 
             // four scenarios
-
             // collision from the top
             if (sinAngle < -QuPhysicsConst::APPROX_COS_PI_4)
             {
@@ -181,7 +183,9 @@ void QuPlayableCharacter::advance(int step)
                     topCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
                 }
                 if(topCollidingObject==nullptr){
-                    topCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
+                    collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
+                    isCollidingWithCrown=true;
+                    topCollidingObject=collidingCrown;
                 }
             }
 
@@ -195,7 +199,9 @@ void QuPlayableCharacter::advance(int step)
                     bottomCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
                 }
                 if(bottomCollidingObject==nullptr){
-                    bottomCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
+                    collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
+                    isCollidingWithCrown=true;
+                    bottomCollidingObject=collidingCrown;
                 }
             }
 
@@ -208,7 +214,9 @@ void QuPlayableCharacter::advance(int step)
                     leftCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
                 }
                 if(leftCollidingObject==nullptr){
-                    leftCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
+                    collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
+                    isCollidingWithCrown=true;
+                    leftCollidingObject=collidingCrown;
                 }
             }
 
@@ -221,11 +229,16 @@ void QuPlayableCharacter::advance(int step)
                     rightCollidingObject=dynamic_cast<QuUnplayableCharacter *>(listCollision[i]);
                 }
                 if(rightCollidingObject==nullptr){
-                    rightCollidingObject=dynamic_cast<QuCrown *>(listCollision[i]);
+                    collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
+                    isCollidingWithCrown=true;
+                    rightCollidingObject=collidingCrown;
                 }
             }
         }
-
+        if(isCollidingWithCrown){
+            collidingCrown->setOwner(this);
+            setCrown(collidingCrown);
+        }
         //update speed and position
 
         if ((collisionTop or collisionBottom ))
@@ -254,8 +267,11 @@ void QuPlayableCharacter::kill()
 {
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
     setPos(getSpawnBlock()->getPos());
-    if (getCrown())
+    if(getCrown()!=nullptr){
+        getCrown()->setOwner(nullptr);
+        setCrown(nullptr);
         quGame->sentToServer(getCrown()->toJSON());
+    }
 }
 
 void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)

@@ -78,3 +78,13 @@ int QuCrown::getClassId()
 {
     return QuEntity::CROWN_ID;
 }
+
+void QuCrown::advance(int phase)
+{
+    if(phase){
+        return;
+    }
+    if(getOwner()!=nullptr){
+        setPos(getOwner()->pos());
+    }
+}

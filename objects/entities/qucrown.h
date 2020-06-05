@@ -32,6 +32,10 @@ public:
     // QuEntity interface
 public:
     int getClassId();
+
+    // QGraphicsItem interface
+public:
+    void advance(int phase);
 };
 
 #endif // QUCROWN_H
