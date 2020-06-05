@@ -110,9 +110,7 @@ void QuClient::receiveMap(QJsonObject *jsonMap)
 {
     lastIdMessageReceive = (*jsonMap)["messageId"].toInt();
 
-    qDebug()<<"avant";
     quGameEngine->setJsonMap(jsonMap);
-    qDebug()<<"après";
     ++lastIdMessageSend;
     QJsonObject answer;
     answer["messageId"] = lastIdMessageSend;
