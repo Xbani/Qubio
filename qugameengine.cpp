@@ -152,7 +152,7 @@ void QuGameEngine::create()
     timer = new QTimer;
     timer->stop();
 
-//    soundPlayer = new QuSoundPlayer();
-//    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
-//    soundPlayer->play();
+    soundPlayer = new QuSoundPlayer();
+    soundPlayer->addMusicToPlaylist(soundPlayer->SOUND_MAIN_THEME);
+    soundPlayer->play();
 }
