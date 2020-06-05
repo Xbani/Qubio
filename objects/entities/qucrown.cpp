@@ -27,7 +27,7 @@ void QuCrown::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         painter->drawImage(boundingRect(), sprite_crown,QRectF(0,0,6,4));
     }
     else
-    painter->drawImage(boundingRect(), sprite_crown,QRectF(0,0,6,4));
+        painter->drawImage(boundingRect(), sprite_crown,QRectF(0,0,6,4));
 }
 
 QJsonObject *QuCrown::toJSON()
@@ -96,7 +96,6 @@ void QuCrown::advance(int phase)
         return;
     }
     if(getOwner()!=nullptr){
-        qDebug() << getOwner();
         setX(getOwner()->x());
         setY(getOwner()->y());
     }

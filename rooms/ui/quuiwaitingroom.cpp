@@ -27,7 +27,7 @@ void QuUIWaitingRoom::toGame()
 void QuUIWaitingRoom::init()
 {
     button_close= new QuButtonClose();
-    qDebug() << "is host : " << is_host;
+    //qDebug() << "is host : " << is_host;
     button_go_game = new QuButtonGoGame(is_host);
 
     button_close->setX(7*width()/8);
@@ -59,7 +59,7 @@ void QuUIWaitingRoom::updatePlayerInfo()
     for(i=0 ; i < players_json->size() ; ++i){
         QJsonObject playerJson = QJsonValue((*players_json)[i]).toObject();
         QuPlayerInfo* player_info= new QuPlayerInfo(playerJson["playerId"].toInt(),playerJson["nickname"].toString(),playerJson["skin"].toInt(),i);
-        qDebug() << "quuiwintingroom playerjson : " << playerJson;
+        //qDebug() << "quuiwintingroom playerjson : " << playerJson;
         player_info_map.insert(playerJson["playerId"].toInt(),player_info);
         addItem(player_info);
     }

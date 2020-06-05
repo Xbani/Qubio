@@ -33,7 +33,6 @@ QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObje
             nameFile.append(QString::number(num));
             nameFile += ".qumap";
     QFile file(nameFile);
-    qDebug()<<nameFile;
     file.open(QFile::ReadOnly);
 
     QTextStream in(&file);
@@ -47,7 +46,6 @@ QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObje
     timer->setInterval(INTERVAL_TIME_CHECK_CONNECTION);
     connect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     timer->start();
-    qDebug()<<"server créer";
 }
 
 void QuServer::startGame()
@@ -109,7 +107,6 @@ void QuServer::sendEntitiesToAll()
     QJsonArray jsonArrayEntities;
     lastMessageIdSent ++;
     foreach(QJsonObject *jsonEntity, jsonEntitiesMap) {
-        //qDebug()<<"foreach";
         QJsonValue jsonValueEntity(*jsonEntity);
         jsonArrayEntities.append(jsonValueEntity);
      }
@@ -248,8 +245,17 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
     {
         QJsonObject* object = new QJsonObject();
         *object = jsonEntitiesArray[i].toObject();
-        if ((*object)["messageId"].toInt() > lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt())) {
-            lastMsgIdsOfEntitiesMap.insert((*object)["messageId"].toInt(), lastMsgIdsOfEntitiesMap.take((*jsonEntities)["entities"].toInt()));
+        if ((*jsonEntities)["messageId"].toInt() > lastMsgIdsOfEntitiesMap.take((*object)["instanceId"].toInt())) {
+            if ((*object)["classId"].toInt() == QuEntity::UNPLAYABLE_CHARACTER_ID){
+                if((*object)["hasCrown"].toBool()){
+                    foreach(QJsonObject *entity,jsonEntitiesMap){
+                        if((*entity)["classId"].toInt() == QuEntity::CROWN_ID){
+                            (*entity)["position"] = (*object)["position"];
+                        }
+                    }
+                }
+            }
+            lastMsgIdsOfEntitiesMap.insert((*object)["messageId"].toInt(), (*object)["messageId"].toInt());
             jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
         }else if(!lastMsgIdsOfEntitiesMap.contains((*jsonEntities)["entities"].toInt()))
             jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
@@ -263,12 +269,16 @@ void QuServer::receiveDeathMessage(QJsonObject *jsonDeath)
         foreach(QJsonObject *entity,jsonEntitiesMap){
             if((*entity)["classId"].toInt() == QuEntity::CROWN_ID){
                 if ((*jsonDeath)["outOfBound"].toBool()){
-                    (*entity)["position"] = (*jsonDeath)["deathPosition"];//TODO
-                    (*entity)["owner"] = -1;
+                    QRandomGenerator rand = QRandomGenerator::securelySeeded();
+                    QPoint pos = spawBlocks.at(rand.bounded(0,100) % spawBlocks.size())->getPos();
+                    QJsonArray jsonArrayPosition;
+                    jsonArrayPosition.append(pos.x());
+                    jsonArrayPosition.append(pos.y());
+                    (*entity)["position"] = jsonArrayPosition;
                 }else{
                     (*entity)["position"] = (*jsonDeath)["deathPosition"];
-                    (*entity)["owner"] = -1;
                 }
+                (*entity)["owner"] = -1;
             }
         }
     }

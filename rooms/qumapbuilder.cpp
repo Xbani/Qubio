@@ -24,7 +24,6 @@ QuMapBuilder::QuMapBuilder(qreal x, qreal y, qreal width, qreal height, QObject 
 
 void QuMapBuilder::selectBlock(int block)
 {
-    qDebug()<<block;
     blockSelected = block;
 }
 
@@ -73,7 +72,6 @@ QJsonObject *QuMapBuilder::mapToJson()
             QGraphicsItem *myItem = items().at(itemI);
             QuBlock *block = dynamic_cast<QuBlock*>(myItem);
             if(block){
-                qDebug()<<block->getTextureId();
                 if(block->getTextureId() == numTypeBlock){
 
                     QJsonArray *coords = new QJsonArray();

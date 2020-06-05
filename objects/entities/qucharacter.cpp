@@ -102,6 +102,7 @@ QJsonObject* QuCharacter::toJSON()
     (*jsonCharacter)["instanceId"] = getInstanceId();
     (*jsonCharacter)["classId"] = QuEntity::UNPLAYABLE_CHARACTER_ID;
     (*jsonCharacter)["animationState"] = animation_state;
+    (*jsonCharacter)["hasCrown"] = getCrown() != nullptr;
 
     jsonArrayPosition.append(pos().x());
     jsonArrayPosition.append(pos().y());

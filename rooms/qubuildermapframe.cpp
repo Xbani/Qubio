@@ -91,7 +91,7 @@ void QuBuilderMapFrame::openMap()
     QTextStream in(&file);
     QJsonDocument jsonDoc = QJsonDocument::fromJson(in.readAll().toUtf8());
     file.close();
-    qDebug()<<jsonDoc.toJson(QJsonDocument::Compact);
+    //qDebug()<<jsonDoc.toJson(QJsonDocument::Compact);
     QJsonObject *jsonObj = new QJsonObject(jsonDoc.object());
     mapBuilder->mapFromJson(jsonObj);
     delete(jsonObj);
