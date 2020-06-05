@@ -62,6 +62,7 @@ void QuClient::receiveEntities(QJsonObject *jsonEntities)
             QJsonObject entityJson = entityValue.toObject();
 
             if(!quGameEngine->getQuGame()->getEntities().contains(entityJson["instanceId"].toInt())){
+                qDebug() << entityJson["instanceId"].toInt();
                 quGameEngine->getQuGame()->createEntity(entityJson["instanceId"].toInt(),entityJson["classId"].toInt());
 
             }else{

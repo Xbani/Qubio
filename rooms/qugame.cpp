@@ -108,7 +108,7 @@ void QuGame::createEntity(int instanceId, int classId, int skin)
             break;
     }
     addItem(quEntity);
-    getEntities().insert(instanceId,quEntity);
+    entities.insert(instanceId,quEntity);
 }
 
 void QuGame::sentToServer(QJsonObject *jsonToSent)
