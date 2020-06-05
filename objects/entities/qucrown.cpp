@@ -81,6 +81,7 @@ void QuCrown::fromJSON(QJsonObject &qJsonObject)
         QuGame *quGame =dynamic_cast<QuGame*>(scene());
         if (quGame){
             character = dynamic_cast<QuCharacter*>(quGame->getEntities().take((qJsonObject)["owner"].toInt()));
+            character->setCrown(this);
         }
     }
 }

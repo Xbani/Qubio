@@ -28,7 +28,7 @@ void QuSocketServer::receive()
             *jsonObj = jsonDoc.object();
 
             QJsonDocument debug(*jsonObj);
-            //qDebug()<<"serveur"<<debug.toJson(QJsonDocument::Compact);
+            qDebug()<<"serveur"<<debug.toJson(QJsonDocument::Compact);
 
             switch (jsonObj->value("messageType").toInt()) {
                 case MessageType::sendEntity:

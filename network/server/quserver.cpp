@@ -25,7 +25,7 @@
 QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObject(parent)
 {
     lastMessageIdSent = 0;
-    lastPlayerIdGiven = 0;
+    lastInstanceIdGiven = 0;
     jsonMap = new QJsonObject();
     QRandomGenerator rand = QRandomGenerator::securelySeeded();
     int num = rand.bounded(0,3);
@@ -86,11 +86,12 @@ void QuServer::startGame()
             }
         }
     }
-
-    QuCrown quCrown(clientsInfoMap.size()+1);
+    lastInstanceIdGiven++;
+    qDebug()<<lastInstanceIdGiven;
+    QuCrown quCrown(lastInstanceIdGiven);
     quCrown.setPos(spawBlocks.at(randValue % spawBlocks.size())->getPos());
-    jsonEntitiesMap.insert(quCrown.getClassId(), quCrown.toJSON());
-
+    jsonEntitiesMap.insert(quCrown.getInstanceId(), quCrown.toJSON());
+    qDebug()<<jsonEntitiesMap.size();
     disconnect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     //We send the info too the players every x ms
     timer->setInterval(INTERVAL_TIME_ENTITIES);
@@ -106,7 +107,9 @@ void QuServer::sendEntitiesToAll()
 {
     QJsonArray jsonArrayEntities;
     lastMessageIdSent ++;
+    qDebug()<<jsonEntitiesMap.size();
     foreach(QJsonObject *jsonEntity, jsonEntitiesMap) {
+        qDebug()<<"debug foreach";
         QJsonValue jsonValueEntity(*jsonEntity);
         jsonArrayEntities.append(jsonValueEntity);
      }
@@ -128,9 +131,9 @@ void QuServer::newPlayerConnect(QJsonObject *jsonConnection, QHostAddress ip, in
     quInfoClient->setSkin((*jsonConnection)["skin"].toDouble());
     quInfoClient->setIsHost((*jsonConnection)["isHost"].toBool());
     //give an id to the player
-    ++lastPlayerIdGiven;
-    quInfoClient->setPlayerId(lastPlayerIdGiven);
-    clientsInfoMap.insert(lastPlayerIdGiven, quInfoClient);
+    ++lastInstanceIdGiven;
+    quInfoClient->setPlayerId(lastInstanceIdGiven);
+    clientsInfoMap.insert(lastInstanceIdGiven, quInfoClient);
     //we add the datagrams to the datagram list & send the id to the new player
     QNetworkDatagram *datagram = new QNetworkDatagram();
     datagram->setDestination(ip, port);
@@ -251,6 +254,7 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
                     foreach(QJsonObject *entity,jsonEntitiesMap){
                         if((*entity)["classId"].toInt() == QuEntity::CROWN_ID){
                             (*entity)["position"] = (*object)["position"];
+                            (*entity)["owner"] = (*object)["instanceId"];
                         }
                     }
                 }
@@ -259,6 +263,7 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
             jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
         }else if(!lastMsgIdsOfEntitiesMap.contains((*jsonEntities)["entities"].toInt()))
             jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
+            lastMsgIdsOfEntitiesMap.insert((*object)["messageId"].toInt(), (*object)["messageId"].toInt());
     }
 }
 

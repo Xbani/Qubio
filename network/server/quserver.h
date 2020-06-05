@@ -104,7 +104,7 @@ private:
      */
     QMap<int, QuInfoClient*> clientsInfoMap;
     int lastMessageIdSent;
-    int lastPlayerIdGiven;
+    int lastInstanceIdGiven;
     QTimer* timer;
     /**
      * @brief spawBlocks list of s=the spawn for playe on the map
