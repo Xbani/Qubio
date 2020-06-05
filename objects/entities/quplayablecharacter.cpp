@@ -126,7 +126,15 @@ void QuPlayableCharacter::advance(int step)
      * ###################################################################################
      */
 
-
+    //if out of room
+    QRectF sRect=scene()->sceneRect();
+    if(x()-boundingRect().x()+boundingRect().width()<sRect.x()
+    || y()-boundingRect().y()+boundingRect().height()<sRect.y()
+    || x()>sRect.x()+sRect.width()
+    || y() > sRect.y() + sRect.height()){
+        kill();
+    }
+    //collisions
     QuObject * topCollidingObject;
     QuObject * bottomCollidingObject;
     QuObject * leftCollidingObject;
@@ -210,6 +218,9 @@ void QuPlayableCharacter::advance(int step)
         {
             setSpeedY(0);
             collisionTop ? setY(topCollidingObject->y() + topCollidingObject->boundingRect().y() + topCollidingObject->boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject->y()+ bottomCollidingObject->boundingRect().y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
+            if(collisionTop && dynamic_cast<QuUnplayableCharacter *>(topCollidingObject)!=nullptr ){
+                kill();
+            }
         }
 
         if (collisionLeft or collisionRight)
@@ -221,6 +232,13 @@ void QuPlayableCharacter::advance(int step)
 
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
     quGame->sentToServer(toJSON());
+}
+
+void QuPlayableCharacter::kill()
+{
+    qDebug() << "killed";
+    setX(80);
+    setY(80);
 }
 
 void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)

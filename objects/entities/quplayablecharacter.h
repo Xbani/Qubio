@@ -28,6 +28,7 @@ public:
 public:
     int getClassId() override;
     void advance(int step) override;
+    void kill();
 
     // QGraphicsItem interface
 protected:
