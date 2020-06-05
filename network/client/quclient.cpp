@@ -10,6 +10,8 @@
 #include "rooms/qugame.h"
 #include "objects/quentity.h"
 #include <rooms/ui/quuiwaitingroom.h>
+#include <objects/entities/quplayablecharacter.h>
+#include <objects/entities/quunplayablecharacter.h>
 
 
 QuClient::QuClient(QHostAddress ipClient, int portClient,
@@ -59,10 +61,17 @@ void QuClient::receiveEntities(QJsonObject *jsonEntities)
             QJsonValue entityValue = jsonPlayerArray.at(entityId);
             QJsonObject entityJson = entityValue.toObject();
 
-            QuEntity *entity = quGameEngine->getQuGame()->getEntities().take(entityJson["instanceId"].toInt());
-            if(entity->getInstanceId() != quGameEngine->getPlayerId()){
-                    entity->fromJSON(entityJson);
+            if(!quGameEngine->getQuGame()->getEntities().contains(entityJson["instanceId"].toInt())){
+                quGameEngine->getQuGame()->createEntity(entityJson["instanceId"].toInt(),entityJson["classId"].toInt());
+
+            }else{
+                QuEntity *entity = quGameEngine->getQuGame()->getEntities().take(entityJson["instanceId"].toInt());
+                if(entity->getInstanceId() != quGameEngine->getPlayerId()){
+                        entity->fromJSON(entityJson);
+                }
             }
+
+
         }
 
     }

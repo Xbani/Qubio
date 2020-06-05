@@ -96,6 +96,21 @@ void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
     }
 }
 
+void QuGame::createEntity(int instanceId, int classId, int skin)
+{
+    QuEntity * quEntity;
+    switch (classId) {
+        case QuEntity::UNPLAYABLE_CHARACTER_ID:
+            quEntity= new QuUnplayableCharacter(instanceId,skin);
+            break;
+        case QuEntity::CROWN_ID:
+            quEntity= new QuCrown(instanceId);
+            break;
+    }
+    addItem(quEntity);
+    getEntities().insert(instanceId,quEntity);
+}
+
 void QuGame::sentToServer(QJsonObject *jsonToSent)
 {
     quGameEngine->getQuClient()->sendEntity(jsonToSent);
