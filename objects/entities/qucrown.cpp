@@ -44,7 +44,7 @@ QJsonObject *QuCrown::toJSON()
     jsonArrayAcceleration.append(getAcceleration().y());
     (*jsonCrown)["acceleration"] = jsonArrayAcceleration;
 
-    (*jsonCrown)["playerPosse"] = character != nullptr ? character->getInstanceId() : -1;
+    (*jsonCrown)["owner"] = character != nullptr ? character->getInstanceId() : -1;
 
     return jsonCrown;
 }
@@ -71,7 +71,7 @@ void QuCrown::fromJSON(QJsonObject &qJsonObject)
 
         QuGame *quGame =dynamic_cast<QuGame*>(scene());
         if (quGame){
-            character = dynamic_cast<QuCharacter*>(quGame->getEntities().take((qJsonObject)["playerPosse"].toInt()));
+            character = dynamic_cast<QuCharacter*>(quGame->getEntities().take((qJsonObject)["owner"].toInt()));
         }
     }
 }

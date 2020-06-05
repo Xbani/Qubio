@@ -5,6 +5,8 @@
 #include <QMessageBox>
 #include <QRandomGenerator>
 #include <QDateTime>
+
+#include <objects/quentity.h>
 //#include <QJsonValue>
 #include <QTimer>
 #include <QFile>
@@ -221,6 +223,26 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
         }else if(!lastMsgIdsOfEntitiesMap.contains((*jsonEntities)["entities"].toInt()))
             jsonEntitiesMap.insert((*object)["instanceId"].toInt(), object);
     }
+}
+
+void QuServer::receiveDeathMessage(QJsonObject *jsonDeath)
+{
+    if ((*jsonDeath)["wasCrowned"].toBool()){
+
+        foreach(QJsonObject *entity,jsonEntitiesMap){
+            if((*entity)["classId"].toInt() == QuEntity::CROWN_ID){
+                if ((*jsonDeath)["outOfBound"].toBool()){
+                    (*entity)["position"] = (*jsonDeath)["deathPosition"];//TODO
+                    (*entity)["owner"] = -1;
+                }else{
+                    (*entity)["position"] = (*jsonDeath)["deathPosition"];
+                    (*entity)["owner"] = -1;
+                }
+            }
+        }
+    }
+
+//deathPosition: [12,12]
 }
 
 void QuServer::handlePlayersConnection()

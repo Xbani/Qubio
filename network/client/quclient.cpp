@@ -169,4 +169,15 @@ void QuClient::receivePlayersList(QJsonObject *jsonPlayerList)
     }
 }
 
+void QuClient::sentDeath(QJsonObject *jsonDeath)
+{
+     ++lastIdMessageSend;
+    (*jsonDeath)["messageId"] = lastIdMessageSend;
+    (*jsonDeath)["messageType"] = MessageType::death;
+    QJsonDocument jsonDoc(*jsonDeath);
+    serverDatagram->setData(jsonDoc.toJson(QJsonDocument::Compact));
+    quSocketClient->send(serverDatagram);
+    delete (jsonDeath);
+}
+
 
