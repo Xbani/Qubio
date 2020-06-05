@@ -264,20 +264,17 @@ void QuPlayableCharacter::advance(int step)
 
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
     quGame->sentToServer(toJSON());
-    if (getCrown())
+    if (getCrown()!=nullptr)
         quGame->sentToServer(getCrown()->toJSON());
 }
 
 void QuPlayableCharacter::kill()
 {
-    qDebug() << "debug 0";
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
     setPos(getSpawnBlock()->getPos());
     if(getCrown()!=nullptr){
         getCrown()->setOwner(nullptr);
-        qDebug() << "debug 1";
         quGame->sentToServer(getCrown()->toJSON());
-        qDebug() << "debug 2";
         setCrown(nullptr); 
     }
 }

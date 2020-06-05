@@ -92,6 +92,7 @@ void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
             addItem(character);
             entities.insert(quPlayerInfo->getPlayerId(),character);
         }
+        iteratorSpawn++;
     }
 }
 
@@ -107,7 +108,7 @@ QuPlayableCharacter *QuGame::getPlayableCharacter()
 
 void QuGame::start(int rand)
 {
-    QuCrown *quCrown = new QuCrown(entities.size());
+    QuCrown *quCrown = new QuCrown(entities.size()+1);
     quCrown->setPos(spawBlocks.at(rand % spawBlocks.size())->getPos());
     addItem(quCrown);
 }
