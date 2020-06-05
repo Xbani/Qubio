@@ -51,6 +51,8 @@ private:
 
     QuSoundPlayer * soundPlayer;
 
+    QJsonObject * jsonMap;
+
 public:
     QuGameEngine();
     ~QuGameEngine();
@@ -87,6 +89,7 @@ public:
     inline QString getNickname()const {return uiMainMenu->getNickName();};
     inline int getSkinColor() const {return uiMainMenu->getColorHUE();};
     inline QuClient * getQuClient() const {return quClient;};
+    inline void setJsonMap(QJsonObject *jsonMap) {this->jsonMap = jsonMap;};
 };
 
 #endif // QUGAMEENGINE_H

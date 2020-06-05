@@ -35,5 +35,8 @@
         <file>resources/sprites/ui/buttons/button18.png</file>
         <file>resources/sprites/ui/buttons/button19.png</file>
         <file>resources/sprites/ui/buttons/button20.png</file>
+        <file>resources/devSaves/world0.qumap</file>
+        <file>resources/devSaves/world1.qumap</file>
+        <file>resources/devSaves/world2.qumap</file>
     </qresource>
 </RCC>

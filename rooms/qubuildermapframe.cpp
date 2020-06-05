@@ -90,8 +90,6 @@ void QuBuilderMapFrame::openMap()
 
     QTextStream in(&file);
     QJsonDocument jsonDoc = QJsonDocument::fromJson(in.readAll().toUtf8());
-    //qDebug()<<in.readAll().toUtf8();
-    //jsonDoc.fromJson();
     file.close();
     qDebug()<<jsonDoc.toJson(QJsonDocument::Compact);
     QJsonObject *jsonObj = new QJsonObject(jsonDoc.object());

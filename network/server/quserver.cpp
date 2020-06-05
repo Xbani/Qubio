@@ -1,8 +1,13 @@
 //#include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QRandomGenerator>
+#include <QDateTime>
 //#include <QJsonValue>
 #include <QTimer>
+#include <QFile>
 #include "quserver.h"
 #include "quinfoclient.h"
 #include "qusocketserver.h"
@@ -14,17 +19,27 @@ QuServer::QuServer(QHostAddress ipServer, int portServer, QObject *parent):QObje
     lastMessageIdSent = 0;
     lastPlayerIdGiven = 0;
     jsonMap = new QJsonObject();
+    QRandomGenerator rand = QRandomGenerator::securelySeeded();
+    int num = rand.bounded(0,3);
+    QString nameFile = ":/resources/devSaves/world";
+            nameFile.append(QString::number(num));
+            nameFile += ".qumap";
+    QFile file(nameFile);
+    qDebug()<<nameFile;
+    file.open(QFile::ReadOnly);
+
+    QTextStream in(&file);
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(in.readAll().toUtf8());
+    file.close();
+    jsonMap = new QJsonObject(jsonDoc.object());
 
     quSocketServer = new QuSocketServer(this);
     quSocketServer->init(ipServer,portServer);
-    //connect(quSocketServer->getUdpSocket(), &QUdpSocket::readyRead,
-    //        quSocketServer, &QuSocketServer::receive);
     timer = new QTimer(this);
     timer->setInterval(INTERVAL_TIME_CHECK_CONNECTION);
-    //this->timer->callOnTimeout(this, SLOT(handlePlayersConnection()));
     connect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     timer->start();
-    //qDebug()<<"server créer";
+    qDebug()<<"server créer";
 }
 
 void QuServer::startGame()
@@ -102,6 +117,7 @@ void QuServer::newPlayerConnect(QJsonObject *jsonConnection, QHostAddress ip, in
     foreach(QuInfoClient *quInfoClient, clientsInfoMap) {
         quInfoClient->setPlayersListReception(false);
     }
+    handlePlayersConnection();
 }
 
 void QuServer::sendMap(QuInfoClient * quInfoClient)

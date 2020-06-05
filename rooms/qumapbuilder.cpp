@@ -36,7 +36,6 @@ void QuMapBuilder::mapFromJson(QJsonObject *mapJson)
     size.setWidth(sizeArray[0].toInt());
     size.setHeight(sizeArray[1].toInt());
     clearScene();
-    qDebug()<<size;
     resizeScene(size);
     QJsonArray blocksArray = (*mapJson)["blocks"].toArray();
     int arrayPos = 0;

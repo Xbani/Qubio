@@ -61,6 +61,7 @@ void QuGameEngine::toQuGame()
 void QuGameEngine::toQuGameMultiPlayers()
 {
     quGame = new QuGame(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
+    quGame->newMapFromJson(jsonMap);
     if (isHost)
         quGame->createPlayers(uiWaitingRoomHost->getQuPlayerInfos());
     else
