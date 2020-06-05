@@ -101,6 +101,7 @@ QJsonObject* QuCharacter::toJSON()
 
     (*jsonCharacter)["instanceId"] = getInstanceId();
     (*jsonCharacter)["classId"] = getClassId();
+    (*jsonCharacter)["animationState"] = animation_state;
 
     jsonArrayPosition.append(pos().x());
     jsonArrayPosition.append(pos().y());
@@ -121,6 +122,7 @@ void QuCharacter::fromJSON(QJsonObject &qJsonObject)
 {
     if(getInstanceId() == qJsonObject["instanceId"].toInt()){
         QJsonArray jsonArray = qJsonObject["position"].toArray();
+
         QPointF QpoitF;
         QpoitF.setX(jsonArray.at(0).toDouble());
         QpoitF.setY(jsonArray.at(1).toDouble());
@@ -136,5 +138,7 @@ void QuCharacter::fromJSON(QJsonObject &qJsonObject)
         vector2d.setX(jsonArray.at(0).toDouble());
         vector2d.setY(jsonArray.at(1).toDouble());
         setAcceleration(vector2d);
+
+        animation_state=qJsonObject["position"].toInt();
     }
 }
