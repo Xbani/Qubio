@@ -1,0 +1,38 @@
+#ifndef QUCROWN_H
+#define QUCROWN_H
+
+#include "qucharacter.h"
+
+#include <objects/quentity.h>
+
+
+
+class QuCrown : public QuEntity
+{
+public:
+    QuCrown();
+
+private:
+    QImage sprite_crown;
+    QuCharacter * character;
+
+    // QGraphicsItem interface
+public:
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void setPos(qreal x, qreal y);
+
+    void setOwner(QuCharacter * character);
+    QuCharacter * getOwner();
+
+    // QuObject interface
+public:
+    QJsonObject *toJSON();
+    void fromJSON(QJsonObject &qJsonObject);
+
+    // QuEntity interface
+public:
+    int getClassId();
+};
+
+#endif // QUCROWN_H
