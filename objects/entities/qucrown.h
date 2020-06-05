@@ -6,7 +6,7 @@
 #include <objects/quentity.h>
 
 
-
+class QuCharacter;
 class QuCrown : public QuEntity
 {
 public:
