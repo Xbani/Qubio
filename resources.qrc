@@ -38,5 +38,6 @@
         <file>resources/devSaves/world0.qumap</file>
         <file>resources/devSaves/world1.qumap</file>
         <file>resources/devSaves/world2.qumap</file>
+        <file>resources/sprites/blocks/Flag.png</file>
     </qresource>
 </RCC>

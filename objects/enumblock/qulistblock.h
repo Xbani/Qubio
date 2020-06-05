@@ -12,7 +12,7 @@ public:
                       Stone,
                       WoodPlank,
                       Grass,
-                      Stairs, Cloud, Bridge
+                      Stairs, Cloud, Bridge, Flag,
                      };
      Q_ENUM(SolidBlock);
 

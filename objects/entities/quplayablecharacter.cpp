@@ -15,6 +15,7 @@
 #include <QtMath>
 #include <QKeyEvent>
 #include <rooms/qugame.h>
+#include <objects/blocks/quspawnblock.h>
 
 
 QuPlayableCharacter::QuPlayableCharacter(int instance_id, int hue):QuCharacter(instance_id,hue)
@@ -236,9 +237,7 @@ void QuPlayableCharacter::advance(int step)
 
 void QuPlayableCharacter::kill()
 {
-    qDebug() << "killed";
-    setX(80);
-    setY(80);
+    setPos(getSpawnBlock()->getPos());
 }
 
 void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)

@@ -12,6 +12,8 @@ class QuSpawnBlock : public QuBlock
 {
 public:
     QuSpawnBlock();
+    QPoint pos;
+    int idPlayer;
 
     // QGraphicsItem interface
 public:
@@ -22,6 +24,11 @@ public:
 public:
     QJsonObject* toJSON() override;
     void fromJSON(QJsonObject &qJsonObject) override;
+    inline QPoint getPos()const{return pos;};
+    inline void setPos(QPoint pos){this->pos = pos;};
+
+    inline int getidPlayer()const{return idPlayer;};
+    inline void setidPlayer(int idPlayer){this->idPlayer = idPlayer;};
 };
 
 #endif // QUSPAWNPLAYER_H

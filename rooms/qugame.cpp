@@ -5,6 +5,7 @@
 #include <qugameengine.h>
 
 #include <objects/blocks/qusolidblock.h>
+#include <objects/blocks/quspawnblock.h>
 
 #include <objects/entities/quplayablecharacter.h>
 
@@ -13,6 +14,8 @@
 #include <objects/ui/quplayerinfo.h>
 
 #include <network/client/quclient.h>
+
+#include <objects/enumblock/qulistblock.h>
 
 
 
@@ -39,12 +42,25 @@ void QuGame::newMapFromJson(QJsonObject *mapJson)
         QJsonArray coordsArray = jsonBlock["coords"].toArray();
         int blockNumber = 0;
         for(blockNumber = 0; blockNumber < coordsArray.size(); blockNumber++) {
-            QuSolidBlock* solidBlock = new QuSolidBlock(jsonBlock["blockType"].toInt());
-            QJsonArray blockCoordsArray = coordsArray[blockNumber].toArray();
-            int blockX = blockCoordsArray[0].toInt();
-            int blockY = blockCoordsArray[1].toInt();
-            solidBlock->setPos(blockX * QuObject::CELL_SIZE, blockY * QuObject::CELL_SIZE);
-            addItem(solidBlock);
+            switch (jsonBlock["blockType"].toInt()) {
+                case QuListBlock::Flag:{
+                    QuSpawnBlock *spawn = new QuSpawnBlock();
+                    QJsonArray blockCoordsArray = coordsArray[blockNumber].toArray();
+                    QPoint point(blockCoordsArray[0].toInt() * QuObject::CELL_SIZE, blockCoordsArray[1].toInt() * QuObject::CELL_SIZE);
+                    spawn->setPos(point);
+                    spawBlocks.append(spawn);
+                    break;
+                }
+                default:{
+                    QuSolidBlock* solidBlock = new QuSolidBlock(jsonBlock["blockType"].toInt());
+                    QJsonArray blockCoordsArray = coordsArray[blockNumber].toArray();
+                    int blockX = blockCoordsArray[0].toInt();
+                    int blockY = blockCoordsArray[1].toInt();
+                    solidBlock->setPos(blockX * QuObject::CELL_SIZE, blockY * QuObject::CELL_SIZE);
+                    addItem(solidBlock);
+                }
+            }
+
         }
     }
 }
@@ -56,22 +72,25 @@ void QuGame::init()
 
 void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)
 {
-    int nb = 1;
+    QVector<QuSpawnBlock*>::iterator iteratorSpawn = spawBlocks.begin();
     foreach(QuPlayerInfo* quPlayerInfo, mapQuPlayerInfo){
         if (quGameEngine->getPlayerId() == quPlayerInfo->getPlayerId()){
             QuPlayableCharacter * mainCharacter = new QuPlayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
             playable_character = mainCharacter;
             setFocusItem(mainCharacter);
-            mainCharacter->setPos(nb*2*QuObject::CELL_SIZE, 3*QuObject::CELL_SIZE);
+            mainCharacter->setPos((*iteratorSpawn)->getPos());
+            (*iteratorSpawn)->setidPlayer(quPlayerInfo->getPlayerId());
+            mainCharacter->setSpawnBlock(*iteratorSpawn);
             addItem(mainCharacter);
             entities.insert(quPlayerInfo->getPlayerId(),mainCharacter);
         }else{
             QuUnplayableCharacter *character = new QuUnplayableCharacter(quPlayerInfo->getPlayerId(), quPlayerInfo->getPlayerHue());
-            character->setPos(nb*2*QuObject::CELL_SIZE, 3*QuObject::CELL_SIZE);
+            character->setPos((*iteratorSpawn)->getPos());
+            (*iteratorSpawn)->setidPlayer(quPlayerInfo->getPlayerId());
+            character->setSpawnBlock(*iteratorSpawn);
             addItem(character);
             entities.insert(quPlayerInfo->getPlayerId(),character);
         }
-        ++nb;
     }
 }
 
