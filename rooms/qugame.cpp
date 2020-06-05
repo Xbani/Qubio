@@ -68,6 +68,9 @@ void QuGame::newMapFromJson(QJsonObject *mapJson)
 void QuGame::init()
 {
     setBackgroundBrush(QBrush(QColor(39,39,68)));
+    QuCrown * crown= new QuCrown();
+    crown->setPos(120,120);
+    addItem(crown);
 }
 
 void QuGame::createPlayers(QMap<int, QuPlayerInfo *> mapQuPlayerInfo)

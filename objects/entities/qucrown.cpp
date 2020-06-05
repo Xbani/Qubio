@@ -2,10 +2,12 @@
 
 #include <QJsonObject>
 #include <QPainter>
+#include <QDebug>
 
 QuCrown::QuCrown()
 {
     sprite_crown = QImage(":/resources/sprites/character/crown.png");
+    character=nullptr;
 }
 
 QRectF QuCrown::boundingRect() const
@@ -35,10 +37,12 @@ int QuCrown::getClassId()
 
 void QuCrown::advance(int phase)
 {
-    if(phase){
+    if(!phase){
         return;
     }
     if(getOwner()!=nullptr){
-        setPos(getOwner()->pos());
+        qDebug() << getOwner();
+        setX(getOwner()->x());
+        setY(getOwner()->y());
     }
 }
