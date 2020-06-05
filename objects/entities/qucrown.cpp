@@ -31,6 +31,8 @@ QJsonObject *QuCrown::toJSON()
     QJsonArray jsonArrayAcceleration;
 
     (*jsonCrown)["instanceId"] = getInstanceId();
+    (*jsonCrown)["classId"] = getClassId();
+
 
     jsonArrayPosition.append(pos().x());
     jsonArrayPosition.append(pos().y());
