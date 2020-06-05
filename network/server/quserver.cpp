@@ -89,7 +89,7 @@ void QuServer::startGame()
         }
     }
 
-    QuCrown quCrown(jsonEntitiesMap.size()+1);
+    QuCrown quCrown(clientsInfoMap.size()+1);
     quCrown.setPos(spawBlocks.at(randValue % spawBlocks.size())->getPos());
     jsonEntitiesMap.insert(quCrown.getClassId(), quCrown.toJSON());
 
