@@ -269,8 +269,6 @@ void QuPlayableCharacter::advance(int step)
 
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
     quGame->sentToServer(toJSON());
-    if (getCrown()!=nullptr)
-        quGame->sentToServer(getCrown()->toJSON());
 }
 
 void QuPlayableCharacter::kill(bool is_out_of_bound)
