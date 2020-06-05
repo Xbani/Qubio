@@ -62,6 +62,8 @@ public:
 
     void receiveDeathMessage(QJsonObject* jsonDeath);
 
+    void receiveGetCrown(QJsonObject* jsonGetCrown);
+
 public slots :
     /**
      * @brief sendEntities sends the entities of the game

@@ -241,8 +241,15 @@ void QuServer::receiveDeathMessage(QJsonObject *jsonDeath)
             }
         }
     }
+}
 
-//deathPosition: [12,12]
+void QuServer::receiveGetCrown(QJsonObject *jsonGetCrown)
+{
+    foreach(QJsonObject *entity,jsonEntitiesMap){
+        if((*entity)["classId"].toInt() == QuEntity::CROWN_ID){
+            (*entity)["owner"] = (*jsonGetCrown)["playerId"];
+        }
+    }
 }
 
 void QuServer::handlePlayersConnection()

@@ -84,6 +84,8 @@ public:
     void receivePlayersList(QJsonObject *jsonPlayersList);
 
     void sentDeath(QJsonObject* jsonDeath);
+
+    void sentGetCrown();
 private:
 
 signals:

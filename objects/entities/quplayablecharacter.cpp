@@ -246,6 +246,8 @@ void QuPlayableCharacter::advance(int step)
         if(isCollidingWithCrown && getCrown()==nullptr){
             collidingCrown->setOwner(this);
             setCrown(collidingCrown);
+            QuGame *quGame = dynamic_cast<QuGame *>(scene());
+            quGame->getQuClient()->sentGetCrown();
         }
         //update speed and position
 
