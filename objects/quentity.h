@@ -24,7 +24,7 @@ public:
     QuEntity(int instance_id);
 
     virtual int getClassId()    = 0;
-    int getInstanceId();
+    inline int getInstanceId()const {return instance_id;};
 
     inline bool getPreviouslyOnGround() const {return previouslyOnGround;}
     inline void setPreviouslyOnGround(bool value) {previouslyOnGround = value;}

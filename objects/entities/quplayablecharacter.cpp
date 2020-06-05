@@ -246,11 +246,16 @@ void QuPlayableCharacter::advance(int step)
 
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
     quGame->sentToServer(toJSON());
+    if (getCrown())
+        quGame->sentToServer(getCrown()->toJSON());
 }
 
 void QuPlayableCharacter::kill()
 {
+    QuGame *quGame = dynamic_cast<QuGame *>(scene());
     setPos(getSpawnBlock()->getPos());
+    if (getCrown())
+        quGame->sentToServer(getCrown()->toJSON());
 }
 
 void QuPlayableCharacter::keyPressEvent(QKeyEvent *event)

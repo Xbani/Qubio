@@ -31,7 +31,7 @@ void QuSocketClient::receive(){
                 quClient->receivePlayersList(jsonObj);
             break;
             case MessageType::startGameByServer:
-                quClient->startGame();
+                quClient->startGame(jsonObj);
             break;
             case MessageType::endGame:
                 quClient->endGame();

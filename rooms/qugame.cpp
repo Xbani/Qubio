@@ -107,7 +107,7 @@ QuPlayableCharacter *QuGame::getPlayableCharacter()
 
 void QuGame::start(int rand)
 {
-    QuCrown *quCrown = new QuCrown();
+    QuCrown *quCrown = new QuCrown(entities.size());
     quCrown->setPos(spawBlocks.at(rand % spawBlocks.size())->getPos().x(),spawBlocks.at(rand % spawBlocks.size())->getPos().x());
     addItem(quCrown);
 }
