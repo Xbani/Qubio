@@ -140,6 +140,6 @@ void QuCharacter::fromJSON(QJsonObject &qJsonObject)
         vector2d.setY(jsonArray.at(1).toDouble());
         setAcceleration(vector2d);
 
-        animation_state=qJsonObject["position"].toInt();
+        animation_state=qJsonObject["animationState"].toInt();
     }
 }
