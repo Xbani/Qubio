@@ -8,11 +8,13 @@
  * @brief The QuCharacter class
  * @details Class which correspond to in game character.
  */
+class QuSpawnBlock;
 class QuCharacter : public QuEntity
 {
 private:
     QString name;
     QColor color;
+    QuSpawnBlock *spawnBlock;
     int animation_state;
 
     QImage sprite_static_left;
@@ -32,6 +34,8 @@ public:
 
     inline int getAnimationState() const {return animation_state;}
     inline void setAnimationState(int animation_state) {this->animation_state = animation_state;}
+    inline QuSpawnBlock* getSpawnBlock() const {return spawnBlock;}
+    inline void setSpawnBlock(QuSpawnBlock* spawnBlock) {this->spawnBlock = spawnBlock;}
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;

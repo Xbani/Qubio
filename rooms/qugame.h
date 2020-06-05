@@ -8,12 +8,14 @@ class QuEntity;
 class QuPlayerInfo;
 class QuGameEngine;
 class QuPlayableCharacter;
+class QuSpawnBlock;
 class QuGame : public QGraphicsScene
 {
 private:
     QMap<int,QuEntity*> entities;
     QuGameEngine * quGameEngine;
     QuPlayableCharacter * playable_character;
+    QVector<QuSpawnBlock*> spawBlocks;
 
 public:
     QuGame(qreal x, qreal y, qreal width, qreal height, QObject *parent);
