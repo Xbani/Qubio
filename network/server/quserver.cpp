@@ -254,7 +254,7 @@ void QuServer::receiveEntities(QJsonObject * jsonEntities)
                     foreach(QJsonObject *entity,jsonEntitiesMap){
                         if((*entity)["classId"].toInt() == QuEntity::CROWN_ID){
                             (*entity)["position"] = (*object)["position"];
-                            (*entity)["owner"] = (*object)["instanceId"];
+                            //(*entity)["owner"] = (*object)["instanceId"];
                         }
                     }
                 }
