@@ -7,6 +7,12 @@
 #include <QDateTime>
 
 #include <objects/quentity.h>
+
+#include <objects/enumblock/qulistblock.h>
+
+#include <objects/blocks/quspawnblock.h>
+
+#include <objects/entities/qucrown.h>
 //#include <QJsonValue>
 #include <QTimer>
 #include <QFile>
@@ -58,9 +64,34 @@ void QuServer::startGame()
     qJsonObject["messageId"] = lastMessageIdSent;
     qJsonObject["messageType"] = MessageType::startGameByServer;
     QRandomGenerator rand = QRandomGenerator::securelySeeded();
-    qJsonObject["rand"] = rand.bounded(0,100);
+    int randValue = rand.bounded(0,100);
+    qJsonObject["rand"] = randValue;
     QJsonDocument qJsonDocument(qJsonObject);
     (this->quSocketServer)->sendToAll(qJsonDocument.toJson(QJsonDocument::Compact));
+
+    QJsonArray blocksArray = (*jsonMap)["blocks"].toArray();
+    int arrayPos = 0;
+    for(arrayPos = 0; arrayPos < blocksArray.size(); arrayPos++) {
+        QJsonObject jsonBlock = blocksArray[arrayPos].toObject();
+        QJsonArray coordsArray = jsonBlock["coords"].toArray();
+        int blockNumber = 0;
+        for(blockNumber = 0; blockNumber < coordsArray.size(); blockNumber++) {
+            switch (jsonBlock["blockType"].toInt()) {
+                case QuListBlock::Flag:{
+                    QuSpawnBlock *spawn = new QuSpawnBlock();
+                    QJsonArray blockCoordsArray = coordsArray[blockNumber].toArray();
+                    QPoint point(blockCoordsArray[0].toInt() * QuObject::CELL_SIZE, blockCoordsArray[1].toInt() * QuObject::CELL_SIZE);
+                    spawn->setPos(point);
+                    spawBlocks.append(spawn);
+                    break;
+                }
+            }
+        }
+    }
+
+    QuCrown quCrown(jsonEntitiesMap.size()+1);
+    quCrown.setPos(spawBlocks.at(randValue % spawBlocks.size())->getPos());
+    jsonEntitiesMap.insert(quCrown.getClassId(), quCrown.toJSON());
 
     disconnect(timer, SIGNAL(timeout()), this, SLOT(handlePlayersConnection()));
     //We send the info too the players every x ms

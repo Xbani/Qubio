@@ -9,7 +9,7 @@
 
 class QuSocketServer;
 class QuInfoClient;
-
+class QuSpawnBlock;
 /**
  * @brief The QuServer class handles the communication client-server
  */
@@ -106,6 +106,10 @@ private:
     int lastMessageIdSent;
     int lastPlayerIdGiven;
     QTimer* timer;
+    /**
+     * @brief spawBlocks list of s=the spawn for playe on the map
+     */
+    QVector<QuSpawnBlock*> spawBlocks;
     const int INTERVAL_TIME_ENTITIES = 16;
     const int INTERVAL_TIME_CHECK_CONNECTION = 5000;
 };
