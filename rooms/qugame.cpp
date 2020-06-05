@@ -114,6 +114,11 @@ void QuGame::start(int rand)
     addItem(quCrown);
 }
 
+QuClient* QuGame::getQuClient() const
+{
+    return quGameEngine->getQuClient();
+}
+
 void QuGame::drawBackground(QPainter *painter, const QRectF &rect)
 {
     QBrush brush=QBrush(backgroundBrush());

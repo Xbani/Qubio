@@ -60,6 +60,8 @@ public:
      */
     void receiveEntities(QJsonObject* jsonEntities);
 
+    void receiveDeathMessage(QJsonObject* jsonDeath);
+
 public slots :
     /**
      * @brief sendEntities sends the entities of the game

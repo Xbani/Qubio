@@ -9,6 +9,7 @@ class QuPlayerInfo;
 class QuGameEngine;
 class QuPlayableCharacter;
 class QuSpawnBlock;
+class QuClient;
 class QuGame : public QGraphicsScene
 {
 private:
@@ -26,7 +27,7 @@ public:
     void sentToServer(QJsonObject *jsonToSent);
     QuPlayableCharacter *getPlayableCharacter();
     void start(int rand);
-
+    QuClient* getQuClient()const;
 
 
     // QGraphicsScene interface

@@ -19,6 +19,7 @@
 #include <rooms/qugame.h>
 #include <objects/blocks/quspawnblock.h>
 #include <objects/entities/qucrown.h>
+#include <network/client/quclient.h>
 
 
 QuPlayableCharacter::QuPlayableCharacter(int instance_id, int hue):QuCharacter(instance_id,hue)
@@ -284,7 +285,7 @@ void QuPlayableCharacter::kill(bool is_out_of_bound)
     jsonArrayDeathPosition.append(pos().x());
     jsonArrayDeathPosition.append(pos().y());
     (*jsonDeathCharacter)["deathPosition"] = jsonArrayDeathPosition;
-
+    quGame->getQuClient()->sentDeath(jsonDeathCharacter);
     setPos(getSpawnBlock()->getPos());
     if(getCrown()!=nullptr){
         getCrown()->setOwner(nullptr);

@@ -82,6 +82,8 @@ public:
      * @param jsonPlayerList the json that containe the playersList
      */
     void receivePlayersList(QJsonObject *jsonPlayersList);
+
+    void sentDeath(QJsonObject* jsonDeath);
 private:
 
 signals:

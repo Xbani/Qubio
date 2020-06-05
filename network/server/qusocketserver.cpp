@@ -34,6 +34,9 @@ void QuSocketServer::receive()
                 case MessageType::sendEntity:
                     quServer->receiveEntities(jsonObj);
                 break;
+                case MessageType::death:
+                    quServer->receiveDeathMessage(jsonObj);
+                break;
                 case MessageType::connection:
                     quServer->newPlayerConnect(jsonObj, datagram.senderAddress(), datagram.senderPort());
                 break;
