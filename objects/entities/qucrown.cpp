@@ -3,12 +3,14 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QPainter>
+#include <QDebug>
 
 #include <rooms/qugame.h>
 
 QuCrown::QuCrown(int instenceId):QuEntity(instenceId)
 {
     sprite_crown = QImage(":/resources/sprites/character/crown.png");
+    character=nullptr;
 }
 
 QRectF QuCrown::boundingRect() const
@@ -81,10 +83,12 @@ int QuCrown::getClassId()
 
 void QuCrown::advance(int phase)
 {
-    if(phase){
+    if(!phase){
         return;
     }
     if(getOwner()!=nullptr){
-        setPos(getOwner()->pos());
+        qDebug() << getOwner();
+        setX(getOwner()->x());
+        setY(getOwner()->y());
     }
 }

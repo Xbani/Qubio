@@ -160,6 +160,7 @@ void QuPlayableCharacter::advance(int step)
         bool collisionRight = false;
 
         //loop for all object colliding with the character, stop at the end of the list or if the two kind of collision appeared
+
         bool isCollidingWithCrown=false;
         QuCrown * collidingCrown=nullptr;
 
@@ -185,6 +186,7 @@ void QuPlayableCharacter::advance(int step)
                 if(topCollidingObject==nullptr){
                     collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
                     isCollidingWithCrown=true;
+                    collisionTop = false;
                     topCollidingObject=collidingCrown;
                 }
             }
@@ -201,6 +203,7 @@ void QuPlayableCharacter::advance(int step)
                 if(bottomCollidingObject==nullptr){
                     collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
                     isCollidingWithCrown=true;
+                    collisionBottom = false;
                     bottomCollidingObject=collidingCrown;
                 }
             }
@@ -216,6 +219,7 @@ void QuPlayableCharacter::advance(int step)
                 if(leftCollidingObject==nullptr){
                     collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
                     isCollidingWithCrown=true;
+                    collisionLeft = false;
                     leftCollidingObject=collidingCrown;
                 }
             }
@@ -231,11 +235,12 @@ void QuPlayableCharacter::advance(int step)
                 if(rightCollidingObject==nullptr){
                     collidingCrown=dynamic_cast<QuCrown *>(listCollision[i]);
                     isCollidingWithCrown=true;
+                    collisionRight = false;
                     rightCollidingObject=collidingCrown;
                 }
             }
         }
-        if(isCollidingWithCrown){
+        if(isCollidingWithCrown && getCrown()==nullptr){
             collidingCrown->setOwner(this);
             setCrown(collidingCrown);
         }
