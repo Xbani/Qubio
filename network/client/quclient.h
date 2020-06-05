@@ -57,7 +57,7 @@ public:
     /**
      * @brief startGame : receive a message from the server when the game start
      */
-    void startGame();
+    void startGame(QJsonObject *jsonStart);
 
     void askStartGame();
     void endGame();

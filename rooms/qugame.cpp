@@ -16,6 +16,7 @@
 #include <network/client/quclient.h>
 
 #include <objects/enumblock/qulistblock.h>
+#include <objects/entities/qucrown.h>
 
 
 
@@ -106,9 +107,9 @@ QuPlayableCharacter *QuGame::getPlayableCharacter()
 
 void QuGame::start(int rand)
 {
-
-    spawBlocks.at(rand % spawBlocks.size());
-
+    QuCrown *quCrown = new QuCrown();
+    quCrown->setPos(spawBlocks.at(rand % spawBlocks.size())->getPos().x(),spawBlocks.at(rand % spawBlocks.size())->getPos().x());
+    addItem(quCrown);
 }
 
 void QuGame::drawBackground(QPainter *painter, const QRectF &rect)

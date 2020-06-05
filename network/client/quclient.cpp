@@ -68,9 +68,9 @@ void QuClient::receiveEntities(QJsonObject *jsonEntities)
     }
 }
 
-void QuClient::startGame()
+void QuClient::startGame(QJsonObject *jsonStart)
 {
-    quGameEngine->toQuGameMultiPlayers();
+    quGameEngine->toQuGameMultiPlayers((*jsonStart)["rand"].toInt());
 }
 
 void QuClient::askStartGame()
