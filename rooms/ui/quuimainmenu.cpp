@@ -24,9 +24,14 @@ void QuUIMainMenu::toUIMultiplayer()
 
 void QuUIMainMenu::toUISolo()
 {
-    if(parent()!=nullptr){
+    /*if(parent()!=nullptr){
         QuGameEngine * game_engine =dynamic_cast<QuGameEngine *>(parent());
         game_engine->toQuGame();
+    }*/
+    if(parent()!=nullptr){
+        QuGameEngine * game_engine = dynamic_cast<QuGameEngine *>(parent());
+        game_engine->fromUIHostToWaitingRoom();
+        game_engine->setIsHost(true);
     }
 }
 
