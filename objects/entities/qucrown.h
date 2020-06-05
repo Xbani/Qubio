@@ -20,7 +20,6 @@ private:
 public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void setPos(qreal x, qreal y);
 
     void setOwner(QuCharacter * character){this->character=character;};
     QuCharacter * getOwner(){return character;};
@@ -33,6 +32,10 @@ public:
     // QuEntity interface
 public:
     int getClassId();
+
+    // QGraphicsItem interface
+public:
+    void advance(int phase);
 };
 
 #endif // QUCROWN_H

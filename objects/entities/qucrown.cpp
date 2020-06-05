@@ -18,12 +18,6 @@ void QuCrown::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawImage(boundingRect(), sprite_crown,QRectF(0,0,6,4));
 }
 
-void QuCrown::setPos(qreal x, qreal y)
-{
-    setX(x);
-    setY(y);
-}
-
 QJsonObject *QuCrown::toJSON()
 {
     return new QJsonObject();
@@ -37,4 +31,14 @@ void QuCrown::fromJSON(QJsonObject &qJsonObject)
 int QuCrown::getClassId()
 {
     return QuEntity::CROWN_ID;
+}
+
+void QuCrown::advance(int phase)
+{
+    if(phase){
+        return;
+    }
+    if(getOwner()!=nullptr){
+        setPos(getOwner()->pos());
+    }
 }
