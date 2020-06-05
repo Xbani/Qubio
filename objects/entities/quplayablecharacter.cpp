@@ -14,6 +14,8 @@
 #include <iostream>
 #include <QtMath>
 #include <QKeyEvent>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <rooms/qugame.h>
 #include <objects/blocks/quspawnblock.h>
 #include <objects/entities/qucrown.h>
@@ -134,7 +136,7 @@ void QuPlayableCharacter::advance(int step)
     || y()-boundingRect().y()+boundingRect().height() < sRect.y()
     || x()>sRect.x()+sRect.width()
     || y() > sRect.y() + sRect.height()){
-        kill();
+        kill(true);
     }
     //collisions
     QuObject * topCollidingObject;
@@ -251,7 +253,7 @@ void QuPlayableCharacter::advance(int step)
             setSpeedY(0);
             collisionTop ? setY(topCollidingObject->y() + topCollidingObject->boundingRect().y() + topCollidingObject->boundingRect().height() + QuPhysicsConst::QUANTUM) : setY(bottomCollidingObject->y()+ bottomCollidingObject->boundingRect().y() - boundingRect().height() - QuPhysicsConst::QUANTUM);
             if(collisionTop && dynamic_cast<QuUnplayableCharacter *>(topCollidingObject)!=nullptr ){
-                kill();
+                kill(false);
             }
         }
 
@@ -268,13 +270,25 @@ void QuPlayableCharacter::advance(int step)
         quGame->sentToServer(getCrown()->toJSON());
 }
 
-void QuPlayableCharacter::kill()
+void QuPlayableCharacter::kill(bool is_out_of_bound)
 {
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
+
+    QJsonObject *jsonDeathCharacter = new QJsonObject();
+    QJsonArray jsonArrayDeathPosition;
+
+    (*jsonDeathCharacter)["instanceId"] = getInstanceId();
+    (*jsonDeathCharacter)["wasCrowned"] = (getCrown()!=nullptr);
+    (*jsonDeathCharacter)["outOfBound"] = is_out_of_bound;
+
+    jsonArrayDeathPosition.append(pos().x());
+    jsonArrayDeathPosition.append(pos().y());
+    (*jsonDeathCharacter)["deathPosition"] = jsonArrayDeathPosition;
+
     setPos(getSpawnBlock()->getPos());
     if(getCrown()!=nullptr){
         getCrown()->setOwner(nullptr);
-        quGame->sentToServer(getCrown()->toJSON());
+        //quGame->sentToServer(getCrown()->toJSON());
         setCrown(nullptr); 
     }
 }
