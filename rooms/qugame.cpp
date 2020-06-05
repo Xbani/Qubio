@@ -104,6 +104,13 @@ QuPlayableCharacter *QuGame::getPlayableCharacter()
     return playable_character;
 }
 
+void QuGame::start(int rand)
+{
+
+    spawBlocks.at(rand % spawBlocks.size());
+
+}
+
 void QuGame::drawBackground(QPainter *painter, const QRectF &rect)
 {
     QBrush brush=QBrush(backgroundBrush());

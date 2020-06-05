@@ -58,7 +58,7 @@ void QuGameEngine::toQuGame()
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));
 }
 
-void QuGameEngine::toQuGameMultiPlayers()
+void QuGameEngine::toQuGameMultiPlayers(int rand)
 {
     quGame = new QuGame(0,0,128*QuObject::PIXEL_SIZE,64*QuObject::PIXEL_SIZE,this);
     quGame->newMapFromJson(jsonMap);
@@ -67,6 +67,7 @@ void QuGameEngine::toQuGameMultiPlayers()
     else
         quGame->createPlayers(uiWaitingRoomJoin->getQuPlayerInfos());
     view->setScene(quGame);
+    quGame->start(rand);
     view->ensureVisible((QGraphicsItem * )quGame->getPlayableCharacter(),300,300);
     timer->start(1000 / 60);
     connect(timer, SIGNAL(timeout()), quGame, SLOT(advance()));

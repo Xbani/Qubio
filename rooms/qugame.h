@@ -25,6 +25,7 @@ public:
     void createPlayers(QMap<int,QuPlayerInfo *>);
     void sentToServer(QJsonObject *jsonToSent);
     QuPlayableCharacter *getPlayableCharacter();
+    void start(int rand);
 
 
 

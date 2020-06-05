@@ -62,7 +62,7 @@ public:
     void toUIHost();
     void toUIJoin();
     void toQuGame();
-    void toQuGameMultiPlayers();
+    void toQuGameMultiPlayers(int rand);
     void fromUIJoinToWaitingRoom();
     void fromUIHostToWaitingRoom();
     void toBuilderMapFrame();

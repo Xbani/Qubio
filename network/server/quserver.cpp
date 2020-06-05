@@ -55,6 +55,8 @@ void QuServer::startGame()
     QJsonObject qJsonObject;
     qJsonObject["messageId"] = lastMessageIdSent;
     qJsonObject["messageType"] = MessageType::startGameByServer;
+    QRandomGenerator rand = QRandomGenerator::securelySeeded();
+    qJsonObject["rand"] = rand.bounded(0,100);
     QJsonDocument qJsonDocument(qJsonObject);
     (this->quSocketServer)->sendToAll(qJsonDocument.toJson(QJsonDocument::Compact));
 
