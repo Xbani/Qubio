@@ -130,8 +130,8 @@ void QuPlayableCharacter::advance(int step)
 
     //if out of room
     QRectF sRect=scene()->sceneRect();
-    if(x()-boundingRect().x()+boundingRect().width()<sRect.x()
-    || y()-boundingRect().y()+boundingRect().height()<sRect.y()
+    if(x()-boundingRect().x()+boundingRect().width()  < sRect.x()
+    || y()-boundingRect().y()+boundingRect().height() < sRect.y()
     || x()>sRect.x()+sRect.width()
     || y() > sRect.y() + sRect.height()){
         kill();
@@ -145,7 +145,7 @@ void QuPlayableCharacter::advance(int step)
     QList <QGraphicsItem*> listCollision = scene()->collidingItems(this);
 
     //if there are no collision
-    if (listCollision.isEmpty())
+    if (listCollision.isEmpty() || listCollision.size()==1 && getCrown()!=nullptr && listCollision.contains(getCrown()))
     {
         setPreviouslyOnGround(false);
     }
@@ -270,12 +270,15 @@ void QuPlayableCharacter::advance(int step)
 
 void QuPlayableCharacter::kill()
 {
+    qDebug() << "debug 0";
     QuGame *quGame = dynamic_cast<QuGame *>(scene());
     setPos(getSpawnBlock()->getPos());
     if(getCrown()!=nullptr){
         getCrown()->setOwner(nullptr);
-        setCrown(nullptr);
+        qDebug() << "debug 1";
         quGame->sentToServer(getCrown()->toJSON());
+        qDebug() << "debug 2";
+        setCrown(nullptr); 
     }
 }
 

@@ -15,7 +15,7 @@ QuCrown::QuCrown(int instenceId):QuEntity(instenceId)
 
 QRectF QuCrown::boundingRect() const
 {
-    return QRectF(0,0,QuObject::PIXEL_SIZE*6,QuObject::PIXEL_SIZE*4);
+    return QRectF(0,-4*QuObject::PIXEL_SIZE,QuObject::PIXEL_SIZE*6,QuObject::PIXEL_SIZE*4);
 }
 
 void QuCrown::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -44,7 +44,7 @@ QJsonObject *QuCrown::toJSON()
     jsonArrayAcceleration.append(getAcceleration().y());
     (*jsonCrown)["acceleration"] = jsonArrayAcceleration;
 
-    (*jsonCrown)["playerPosse"] = character == nullptr ? character->getInstanceId() : -1;
+    (*jsonCrown)["playerPosse"] = character != nullptr ? character->getInstanceId() : -1;
 
     return jsonCrown;
 }

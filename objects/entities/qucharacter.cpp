@@ -32,6 +32,7 @@ QuCharacter::QuCharacter(int instance_id, int hue):QuEntity(instance_id)
     strite_move_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_MOVE.png").mirrored(true, false),hue);
     sprite_jump_left    = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png"),hue);
     sprite_jump_right   = QuToolSprite::setCharacterHUE(QImage(":/resources/sprites/character/character_JUMP.png").mirrored(true, false),hue);
+    qu_crown=nullptr;
 }
 
 QRectF QuCharacter::boundingRect() const
